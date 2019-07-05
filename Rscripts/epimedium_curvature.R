@@ -12,24 +12,24 @@ library(soilphysics)
 library(polynom)
 
 #import dorsal data####
-dorsal<- here("data/epimedium_photos/koreanum/koreanum_dorsal_appended.TPS") %>% #mounts tps file
+dorsal_lst<- here("data/epimedium_photos/koreanum/koreanum_dorsal_appended.TPS") %>% #mounts tps file
          readland.tps(specID='imageID') %>% #geomorph func, auto-applies the scaling factor to LMs
          a2l() %>% # Momit func, converts array to list
          Ldk() #adds "$shp{i}" as list element headers
         
 
 #inspect raw LMs
-str(dorsal)#LMs stored in $coo
-dorsal %>% paper %>% draw_curve #draws all curves on one plot (not yet procrustes superimposed)
-rapply(dorsal, coo_plot) #recursively plots all curves
-coo_plot(dorsal[i]) #for i={1:31} to plot individually
+str(dorsal_lst)#LMs stored in $coo
+dorsal_lst %>% paper %>% draw_curve #draws all curves on one plot (not yet procrustes superimposed)
+rapply(dorsal_lst, coo_plot) #recursively plots all curves
+coo_plot(dorsal_lst[i]) #for i={1:31} to plot individually
 
 #calculate polynomials
-dorsal_curv <- npoly(dorsal$coo, degree=3) #31 polynomial curves estimated 
-str(dorsal_curv[[1]]) #"Call:" = function+parameters  used to create the model
+dorsalcurv_lst <- npoly(dorsal_lst$coo, degree=3) #31 polynomial curves estimated 
+str(dorsalcurv_lst[[1]]) #"Call:" = function+parameters  used to create the model
 
 #draw polynomials estimates over raw LMs
-dorsal_curv[[i]] %>% #for i={1:31} -- LMs must be previously plotted w coo_plot() 
+dorsalcurv_lst[[i]] %>% #for i={1:31} -- LMs must be previously plotted w coo_plot() 
 npoly_i() %>%
 coo_draw()
 
@@ -43,11 +43,11 @@ dev.off()
 
 #create polynomial functions from coeffs
 
-coeffs<-sapply(dorsal_curv, function(v) v[1]) 
+coeffs_lst<-sapply(dorsalcurv_lst, function(v) v[1]) 
 #extracts the first element ($coeff) from each element ($shp) in the list. 
 #sapply stores results as a list of atomic vectors
 
-aspolyfunc<-function(x) x %>%
+aspoly.fun<-function(x) x %>%
   as.numeric() %>%
   as.mpoly() %>% #creates a polynomial object of class 'mpoly'
   print() %>% 
@@ -55,16 +55,16 @@ aspolyfunc<-function(x) x %>%
   mp() %>% #mpoly
   as.function()
 
-listpolyfunc<-lapply(coeffs, aspolyfunc) # a list of 31 parameterized polynomial functions
+polyfunc_lst<-lapply(coeffs_lst, aspoly.fun) # a list of 31 parameterized polynomial functions
 
 
 #extract the x-coords from the "baseline" entry for every $shp
 #max/min baselines are stored in [4] and [5], [[1]][1] extracts only the x-coord
-max_baselines<-(lapply(dorsal_curv, function(b) b[4][[1]][1]))
-min_baselines<-(lapply(dorsal_curv, function(b) b[5][[1]][1]))
+maxbaselines_lst<-(lapply(dorsalcurv_lst, function(b) b[4][[1]][1]))
+minbaselines_lst<-(lapply(dorsalcurv_lst, function(b) b[5][[1]][1]))
 
 #calculates arclength for every polynomial bounded by baselines
-lengths<-mapply(arclength, listpolyfunc, min_baselines, max_baselines) %>%
+lengths_lst<-mapply(arclength, polyfunc_lst, minbaselines_lst, maxbaselines_lst) %>%
          as.tibble() %>% #row 1 contains arclengths 
          slice(., 1) %>% #keep only row 1
          as.list()
@@ -79,17 +79,17 @@ lengths<-mapply(arclength, listpolyfunc, min_baselines, max_baselines) %>%
 
 #extracts the lower xy-boundary from b[5], unlists it, and isolates the x-boundary by [1]
 #then does the same for b[4] which is the upper xy-boundary stored in dorsal_curv$baseline1
-baselines <- dorsal_curv %>% 
+baselines_lst <- dorsalcurv_lst %>% 
              lapply(., function(b) c( unlist(b[5])[1], unlist(b[4])[1]))
 
 
-polylist<- coeffs %>%
+poly_lst<- coeffs_lst %>%
            lapply(., polynomial) %>% #convert coeffs to a list of polynomials
            lapply(., as.character) #convert polynomials to character vectors
   
 
 #convert polynomials stored as character strings to quoteless expressions
-poly2func<- function (p) 
+poly2.fun<- function (p) 
 {
   f<- function(x) NULL
   body(f) <- parse(text=p)
@@ -97,14 +97,14 @@ poly2func<- function (p)
 }
 
 
-funclist<- polylist %>%
-           lapply(., poly2func) #create a list of one-line polynomial functions
+func_lst<- poly_lst %>%
+           lapply(., poly2.fun) #create a list of polynomial functions readable by totalK()
 
 
 #run trace(fun2form, edit=TRUE) and change width.cutoff to 500L under deparse()
 
 #total curvature function
-totalK<-function (x.range, fun) 
+totalK.fun<-function (x.range, fun) 
 {
   stopifnot(is.atomic(x.range))
   if (!is.numeric(x.range)) 
@@ -128,15 +128,40 @@ totalK<-function (x.range, fun)
   k <- abs(he)/(1 + gr^2)^(3/2) #there are possibly 5000 curvature points stored in k... could sum them? also, see: https://en.wikipedia.org/wiki/Curvature "curvature of the graph of a function"
 }
 
-curvaturelist <- totalK %>%
-                 mapply(., baselines, funclist) %>%
-                 as.tibble
+curvature_tbl <- 
+  totalK.fun %>%
+  mapply(., baselines_lst, func_lst) %>%
+  as.tibble() %>%
+  rapply(., sum) %>% #integration of f dx 
+  as.tibble() %>%
+  gather()
 
 
-totalcurvaturelist <- curvaturelist %>% 
-                      rapply(., sum) %>%
-                      as.list()
-
+alltogether_tbl <- 
+  lengths_lst %>% #list of arclengths
+  unlist() %>%
+  as.tibble() %>%
+  gather() %>% #unpivot column names to row names
+  {bind_cols(                 #bind arclength column and curvature column
+    dplyr::select(., value ), #mask Momocs::select
+    dplyr::select(curvature_tbl, value),
+    dplyr::select(  
+              read.csv(here("data/epimedium_curv_size_data.csv"), header=TRUE) %>% #fetch ID tags from data.csv
+              dplyr::select(species_individual_panicle_flower) %>% #isolate ID column
+              slice(., 28:58) %>%
+              as.tibble(),
+                  species_individual_panicle_flower
+                  )
+            )
+  } %>% 
+  rename(arclength=value, 
+         total_curvature=value1,
+         species_ID=species_individual_panicle_flower
+         ) %>% #old colnames were "value" and "value1"
+  mutate(adjusted_curvature = total_curvature/arclength) %>% #new column 
+  write.csv(., here("output/estimated_curvature.csv")) 
+  
+  
 
 
 
