@@ -12,21 +12,25 @@ library(soilphysics)
 library(polynom)
 
 #import dorsal data####
-dorsal_lst<- here("data/epimedium_photos/koreanum/koreanum_dorsal_appended.TPS") %>% #mounts tps file
-         readland.tps(specID='imageID') %>% #geomorph func, auto-applies the scaling factor to LMs
-         a2l() %>% # Momit func, converts array to list
-         Ldk() #adds "$shp{i}" as list element headers
+dorsal_lst <- 
+  here("data/epimedium_photos/koreanum/koreanum_dorsal_appended.TPS") %>% #mounts tps file
+  readland.tps(specID='imageID') %>% #geomorph func, auto-applies the scaling factor to LMs
+  a2l() %>% # Momit func, converts array to list
+  Ldk() #adds "$shp{i}" as list element headers
         
 
 #inspect raw LMs
 str(dorsal_lst)#LMs stored in $coo
-dorsal_lst %>% paper %>% draw_curve #draws all curves on one plot (not yet procrustes superimposed)
+dorsal_lst %>% 
+  paper %>% 
+  draw_curve #draws all curves on one plot (not yet procrustes superimposed)
 rapply(dorsal_lst, coo_plot) #recursively plots all curves
 coo_plot(dorsal_lst[i]) #for i={1:31} to plot individually
 
 #calculate polynomials
-dorsalcurv_lst <- npoly(dorsal_lst$coo, degree=3) #31 polynomial curves estimated 
-str(dorsalcurv_lst[[1]]) #"Call:" = function+parameters  used to create the model
+dorsalcurv_lst <- 
+  npoly(dorsal_lst$coo, degree=3) #31 polynomial curves estimated 
+                                  #"Call:" = function+parameters  used to create the model
 
 #draw polynomials estimates over raw LMs
 dorsalcurv_lst[[i]] %>% #for i={1:31} -- LMs must be previously plotted w coo_plot() 
@@ -40,14 +44,14 @@ dev.off()
 
 #calculate arc length####
 
-
 #create polynomial functions from coeffs
-
-coeffs_lst<-sapply(dorsalcurv_lst, function(v) v[1]) 
+coeffs_lst <- 
+  sapply(dorsalcurv_lst, function(v) v[1]) 
 #extracts the first element ($coeff) from each element ($shp) in the list. 
 #sapply stores results as a list of atomic vectors
 
-aspoly.fun<-function(x) x %>%
+aspoly.fun <- 
+  function(x) x %>%
   as.numeric() %>%
   as.mpoly() %>% #creates a polynomial object of class 'mpoly'
   print() %>% 
@@ -55,19 +59,29 @@ aspoly.fun<-function(x) x %>%
   mp() %>% #mpoly
   as.function()
 
-polyfunc_lst<-lapply(coeffs_lst, aspoly.fun) # a list of 31 parameterized polynomial functions
+polyfunc_lst <- 
+  lapply(coeffs_lst, aspoly.fun) # a list of 31 parameterized polynomial functions
 
 
-#extract the x-coords from the "baseline" entry for every $shp
-#max/min baselines are stored in [4] and [5], [[1]][1] extracts only the x-coord
-maxbaselines_lst<-(lapply(dorsalcurv_lst, function(b) b[4][[1]][1]))
-minbaselines_lst<-(lapply(dorsalcurv_lst, function(b) b[5][[1]][1]))
+#extracts the lower xy-boundary from b[5], unlists it, and isolates the x-boundary by [1]
+#then does the same for b[4] which is the upper xy-boundary stored in dorsal_curv$baseline1
+baselines_lst <- 
+  dorsalcurv_lst %>% 
+  lapply(., 
+         function(b) c(unlist(b[5])[1], unlist(b[4])[1])
+         )
 
 #calculates arclength for every polynomial bounded by baselines
-lengths_lst<-mapply(arclength, polyfunc_lst, minbaselines_lst, maxbaselines_lst) %>%
-         as.tibble() %>% #row 1 contains arclengths 
-         slice(., 1) %>% #keep only row 1
-         as.list()
+lengths_lst <- 
+  mapply(arclength, polyfunc_lst, 
+         baselines_lst %>%
+           sapply(., "[[", 1), #min baselines
+         baselines_lst %>% 
+           sapply(., "[[", 2) #max baselines
+         ) %>%
+  as.tibble() %>% #row 1 contains arclengths 
+  slice(., 1) %>% #keep only row 1
+  as.list()
 
 
 
@@ -76,16 +90,10 @@ lengths_lst<-mapply(arclength, polyfunc_lst, minbaselines_lst, maxbaselines_lst)
 
 #calculate total curvature####
 
-
-#extracts the lower xy-boundary from b[5], unlists it, and isolates the x-boundary by [1]
-#then does the same for b[4] which is the upper xy-boundary stored in dorsal_curv$baseline1
-baselines_lst <- dorsalcurv_lst %>% 
-             lapply(., function(b) c( unlist(b[5])[1], unlist(b[4])[1]))
-
-
-poly_lst<- coeffs_lst %>%
-           lapply(., polynomial) %>% #convert coeffs to a list of polynomials
-           lapply(., as.character) #convert polynomials to character vectors
+poly_lst <- 
+  coeffs_lst %>%
+  lapply(., polynomial) %>% #convert coeffs to a list of polynomials
+  lapply(., as.character) #convert polynomials to character vectors
   
 
 #convert polynomials stored as character strings to quoteless expressions
@@ -146,7 +154,9 @@ alltogether_tbl <-
     dplyr::select(., value ), #mask Momocs::select
     dplyr::select(curvature_tbl, value),
     dplyr::select(  
-              read.csv(here("data/epimedium_curv_size_data.csv"), header=TRUE) %>% #fetch ID tags from data.csv
+              read.csv(
+                  here("data/epimedium_curv_size_data.csv"), 
+                  header=TRUE) %>% #fetch ID tags from data.csv
               dplyr::select(species_individual_panicle_flower) %>% #isolate ID column
               slice(., 28:58) %>%
               as.tibble(),
@@ -155,11 +165,9 @@ alltogether_tbl <-
             )
   } %>% 
   rename(arclength=value, 
-         total_curvature=value1,
-         species_ID=species_individual_panicle_flower
-         ) %>% #old colnames were "value" and "value1"
+         total_curvature=value1) %>% #old colnames were "value" and "value1"
   mutate(adjusted_curvature = total_curvature/arclength) %>% #new column 
-  write.csv(., here("output/estimated_curvature.csv")) 
+  write.csv(., here("data/epimedium_curv_curvature.csv")) 
   
   
 

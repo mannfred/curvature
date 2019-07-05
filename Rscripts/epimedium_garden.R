@@ -15,21 +15,9 @@ pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative =
 #NOTE: n is number in *each* group
 #........need 105 samples of each epimedium spp.......
 
-##################### test data
 
-test_data<-
-  read.csv('epimedium_test_data.csv', header=TRUE) %>%
-  as.tibble() %>%
-  glimpse() %>%
-  gather(key="time_from_abscission", value="size", -Species_Individual_Panicle_Flower) %>%
-  print(n=40)
 
-ggplot(data=test_data, aes(x=time_from_abscission,y=size)) +
-  geom_boxplot(aes(fill=time_from_abscission), alpha=0.7) +
-  theme(axis.text.x = element_text(angle=90)) +
-  scale_fill_brewer(palette="Dark2")
-
-#####################
+#plotting garden data####
 
 library(here)
 library(stringr) 
@@ -55,7 +43,8 @@ data_sort<-
   write.csv("epimedium_growth_data_pivot.csv", row.names=F) #stage info will be manually entered to this file :(
 
 
-#visualize stage-size relationship
+#visualize stage-size relationship####
+
 data2<-
   read.csv('epimedium_growth_data_pivot.csv', header=TRUE) %>%
   filter(grepl('koreanum', Species_Individual_Panicle_Flower)) %>% #change species name to generate separate graphs
@@ -72,7 +61,7 @@ ggplot(data=data2, aes(x=stage, y=size)) +
 #visualize date-size relationship
 #need to convert absolute dates to free time (e.g. days)
 
-#just for grandiflorum_1_1_1
+#just for grandiflorum_1_1_1####
 
 data3<-
   read.csv('epimedium_growth_data_pivot.csv', header=TRUE) %>%
