@@ -17,54 +17,12 @@ link-citations: true
 knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
 ```
 
-#### Abstract
 
-Floral curvature is a widespread and convergent trait of great ecological and evolutionary significance in the angiosperms. 
 
-"We are beginning to understand why some hummingbird bills are long, whereas others are short, and why some hummingbird flowers are wide, whereas others are narrow. Now, why are bills of some hummingbirds and the tubes of the flowers they visit curved?" - Temeles (1996).
 
 <br>
 
-#### The ecological function of floral curvature aka why is flower shape (in general) interesting/important?
-
-  Many aspects of the floral phenotype have increasingly been found to be adaptive, often satisfying the age-old "why" of the diversity and function of floral forms. Nonetheless, certain components have yet to be fully understood. In order to examine this particular aspect of floral morphology, curvature, it is useful to return to first principles. 
-
-In the seed plants, pollen is necessary for fertilization (Bradley 1717), but the ideal pollen is often that which comes from another individual plant of the same species (red queen? XXX). Pollination by animals is an adaptation that can both export and import intraspecific pollen (Miller 1721) while precluding interspecific pollen transfer (Dobbs 1750). For effective pollination, the phenology and morphology of the flower operates in concert with the ethological habits of the pollinator. This is exemplified by the phenomena of dichogamy, pigmentation, and constancy (Sprengel 1793). The shape and size of a flower also plays a role in effective pollination. Grant (1950) proposed that 'mutations causing the petals to grow up as a fused corolla tube around the stamens' may have been one of the primitive adaptations promoting flower constancy. Today it is generally recognized that plants with long and/or narrow corolla tubes promote visitation by hummingbirds, flies, lepitoptrans, and long-tongued hymenoptrans, and exclude those animals (e.g. beetles) unable to reach the inner hypanthium for nectar. While the co-variation of corolla length and diameter have been considered in the context of flower-hummingbird bill diversity (Temeles XXX), curvature has not received the same attention. 
-
-Our discussion focuses on those flowers with fused (Asteridds) or invaginated (Rosidds) petals that form a corolla tube or nectar spur, respectively. For brevity we continue by focusing on corolla tubes, as the implications are likely similar for spurs. The morphology of corolla tubes evolve through three spatial dimensions, length, width, and curvature. Each dimension can be thought of as a set of filters that act heirarchically, mirroring the order in which these features likely evolved. Length is the primary filter: a pollinator that cannot lick (i.e. has a tongue for extending their feeding range beyond their mouth) cannot feed from a tube with length >0. In Grant's (1950) example, this would exclude beetles while including flies and bees. Corolla diameter further filters pollinators. In the case of hummingbirds, long-billed hummingbirds with an advanced reach still cannot access flower tubes adapted to small-billed hummingbirds with small diameters (Temeles XXX, Grant XXX). Curvature enables the corolla tube to occupy a third dimension, applying yet another filter to those pollinators able to access the inner hypanthium. In the case of hummingbirds, straight-billed species can only access the flower as much as the horizontal (x) length of the flower permits. The vertical length is as inaccessible as if the flower was a straight and long. For curve-billed species (e.g.) Phaethornis (Trochilidae)
-
-Just as corolla length and diameter are influenced by bill length [and vice versa, e.g. @temeles1996new], flower and bill curvature introduce yet another dimension of specificity: length and width constrains morphological matching in the xy plane, while curvature additionally constrains matching in the xz and yz plane. Curvature is therefore desirable to measure, because a flower that is "more curved" could, for example, be interpreted to be more specialized than a sister species that is "less curved". Therefore, as pollination biologists we should have standardized protocols for measuring, quantifying, and describing curvature. 
-
-The first discussion of the importance of curvature in plant-hummingbird interactions begins with Hainsworth [-@hainsworth1973tongue] and is first empirically studied by @stiles1975ecology - though methods for measuring curvature of bills outside of an ecological context can be found much earlier (@baldwin1931measurements). However, a review of the literature ([Table 1](#tables_lit_review)) reveals that a consensus has yet to be made among pollination ecologists as to what exactly we mean by *curvature* and how to measure it, which naturally affects how we analyse, interpret, and present these data. Here, we summarize the approaches to measuring curvature within the field of plant-hummingbird pollination, identify commonalities and shortcomings, and offer a solution with the aim of standardizing how curvature is studied within the field of pollination ecology [*sensu* @faegri1979the].  
-
-<br>
-
-#### Materials and Methods
-
-The literature was sourced by querying Google Scholar (Also do second, up-to-date sweep on WOS) for the terms "corolla curvature", "flower curvature", and "hummingbird curvature". We limit our analysis to hummingbird pollination because the literature for any type of plant-animal mutualism is plentiful, and though the general concepts we discuss should be portable to other pollination systems, the practical methodology will need to be customized to each broad class of pollinator (e.g. bats, moths, bees, flies, passerine birds). 
-
-1. Rotate the photographs so that the opening of the corolla tube is parallel to the y-axis. 
-2. Build tps file (a file listing all specimens) using tpsUtil.
-3. Landmark specimens from tps file using tpsDig (steps 1 and 2 will soon be possible in MomX and could be done in geomorph). Landmarks used to measure the ventral arc are 1) the apex of the ventral petal before it begins recurving, and 2) the ventral point corresponding to the narrowest cross section of the corolla tube. 12 semi-landmarks are placed between them (14 points total). Landmarks used to measure the dorsal arc are 3) the point on the dorsal petal opposite to landmark 1 in cross section, and 4) the dorsal point opposite to landmark 2 in cross section. 16 semi-landmarks are placed between them (18 points total). 
-4. Curve points are drawn in tpsDig using the "pencil tool". Following the placement of points, a curve is drawn that connects them. Right-click the curve and select "Resample Curve" and then space the points evenly "by length". Each curve (dorsal and ventral) need to be treated as individual specimens, saved in separate files, and analysed separately.
-5. Semi-landmarks need to be treated like landmarks for curve-fitting. To do this, use the 'Append tps curve to landmarks' function in tpsUtil. https://www.researchgate.net/post/Which_software_should_I_use_for_placing_sliding_semilandmarks 
-6.  Import into R using  from_tps() function from Momit. 
-7. Superimpose the shape using the fgProcrustes() function in Momocs.
-8. Calculate polynomials and plot curves following the "Olea" example at: https://momx.github.io/Momocs/reference/opoly.html 
-How do I decide what degree polynomial to use? Consult: Rohlf 1990.
-9. Need to carry out multivariate stats on coefficients from polynomial equations. The eight regression parameters 'bi' were used as quantitative variables (Table 3). A CVA was then carried out on 1500 stones and nine variables (the eight quantitative and one qualitative expressing 50 classes corresponding to the 50 wild populations and cultivars).
-10. How to calculate total curvature, mean curvature, and max curvature? Maybe R package 'MonoPoly'? And, the 'maxcurve' function in the 'soilphysics' package. 
-
-##### Epimedium phenology
-
-We tested the utility of this curvature metric by studying floral development in Epimedium grandiflorum C.Morren and Epimedium koreanum Nakai (Berberidaceae, Table 1 - sample sizes). Flower size was measured daily from April - May 2019 at the UBC Botanical Garden (Supp Mat 1). By correlating changes in flower size to developmental landmarks (Supp Fig 1), we were able to define 7 discrete stages of flower development (Table 2, Figure 5 - photographs of the stages). We then sampled 5 flowers from each stage of both species and photographed them at 5.0x using a Zeiss AxioCam 301. 
-
-Supp Mat 1:
-In E. grandiflorum, the distance separating the outer sepals (sensu Stearn 2002) was measured using dial calipers (graduation = 0.1 mm), until the length of the inner sepals exceeded the length of the outer sepals (stage 4, Table 2 - describing the stages). From this point onwards, the inner sepal distance was measured. Because the aestivation was imbricate, we measured the sepals of the major axis (Figure demonstrating measurement technique). In E. koreanum, the inner sepals lack pigmentation and adhere closely to the petals, making them difficult to measure accuratley in situ. For this reason, the outer sepals were measured until they abscised (stage 5, table 2). 
-
-##### Imaging
-
-Flowers were sampled opportunisticly and preserved in 70% ethanol. Preserved flowers were later transfered to a glass slide and imaged using a stereo microscope (Zeiss Stemi 508) at 0.63x. Three images per specimen were joined using the Stitching Plugin (Preibisch et al 2009) in the Fiji distribution of ImageJ2 (Schindelin et al 2012, Rueden et al 2017). 
+ 
 
 
 
