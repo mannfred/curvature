@@ -13,7 +13,7 @@ library(polynom)
 
 #import dorsal data####
 dorsal_lst <- 
-  here("data/epimedium_photos/koreanum/koreanum_dorsal_appended.TPS") %>% #mounts tps file
+  here("data/epimedium_photos/grandiflorum/grandiflorum_dorsal_appended.TPS") %>% #mounts tps file
   readland.tps(specID='imageID') %>% #geomorph func, auto-applies the scaling factor to LMs
   a2l() %>% # Momit func, converts array to list
   Ldk() #adds "$shp{i}" as list element headers
@@ -158,7 +158,7 @@ alltogether_tbl <-
                   here("data/epimedium_curv_size_data.csv"), 
                   header=TRUE) %>% #fetch ID tags from data.csv
               dplyr::select(species_individual_panicle_flower) %>% #isolate ID column
-              slice(., 28:58) %>%
+              slice(., 1:19) %>%   #20:50 for koreanum, 51:77 for violaceum, 1:19 for grandiflorum
               as.tibble(),
                   species_individual_panicle_flower
                   )
@@ -167,7 +167,7 @@ alltogether_tbl <-
   rename(arclength=value, 
          total_curvature=value1) %>% #old colnames were "value" and "value1"
   mutate(adjusted_curvature = total_curvature/arclength) %>% #new column 
-  write.csv(., here("data/epimedium_curv_curvature.csv")) 
+  write.csv(., here("data/epimedium_curvature_grandiflorum.csv")) 
   
   
 

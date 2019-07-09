@@ -4,14 +4,14 @@ library(here)
 data_tbl <- 
     left_join(
         read.csv(
-                here("data/epimedium_curv_curvature.csv"),
+                here("data/epimedium_curvature_grandiflorum.csv"),
                 header=TRUE) %>% 
-        as.tibble(),
+            as.tibble(),
         read.csv(
                 here("data/epimedium_curv_size_data.csv"),
                 header=TRUE) %>%
-        as.tibble() %>%
-        slice(., 28:58), #isolate rows w E. koreanum data
+            as.tibble() %>%
+        slice(., 1:19), #20:50 for koreanum, 51:77 for violaceum, 1:21 for grandiflorum
         by="species_individual_panicle_flower" 
               ) %>%
     dplyr::select(4, 2, 3, 5, 6) #isolate columns 2:5 and rearrange
