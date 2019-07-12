@@ -1,0 +1,12 @@
+Citation,System,Method
+Hamilton 1975,Comparative Behavior of the American Avocet and the Black-Necked Stilt(Recurvirostridae),Radius of curvature
+Kawabata et al 2009,Quantitative analysis of corolla shapes and petal contours in single-flower cultivars of Lisianthus.,Something like geomorph??
+Pour et al 2018,Curvature-based pattern recognition for cultivar classification of Anthurium (Araceae) flowers.,Calculated k (the rate of change in the direction of the tangent line at that point with respect to arc length) for n points along the flower.
+Dellinger et al 2018,Floral trait changes correlated with the repeated shifts away from buzz?pollination in the Melastomataceae.,Qualitative
+Joly et al 2017,Analysis of polliation syndromes in Antillean Gesneriaceae.,Geometric morphometrics. “PC2 represents variation in corolla curvature” (descriptive).
+Berger et al 2017,Quantifying morphological modifications to floral form in gene knockdowns in Fedia graciliflora.,Landmark-based geometric morphometrics
+Alexandre et al 2015,QTL analysis comparing hummingbird pollinated and generalist Rhytidophyllum flowers (Gesneriaceae).,Angle between flower opening and flower base.
+Campos et al 2015,Generating 3D printed flowers to test efficacy of moth pollination,“Curvature parameter”
+Travers et al 2003,"Nectar spurs of Impatiens spp. and Ruby-throated hummingbird (Archilochus colubris) at Franklin County, Massachusetts.",“Angle at which the spur deviates from an arbitrary line drawn through the flower.” (Angle of deflection)
+Baldwin et al 1931,Measurements of birds,Inverse radius method
+Dalayap et al 2011,"Petal, sepal, and labellum shapes in Mokara orchids",Outline morphometrics
