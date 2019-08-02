@@ -1,2 +1,17 @@
+---
+title: "The inside curve: geometry and pollination ecology of curved flowers"
+author:
+date: "2019-02-14"
+output: 
+  word_document: 
+    fig_caption: yes
+    reference_docx: curvature_review_reference.docx
+bibliography: curvature_review.bib
+csl: cell.csl
+link-citations: true
+---
 
+
+
+# References 
 
