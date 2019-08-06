@@ -1,0 +1,20 @@
+Looks to me like a logistic. Log growth phase followed by levelling off. Would be interesting for fun to log transform growth axis to see how the log growth phase looks. 
+
+PS the end of the log growth phase, ie intercept between two straight lines (log growth line and plateau line) on log linear plot is also a developmental marker
+
+
+
+
+What story to tell?
+development of Epimedium koreanum and Epimedium violaceum (
+inflections (S-shape) in Epimedium grandiflorum
+comparing mature grandiflorum to mature koreanum and violaceum
+
+For koreanum and violaceum data:
+
+define developmental stages (first time done for epidmedium) and correlate with size
+correlate size with time (days)
+define times for stages 
+correlate size with curvature
+correlate time with curvature
+define curvature for stages 
