@@ -18,3 +18,4 @@ define times for stages
 correlate size with curvature
 correlate time with curvature
 define curvature for stages 
+

@@ -1,0 +1,14 @@
+Measuring flowers
+In E. grandiflorum, the distance separating the outer sepals (sensu Stearn 2002) was measured using dial calipers (graduation = 0.1 mm), until the length of the inner sepals exceeded the length of the outer sepals (stage 4, Table 2 - describing the stages). From this point onwards, the inner sepal distance was measured. Because the aestivation was imbricate, we measured the sepals of the major axis (Figure demonstrating measurement technique). In _E. koreanum_, the inner sepals lack pigmentation and adhere closely to the petals, making them difficult to measure accurately in situ. For this reason, the outer sepals were measured until they abscised (stage 5, table 2). Flowers were sampled opportunistically and preserved in 70% ethanol. 
+
+Supp Mat 2:
+#### Landmarking
+1. Rotate the photographs so that the opening of the corolla tube is parallel to the y-axis. 
+2. Build tps file (a file listing all specimens) using tpsUtil. This tps file is used by tpsdig to add landmarks to.
+3. Landmark specimens from tps file using tpsDig (steps 1 and 2 will soon be possible in MomX and could be done in geomorph). Landmarks used to measure the dorsal arc are 1) the farthest point on the apex of the spur before the spur diminishes to a tip (E. violaceum) or widens into a nectar bucket (E. koreanum), and 2) the dorsal point at which the spur widens to become an attachment point for the petal to the stem(?). 13 semi-landmarks are placed between them (15 points total). 
+4. Curve points are drawn in tpsDig using the “pencil tool”, from landmark 1 (see above) to landmark 2. Following the placement of points, a curve is drawn that connects them. Right-click the curve and select “Resample Curve” and then space the points evenly “by length”. Manually adjust re-sampled points onto specimen and again “resample curve”. This does not usually need to be repeated more than twice.
+5.1 Set scale by going to Options->image tools and typing in desired length and units. Press ‘set scale’ and then click on both ends of the scale bar in your image. Then go back to the image options box and select ‘OK’. 
+5.2 Semi-landmarks need to be treated like landmarks for curve-fitting. To do this, use the ‘Append tps curve to landmarks’ function in tpsUtil. https://www.researchgate.net/post/Which_software_should_I_use_for_placing_sliding_semilandmarks 
+6.  Import into R using  from_tps() function from Momit. 
+7. Superimpose the shape using the fgProcrustes() function in Momocs.
+8. Calculate polynomials and plot curves following the “Olea” example at: https://momx.github.io/Momocs/reference/opoly.html 
