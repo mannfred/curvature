@@ -20,6 +20,7 @@ pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative =
 library(here)
 library(stringr) 
 library(tidyverse)
+library(broom)
 
 
 #pivot original data frame so that "stage" info can be manually inputted 
@@ -48,12 +49,16 @@ data_sort<-
 
 #visualize stage-size relationship####
 
+#need to write script that adds in "days" column and accompanying data (1,2,3,...)
 data2<-
   read.csv(
       here("data/epimedium_growth_data_pivot.csv"), 
       header=TRUE) %>%
   na.omit() %>%
-  mutate(stage = factor(stage, levels=c("E", "G", "O", "P", "D", "A"))) #reorder $stage 
+  mutate(stage = factor(stage, levels=c("E", "G", "O", "P", "D", "A"))) %>% #reorder $stage
+  as.tibble() 
+
+
 
 
 ggplot(data=data2 %>% 
@@ -61,8 +66,23 @@ ggplot(data=data2 %>%
        aes(x=stage, y=size)) +
        geom_boxplot(binaxis='y', stackdir='center') +
        theme(axis.text.x = element_text(angle=90)) 
-
 #stages are not well defined... 
+
+
+stageVSsize<-lm(size~stage, data=data2 %>% 
+                      filter(grepl('grandiflorum', Species_Individual_Panicle_Flower)))
+
+
+
+
+anova(test2)
+aov(test2)
+TukeyHSD(aov(test2))
+
+
+
+
+
 
 #visualize date-size relationship
 #need to convert absolute dates to free time (e.g. days)
