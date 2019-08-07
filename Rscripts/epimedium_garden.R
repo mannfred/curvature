@@ -10,8 +10,8 @@ pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative =
 #power = 0.7
 #alternative = greater
 
-#NOTE: n is number in *each* group
-#........ 105 samples of each epimedium spp.......
+#NOTE: n is number of samples needed per species
+
 
 
 
