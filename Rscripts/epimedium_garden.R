@@ -31,7 +31,7 @@ data<-
       header=TRUE) %>%
   select(Species_Individual_Panicle_Flower, 2:25) %>% #add ", 2:25" parameter to select data upto column 25 (col25=May 2, 2019)
   as.tibble() %>%
-  gather(key="date", value="size", -Species_Individual_Panicle_Flower)
+  gather(key="date", value="size", -Species_Individual_Panicle_Flower) #pivot
 
 levels<- 
   unique(data$Species_Individual_Panicle_Flower) %>%
@@ -40,11 +40,11 @@ levels<-
 data_sort<-
   data %>%
   mutate(Species_Individual_Panicle_Flower = factor(Species_Individual_Panicle_Flower, levels=levels)) %>%
-  arrange(Species_Individual_Panicle_Flower) %>% 
+  arrange(Species_Individual_Panicle_Flower) %>% #arranges observations by individual
   print(n=50) %>%
   write.csv(
       here("data/epimedium_growth_data_pivot.csv"), 
-      row.names=F) #stage info to be manually entered to this file :(
+      row.names=F) #stage info now manually entered into this file
 
 
 #visualize stage-size relationship####
@@ -56,18 +56,35 @@ data2<-
       header=TRUE) %>%
   na.omit() %>%
   mutate(stage = factor(stage, levels=c("E", "G", "O", "P", "D", "A"))) %>% #reorder $stage
-  as.tibble() 
+  mutate(
+    Species_epithet = str_extract(
+                         data2$Species_Individual_Panicle_Flower, 
+                         "[a-z]+") #extacts words from strings
+        ) %>%
+  group_by(Species_Individual_Panicle_Flower) %>% #creates groups by individual 
+  mutate(days = row_number()) %>% #for every level of SIPF, assign "day" numbers starting from 1
+  ungroup() %>% #because I don't actually want them grouped by individual, I just did this for generating the "days" column
+  group_by(Species_epithet) #grouping by grandiflorum, koreanum, violaceum
+                              
+  
 
 
 
-
-ggplot(data=data2 %>% 
-            filter(grepl('violaceum', Species_Individual_Panicle_Flower)),
-       aes(x=stage, y=size)) +
+https://aosmith.rbind.io/2018/08/20/automating-exploratory-plots/#just-the-code-please 
+https://drsimonj.svbtle.com/running-a-model-on-separate-groups
+https://sebastiansauer.github.io/dplyr_filter/ #regex
+  
+  
+ggplot(data=data2,
+       aes(x=stage, y=size, colour = factor(Species_epithet))) +
        geom_boxplot(binaxis='y', stackdir='center') +
        theme(axis.text.x = element_text(angle=90)) 
+      
+
 #stages are not well defined... 
 
+
+geom_point(aes(colour = factor(cyl)), size = 4)
 
 stageVSsize<-lm(size~stage, data=data2 %>% 
                       filter(grepl('grandiflorum', Species_Individual_Panicle_Flower)))
