@@ -49,7 +49,6 @@ data_sort<-
 
 #visualize stage-size relationship####
 
-#need to write script that adds in "days" column and accompanying data (1,2,3,...)
 data2<-
   read.csv(
       here("data/epimedium_growth_data_pivot.csv"), 
@@ -58,7 +57,7 @@ data2<-
   mutate(stage = factor(stage, levels=c("E", "G", "O", "P", "D", "A"))) %>% #reorder $stage
   mutate(
     Species_epithet = str_extract(
-                         data2$Species_Individual_Panicle_Flower, 
+                         Species_Individual_Panicle_Flower, 
                          "[a-z]+") #extacts words from strings
         ) %>%
   group_by(Species_Individual_Panicle_Flower) %>% #creates groups by individual 
@@ -74,20 +73,39 @@ https://aosmith.rbind.io/2018/08/20/automating-exploratory-plots/#just-the-code-
 https://drsimonj.svbtle.com/running-a-model-on-separate-groups
 https://sebastiansauer.github.io/dplyr_filter/ #regex
   
+#plot sizes at varying stages####
   
 ggplot(data=data2,
-       aes(x=stage, y=size, colour = factor(Species_epithet))) +
-       geom_boxplot(binaxis='y', stackdir='center') +
-       theme(axis.text.x = element_text(angle=90)) 
-      
+         aes(
+           x=stage, 
+           y=size, 
+           colour = factor(Species_epithet)
+             )
+       ) +
+       geom_boxplot() +
+       theme(axis.text.x = element_text(angle=90)) +
+       theme_classic() +
+       theme(legend.position="bottom")  #removes gray backdrop
+       
 
-#stages are not well defined... 
+data3<-
+  data2 %>% 
+  ungroup() %>%
+  nest( -Species_Individual_Panicle_Flower, -Species_epithet) %>% 
+  mutate(modelfit = 
+    map(data, ~ TukeyHSD(aov(size))
+         )
+       )
+
+  data3$data[[1]]
+  
+data3$data[data3$Species_epithet == "koreanum"]
+
+stage_size<-lm(size~stage, data=data2 %>% 
+                 filter(grepl('grandiflorum', Species_Individual_Panicle_Flower)))
 
 
-geom_point(aes(colour = factor(cyl)), size = 4)
 
-stageVSsize<-lm(size~stage, data=data2 %>% 
-                      filter(grepl('grandiflorum', Species_Individual_Panicle_Flower)))
 
 
 
