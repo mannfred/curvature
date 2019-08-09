@@ -47,8 +47,9 @@ data_sort<-
       row.names=F) #stage info now manually entered into this file
 
 
-#visualize stage-size relationship####
+#visualize and test stage-size relationship####
 
+#data wrangling
 data2<-
   read.csv(
       here("data/epimedium_growth_data_pivot.csv"), 
@@ -67,14 +68,7 @@ data2<-
                               
   
 
-
-
-https://aosmith.rbind.io/2018/08/20/automating-exploratory-plots/#just-the-code-please 
-https://drsimonj.svbtle.com/running-a-model-on-separate-groups
-https://sebastiansauer.github.io/dplyr_filter/ #regex
-  
-#plot sizes at varying stages####
-  
+#plot sizes at varying stages
 ggplot(data=data2,
          aes(
            x=stage, 
@@ -88,34 +82,50 @@ ggplot(data=data2,
        theme(legend.position="bottom")  #removes gray backdrop
        
 
+#test for differences between stages (within species)
+
+#lm function for map()
+lm_size_stage<- 
+  function(df) {
+    lm(size ~ stage, data = df)
+                }
+
+#tukey function for map()
+tukey_func<-
+  function(lm_fit) {
+    TukeyHSD(aov(lm_fit))
+                    }
 data3<-
-  data2 %>% 
-  ungroup() %>%
-  nest( -Species_Individual_Panicle_Flower, -Species_epithet) %>% 
-  mutate(modelfit = 
-    map(data, ~ TukeyHSD(aov(size))
+  data2 %>%
+  group_by(Species_epithet) %>%
+  nest() %>% #nests by Species_epithet
+  mutate(lm_fit = 
+           map(data, lm_size_stage)
+         ) %>%
+  mutate(tukey =
+           map(lm_fit, tukey_func)
          )
-       )
-
-  data3$data[[1]]
-  
-data3$data[data3$Species_epithet == "koreanum"]
-
-stage_size<-lm(size~stage, data=data2 %>% 
-                 filter(grepl('grandiflorum', Species_Individual_Panicle_Flower)))
 
 
 
+#test for size differences between stages (per species)
 
+#lm function for map()
+lm_size_species<- 
+  function(df) {
+    lm(size ~ Species_epithet, data = df)
+                }
 
-
-
-anova(test2)
-aov(test2)
-TukeyHSD(aov(test2))
-
-
-
+data4<-
+  data2 %>%
+  group_by(stage) %>%
+  nest() %>%
+  mutate(lm_fit = 
+           map(data, lm_size_species)
+         ) %>%
+  mutate(tukey =
+           map(lm_fit, tukey_func)
+         )
 
 
 
