@@ -20,7 +20,7 @@ pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative =
 library(here)
 library(stringr) 
 library(tidyverse)
-library(broom)
+library(lubridate)
 
 
 #pivot original data frame so that "stage" info can be manually inputted 
@@ -72,14 +72,17 @@ data2<-
 ggplot(data=data2,
          aes(
            x=stage, 
-           y=size, 
-           colour = factor(Species_epithet)
+           y=size 
              )
        ) +
-       geom_boxplot() +
+       geom_boxplot(
+         aes(
+           fill = factor(Species_epithet)
+             )
+                    )+
        theme(axis.text.x = element_text(angle=90)) +
-       theme_classic() +
-       theme(legend.position="bottom")  #removes gray backdrop
+       theme_classic() + #removes gray backdrop
+       theme(legend.position="bottom")  
        
 
 #test for differences between stages (within species)
@@ -100,15 +103,16 @@ data3<-
   group_by(Species_epithet) %>%
   nest() %>% #nests by Species_epithet
   mutate(lm_fit = 
-           map(data, lm_size_stage)
+           map(data, lm_size_stage) #fits lms 
          ) %>%
   mutate(tukey =
-           map(lm_fit, tukey_func)
-         )
+           map(lm_fit, tukey_func) #compares means within species
+         ) %>%
 
 
 
-#test for size differences between stages (per species)
+
+#test for size differences between stages (between species)
 
 #lm function for map()
 lm_size_species<- 
@@ -118,7 +122,7 @@ lm_size_species<-
 
 data4<-
   data2 %>%
-  group_by(stage) %>%
+  group_by(stage) %>% #grouping by stage to make between-species comparisons
   nest() %>%
   mutate(lm_fit = 
            map(data, lm_size_species)
@@ -127,23 +131,72 @@ data4<-
            map(lm_fit, tukey_func)
          )
 
+#create new stage definitions (i.e. collapse non-sig stages) 
+
+data5<-
+  data2 %>%
+  ungroup() %>%
+  select(name:)
+  mutate(new_stage = case_when(stage == "E" | 
+                               stage == "G" & 
+                               Species_epithet == 'grandiflorum' 
+                               ~ "E-G", 
+                               Species_epithet == 'koreanum' |
+                               Species_epithet == 'violaceum' &
+                               stage == "E" 
+                               ~ "E",
+                               Species_epithet == 'koreanum' |
+                               Species_epithet == 'violaceum' &
+                               stage == "G"
+                               ~ "G",
+                               stage == "P" |
+                               stage == "D" |
+                               stage == "A"
+                               ~ "P-D-A",
+                               stage == "O"
+                               ~ "O"
+                               ))
+         
+         
+  
+data6<-
+  data5 %>%
+  filter(Species_epithet == 'koreanum' | Species_epithet == 'violaceum') %>%
+  mutate(new_stage = case_when(stage == "E" | stage == "G" ~ "E-G"))                             
+
+                            
 
 
-#visualize date-size relationship
-#need to convert absolute dates to free time (e.g. days)
 
-#just for grandiflorum_1_1_1####
+#how does size develop through time?####
 
-data3<-
-  read.csv(
-      here("data/epimedium_growth_data_pivot.csv"), 
-      header=TRUE) %>%
+data5<-
+  data2 %>%
   filter(grepl('grandiflorum_1_1_3', Species_Individual_Panicle_Flower)) %>%
   na.omit() #change species name to generate separate graphs
 
-qplot(data=data3, x=days, y=size)# +
+qplot(data=data5, x=days, y=size)# +
 geom_dotplot(dotsize=0.7, binwidth = 0.) +
   ylim(0,30) +
   ggtitle('Epimedium grandiflorum, flower 1')
 
-qplot(x=x, y=y, data=test) 
+
+
+data2$date<-
+  data2$date %>%
+  paste(., "_19", sep= "") %>% #add year 2019 to date format
+  mdy() 
+
+ggplot(data=data2,
+       aes(
+         x=julian_date, 
+         y=size, 
+         group = Species_Individual_Panicle_Flower,
+         colour = factor(Species_epithet)
+       )
+) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle=90)) +
+  theme_classic() + #removes gray backdrop
+  theme(legend.position="bottom") 
+#ordinal date
