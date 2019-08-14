@@ -17,11 +17,11 @@ pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative =
 
 #plotting garden data####
 
-library(here)
 library(stringr) 
 library(tidyverse)
 library(lubridate)
-
+library(here)
+here = here::here #mask lubridate::here
 
 #pivot original data frame so that "stage" info can be manually inputted 
 
@@ -69,7 +69,7 @@ data2<-
   
 
 #plot sizes at varying stages
-ggplot(data=data2,
+ggplot(data=data5,
          aes(
            x=stage, 
            y=size 
@@ -99,7 +99,7 @@ tukey_func<-
     TukeyHSD(aov(lm_fit))
                     }
 data3<-
-  data2 %>%
+  data5 %>%
   group_by(Species_epithet) %>%
   nest() %>% #nests by Species_epithet
   mutate(lm_fit = 
@@ -107,7 +107,7 @@ data3<-
          ) %>%
   mutate(tukey =
            map(lm_fit, tukey_func) #compares means within species
-         ) %>%
+         ) 
 
 
 
@@ -131,22 +131,23 @@ data4<-
            map(lm_fit, tukey_func)
          )
 
+
+
 #create new stage definitions (i.e. collapse non-sig stages) 
 
 data5<-
   data2 %>%
   ungroup() %>%
-  select(name:)
-  mutate(new_stage = case_when(stage == "E" | 
-                               stage == "G" & 
+  mutate(new_stage = case_when(c(stage == "E" | 
+                               stage == "G") & 
                                Species_epithet == 'grandiflorum' 
                                ~ "E-G", 
-                               Species_epithet == 'koreanum' |
-                               Species_epithet == 'violaceum' &
+                               c(Species_epithet == 'koreanum' |
+                               Species_epithet == 'violaceum') &
                                stage == "E" 
                                ~ "E",
-                               Species_epithet == 'koreanum' |
-                               Species_epithet == 'violaceum' &
+                               c(Species_epithet == 'koreanum' |
+                               Species_epithet == 'violaceum') &
                                stage == "G"
                                ~ "G",
                                stage == "P" |
@@ -156,13 +157,12 @@ data5<-
                                stage == "O"
                                ~ "O"
                                ))
+
+
          
          
   
-data6<-
-  data5 %>%
-  filter(Species_epithet == 'koreanum' | Species_epithet == 'violaceum') %>%
-  mutate(new_stage = case_when(stage == "E" | stage == "G" ~ "E-G"))                             
+                            
 
                             
 
@@ -182,14 +182,17 @@ geom_dotplot(dotsize=0.7, binwidth = 0.) +
 
 
 
-data2$date<-
-  data2$date %>%
-  paste(., "_19", sep= "") %>% #add year 2019 to date format
-  mdy() 
-
-ggplot(data=data2,
+data6<-
+  data5 %>% #already ungrouped version of data2 with redfined stages
+  mutate(date = data2$date %>%
+                paste(., "_19", sep= "") %>% #add year 2019 to date format
+                mdy() 
+         ) 
+  
+#dynamic time warping! http://marcocuturi.net/GA.html
+ggplot(data=data6,
        aes(
-         x=julian_date, 
+         x=date, 
          y=size, 
          group = Species_Individual_Panicle_Flower,
          colour = factor(Species_epithet)
