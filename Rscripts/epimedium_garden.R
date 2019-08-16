@@ -69,7 +69,7 @@ data2<-
   
 
 #plot sizes at varying stages
-ggplot(data=data5,
+ggplot(data=data2,
          aes(
            x=stage, 
            y=size 
@@ -99,7 +99,7 @@ tukey_func<-
     TukeyHSD(aov(lm_fit))
                     }
 data3<-
-  data5 %>%
+  data2 %>%
   group_by(Species_epithet) %>%
   nest() %>% #nests by Species_epithet
   mutate(lm_fit = 
@@ -190,6 +190,21 @@ data6<-
          ) 
   
 #dynamic time warping! http://marcocuturi.net/GA.html
+
+dtwdata<-
+  read.csv(
+    here("data/test.csv"), 
+    header=FALSE)
+
+align<-dtw(dtwdata, slice(dtwdata, 3), open.end=TRUE, open.begin=TRUE, step.pattern=asymmetric, keep=TRUE)
+str(align)
+
+align$jmin
+
+dtw_avg <- DBA(CharTraj[1:5], CharTraj[[1]], trace = TRUE)
+
+
+
 ggplot(data=data6,
        aes(
          x=date, 
