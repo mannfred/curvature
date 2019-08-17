@@ -134,18 +134,27 @@ data4<-
 
 
 #create new stage definitions (i.e. collapse non-sig stages) 
+#E = B stage ('Bud Burst')
+#G = G stage ('growth stage') 
+#O = O stage ('opening stage')
+#P-D-A = A stage ('anthesis')
+
 
 data5<-
   data2 %>%
   ungroup() %>%
+  mutate(date = data2$date %>%
+           paste(., "_19", sep= "") %>% #add year 2019 to date format
+           mdy() 
+         ) %>%
   mutate(new_stage = case_when(c(stage == "E" | 
                                stage == "G") & 
                                Species_epithet == 'grandiflorum' 
-                               ~ "E-G", 
+                               ~ "G", 
                                c(Species_epithet == 'koreanum' |
                                Species_epithet == 'violaceum') &
                                stage == "E" 
-                               ~ "E",
+                               ~ "B",
                                c(Species_epithet == 'koreanum' |
                                Species_epithet == 'violaceum') &
                                stage == "G"
@@ -153,18 +162,10 @@ data5<-
                                stage == "P" |
                                stage == "D" |
                                stage == "A"
-                               ~ "P-D-A",
+                               ~ "A",
                                stage == "O"
                                ~ "O"
                                ))
-
-
-         
-         
-  
-                            
-
-                            
 
 
 
@@ -181,13 +182,7 @@ geom_dotplot(dotsize=0.7, binwidth = 0.) +
   ggtitle('Epimedium grandiflorum, flower 1')
 
 
-
-data6<-
-  data5 %>% #already ungrouped version of data2 with redfined stages
-  mutate(date = data2$date %>%
-                paste(., "_19", sep= "") %>% #add year 2019 to date format
-                mdy() 
-         ) 
+  
   
 #dynamic time warping! http://marcocuturi.net/GA.html
 
@@ -202,6 +197,44 @@ str(align)
 align$jmin
 
 dtw_avg <- DBA(CharTraj[1:5], CharTraj[[1]], trace = TRUE)
+
+
+
+#data5: for every individual, create a fasta heading >"row name",
+#then, paste it's stage sequence below it. 
+
+
+
+data6<-
+  data5 %>% 
+  filter(Species_epithet == 'grandiflorum') %>%
+  group_by(Species_Individual_Panicle_Flower) %>%
+  pivot_wider(Species_Individual_Panicle_Flower, 
+              names_from=date, 
+              values_from = new_stage) %>%
+  replace(., is.na(.), "") %>%
+  unite(seq, 2:14, sep="", remove=FALSE) 
+   
+
+#write a fasta file from tibble
+Xfasta <- character(nrow(data6) * 2) #empty character vector with slots for fasta header and accompanying seq
+Xfasta[c(TRUE, FALSE)] <- paste0(">", data6$Species_Individual_Panicle_Flower) #paste in IDs
+Xfasta[c(FALSE, TRUE)] <- data6$seq #paste in seq data
+
+writeLines(Xfasta, "gran_seqs.fasta")
+
+
+#multiple seq alignment
+
+library(msa) #for alignment
+
+
+myseqs<-readAAStringSet(here("gran_seqs.fasta"))
+
+align<-msa::msa(myseqs, method="ClustalW", gapOpening = 200, gapExtension = 10, type="protein")
+
+detail(align) #then copy to .txt file
+
 
 
 
