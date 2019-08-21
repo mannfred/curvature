@@ -200,41 +200,104 @@ dtw_avg <- DBA(CharTraj[1:5], CharTraj[[1]], trace = TRUE)
 
 
 
-#data5: for every individual, create a fasta heading >"row name",
-#then, paste it's stage sequence below it. 
-
-
-
-data6<-
+#multiple sequence alignment
+grandiflorum_stringset<-
   data5 %>% 
   filter(Species_epithet == 'grandiflorum') %>%
   group_by(Species_Individual_Panicle_Flower) %>%
   pivot_wider(Species_Individual_Panicle_Flower, 
               names_from=date, 
-              values_from = new_stage) %>%
+              values_from = new_stage) %>% 
   replace(., is.na(.), "") %>%
-  unite(seq, 2:14, sep="", remove=FALSE) 
+  unite(seq, 2:14, sep="", remove=FALSE) %>% #unites nucleotides from columns 2:14 into a single seq
+  pull(seq) %>% #isolate the seqs column
+  AAStringSet() #creats AAStringSet for msa
+
+#add names
+names(grandiflorum_stringset) = paste(data5 %>% 
+                                        filter(Species_epithet == 'grandiflorum') %>%
+                                        pull(Species_Individual_Panicle_Flower) %>%
+                                        unique(.),
+                                        
+                                      sep=""
+                                      )
+
+
+library(msa) 
+
+#for Epimedium grandiflorum
+align<-msa::msaClustalW(grandiflorum_stringset, 
+                        cluster="nj",
+                        maxiters = 1000,
+                        gapOpening = 100, #terminal gaps are not penalized
+                        gapExtension = 20, 
+                        type="protein")
+
+detail(align) #inspect
+str(align) #S4 'formal class MsaAAMultipleAlignment' w 6 slots
+
+
+
+
+#compute consensus seq for the two (obvious) groups (1:39 and 40:46) and then 
+#re-align the two consensus seqs
+
+
+#convert msa object (S4) to a tibble for splitting
+aligntb<-
+  align %>%
+  as.matrix() %>%
+  as_tibble %>%
+  mutate(ID = align@unmasked@ranges@NAMES) %>%
+  select(ID, everything()) #move ID column to the beginning of the tibble
    
+#seq group 1
+align1<-
+  aligntb %>%
+  dplyr::slice(1:39) %>%
+  unite(seq, 2:18, sep="", remove=FALSE) %>%
+  pull(seq) %>% #isolate the seqs column
+  AAStringSet()  #convert to XString object for msa
 
-#write a fasta file from tibble
-Xfasta <- character(nrow(data6) * 2) #empty character vector with slots for fasta header and accompanying seq
-Xfasta[c(TRUE, FALSE)] <- paste0(">", data6$Species_Individual_Panicle_Flower) #paste in IDs
-Xfasta[c(FALSE, TRUE)] <- data6$seq #paste in seq data
+names(align1) = paste(aligntb %>% 
+                        pull(ID) %>% 
+                        .[1:39], 
+                      sep=""
+                      )
 
-writeLines(Xfasta, "gran_seqs.fasta")
+align1.2<-msa::msaClustalW(align1, 
+                        cluster="nj",
+                        maxiters = 1000,
+                        gapOpening = 100, #terminal gaps are not penalized
+                        gapExtension = 20, 
+                        type="protein")
 
+msaConsensusSequence(align1.2)
+#[1] "----GOOOAAAAA------"
 
-#multiple seq alignment
+#seq group 2
+align2<-
+  aligntb %>%
+  dplyr::slice(40:46) %>%
+  unite(seq, 2:18, sep="", remove=FALSE) %>%
+  pull(seq) %>% #isolate the seqs column
+  AAStringSet()  #convert to XString object for msa
+  
+names(align2) = paste(aligntb %>% 
+                        pull(ID) %>% 
+                        .[40:46], 
+                      sep=""
+                      )
 
-library(msa) #for alignment
+align2.2<-msa::msaClustalW(align2, 
+                           cluster="nj",
+                           maxiters = 1000,
+                           gapOpening = 100, #terminal gaps are not penalized
+                           gapExtension = 20, 
+                           type="protein")
 
-
-myseqs<-readAAStringSet(here("gran_seqs.fasta"))
-
-align<-msa::msa(myseqs, method="ClustalW", gapOpening = 200, gapExtension = 10, type="protein")
-
-detail(align) #then copy to .txt file
-
+msaConsensusSequence(align2.2)
+#[1] "-------GGGGGGOOAA-"
 
 
 
@@ -251,3 +314,11 @@ ggplot(data=data6,
   theme_classic() + #removes gray backdrop
   theme(legend.position="bottom") 
 #ordinal date
+
+
+#write a fasta file from tibble
+# fasta <- character(nrow(data6) * 2) #empty character vector with slots for fasta header and accompanying seq
+# fasta[c(TRUE, FALSE)] <- paste0(">", data6$Species_Individual_Panicle_Flower) #paste in IDs
+# fasta[c(FALSE, TRUE)] <- data6$seq #paste in seq data
+# 
+# writeLines(fasta, "gran_seqs.fasta")

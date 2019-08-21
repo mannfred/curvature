@@ -1,0 +1,237 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.26)  20 AUG 2019 13:51
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./align.tex
+(./align.tex
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 3 language(s) loaded.
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cl
+s
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (c:/Users/mannfred/Documents/R/win-library/3.5/msa/tex/texshade.sty
+Package: texshade 2011/05/13 LaTeX TeXshade (v1.24)
+
+Package `texshade', Version 1.24 of 2011/12/01.
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.
+sty
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/co
+lor.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: dvips.def on input line 147.
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/dv
+ips.def
+File: dvips.def 2017/06/20 v3.1d Graphics/color driver for dvips
+)
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/dvipsn
+am.def
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+))
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphi
+cs.sty
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.s
+ty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/gr
+aphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pd
+ftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\structurefile=\read1
+\featurefile=\write3
+\alignfile=\read2
+\sublogofile=\read3
+\exp@rtfile=\write4
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssym
+b.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfon
+ts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+\symalphahelix=\mathgroup6
+\loopcount=\count87
+\innerloopcount=\count88
+\outerloopcount=\count89
+\seq@count=\count90
+\killseq@count=\count91
+\seq@percent=\count92
+\res@count=\count93
+\seq@pointer=\count94
+\pos@count=\count95
+\res@perline=\count96
+\end@count=\count97
+\cons@count=\count98
+\total@count=\count99
+\temp@count=\count100
+\triple@count=\count101
+\temp@@count=\count102
+\pos@sum=\count103
+\box@width=\skip43
+\name@width=\skip44
+\box@depth=\skip45
+\width@tmp=\skip46
+\box@height=\skip47
+\number@width=\skip48
+\line@stretch=\skip49
+\center@fill=\skip50
+\arrow@width=\skip51
+\arrow@height=\skip52
+\rule@thick=\skip53
+\arrow@thick=\skip54
+\logo@height=\skip55
+\equal@width=\skip56
+\equal@tmp=\skip57
+\equal@height=\skip58
+\temp@@length=\skip59
+\vspace@legend=\skip60
+\hspace@legend=\skip61
+Package color Info: Redefining color LightGray on input line 1704.
+Package color Info: Redefining color LightLightGray on input line 1805.
+Package color Info: Redefining color LightLightLightGray on input line 1907.
+)
+No file align.aux.
+\openout1 = `align.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/oberdiek/epstop
+df-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/oberdiek/infw
+arerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/oberdiek/grfext
+.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/oberdiek/kvde
+finekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/oberdiek/ltxc
+mds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)))
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/oberdiek/kvopti
+ons.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval
+.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/oberdiek/kvse
+tkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/oberdiek/etex
+cmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/oberdiek/iflu
+atex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/oberdiek/pdft
+excmds.sty
+Package: pdftexcmds 2018/01/21 v0.26 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/oberdiek/ifpd
+f.sty
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/eps
+topdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+(C:/Users/mannfred/AppData/Local/Temp/RtmpaiyrhB/seq32582d96511b.fasta: . )
+LaTeX Font Info:    Try loading font information for U+msa on input line 82.
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.f
+d
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 82.
+
+(c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.f
+d
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+Non-PDF special ignored!
+
+{c:/Users/mannfred/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pd
+ftex.map
+!pdfTeX error: pdflatex.exe (file c:/Users/mannfred/AppData/Roaming/TinyTeX/tex
+mf-var/fonts/map/pdftex/updmap/pdftex.map): fflush() failed (Bad file descripto
+r)
+ ==> Fatal error occurred, no output PDF file produced!
