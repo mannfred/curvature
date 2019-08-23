@@ -68,23 +68,6 @@ data2<-
                               
   
 
-#plot sizes at varying stages
-ggplot(data=data2,
-         aes(
-           x=stage, 
-           y=size 
-             )
-       ) +
-       geom_boxplot(
-         aes(
-           fill = factor(Species_epithet)
-             )
-                    )+
-       theme(axis.text.x = element_text(angle=90)) +
-       theme_classic() + #removes gray backdrop
-       theme(legend.position="bottom")  
-       
-
 #test for differences between stages (within species)
 
 #lm function for map()
@@ -134,11 +117,11 @@ data4<-
 
 
 #create new stage definitions (i.e. collapse non-sig stages) 
-#E = B stage ('Bud Burst')
-#G = G stage ('growth stage') 
-#O = O stage ('opening stage')
+#E = C stage ('crown stage')
+#G = G stage ('growthstage') 
+#O = T stage ('nectar producTion stage')
 #P-D-A = A stage ('anthesis')
-
+#use https://www.hiv.lanl.gov/content/sequence/HelpDocs/IUPAC.html for checking AA codes
 
 data5<-
   data2 %>%
@@ -154,7 +137,7 @@ data5<-
                                c(Species_epithet == 'koreanum' |
                                Species_epithet == 'violaceum') &
                                stage == "E" 
-                               ~ "B",
+                               ~ "C",
                                c(Species_epithet == 'koreanum' |
                                Species_epithet == 'violaceum') &
                                stage == "G"
@@ -164,73 +147,65 @@ data5<-
                                stage == "A"
                                ~ "A",
                                stage == "O"
-                               ~ "O"
+                               ~ "T"
                                ))
 
 
-
-#how does size develop through time?####
-
-data5<-
-  data2 %>%
-  filter(grepl('grandiflorum_1_1_3', Species_Individual_Panicle_Flower)) %>%
-  na.omit() #change species name to generate separate graphs
-
-qplot(data=data5, x=days, y=size)# +
-geom_dotplot(dotsize=0.7, binwidth = 0.) +
-  ylim(0,30) +
-  ggtitle('Epimedium grandiflorum, flower 1')
-
-
-  
-  
-#dynamic time warping! http://marcocuturi.net/GA.html
-
-dtwdata<-
-  read.csv(
-    here("data/test.csv"), 
-    header=FALSE)
-
-align<-dtw(dtwdata, slice(dtwdata, 3), open.end=TRUE, open.begin=TRUE, step.pattern=asymmetric, keep=TRUE)
-str(align)
-
-align$jmin
-
-dtw_avg <- DBA(CharTraj[1:5], CharTraj[[1]], trace = TRUE)
+#plot sizes at varying stages
+ggplot(data=data5,
+       aes(
+         x=new_stage, 
+         y=size 
+       )
+) +
+  geom_boxplot(
+    aes(
+      fill = factor(Species_epithet)
+    )
+  )+
+  theme(axis.text.x = element_text(angle=90)) +
+  theme_classic() + #removes gray backdrop
+  theme(legend.position="bottom")  
 
 
 
-#multiple sequence alignment
-grandiflorum_stringset<-
-  data5 %>% 
-  filter(Species_epithet == 'grandiflorum') %>%
-  group_by(Species_Individual_Panicle_Flower) %>%
-  pivot_wider(Species_Individual_Panicle_Flower, 
-              names_from=date, 
-              values_from = new_stage) %>% 
-  replace(., is.na(.), "") %>%
-  unite(seq, 2:14, sep="", remove=FALSE) %>% #unites nucleotides from columns 2:14 into a single seq
-  pull(seq) %>% #isolate the seqs column
-  AAStringSet() #creats AAStringSet for msa
 
-#add names
-names(grandiflorum_stringset) = paste(data5 %>% 
-                                        filter(Species_epithet == 'grandiflorum') %>%
-                                        pull(Species_Individual_Panicle_Flower) %>%
-                                        unique(.),
-                                        
-                                      sep=""
-                                      )
+# sequence assembly: 
+# for creating long consensus sequence from short fragments of same sequence
+
+#find the longest string to use as a reference for local alignment
+refseq<-
+  grandiflorum_stringset[
+    which.max(
+      nchar(grandiflorum_stringset)
+              )
+                        ] %>%
+  as.character()
+#     width seq                  names               
+# [1] 12    SSSSSSSRRDDD         grandiflorum_1_2_4
 
 
-library(msa) 
+pair<-pairwiseAlignment(grandiflorum_stringset, 
+                        refseq, 
+                        type="overlap",
+                        substitutionMatrix=matchmatrix,
+                        )
+
+
+conMatrix1<-consensusMatrix(pair, as.prob=TRUE)
+conMatrix2<-conMatrix1[-1,] #create conMatrix without gaps
+conMatrix2<- conMatrix[1,] + conMatrix2[,apply(conMatrix2, 2, which.max)]
+
+msaConsensusSequence(conMatrix, type="upperlower", thresh=c(10, 1), ignoreGaps=TRUE)
+#GGGGGTTTTAAA
 
 #for Epimedium grandiflorum
 align<-msa::msaClustalW(grandiflorum_stringset, 
-                        cluster="nj",
+                        cluster="nj", #neighbour joining 
                         maxiters = 1000,
                         gapOpening = 100, #terminal gaps are not penalized
                         gapExtension = 20, 
+                        substitutionMatrix = matchmatrix,
                         type="protein")
 
 detail(align) #inspect
@@ -238,6 +213,7 @@ str(align) #S4 'formal class MsaAAMultipleAlignment' w 6 slots
 
 
 
+msaConsensusSequence(align, type="upperlower", thresh=c(2,1), ignoreGaps=FALSE)
 
 #compute consensus seq for the two (obvious) groups (1:39 and 40:46) and then 
 #re-align the two consensus seqs
@@ -270,10 +246,11 @@ align1.2<-msa::msaClustalW(align1,
                         maxiters = 1000,
                         gapOpening = 100, #terminal gaps are not penalized
                         gapExtension = 20, 
+                        substitutionMatrix = matchmatrix,
                         type="protein")
 
-msaConsensusSequence(align1.2)
-#[1] "----GOOOAAAAA------"
+msaConsensusSequence(align1.2, type="upperlower")
+#[1] "---------RRDDDDD---"
 
 #seq group 2
 align2<-
@@ -294,10 +271,33 @@ align2.2<-msa::msaClustalW(align2,
                            maxiters = 1000,
                            gapOpening = 100, #terminal gaps are not penalized
                            gapExtension = 20, 
+                           substitutionMatrix = matchmatrix,
                            type="protein")
 
-msaConsensusSequence(align2.2)
-#[1] "-------GGGGGGOOAA-"
+msaConsensusSequence(align2.2, type="upperlower")
+#[1] [1] "--SSSSSSSRRRD----"
+
+#final alignment of two consensus seqs
+
+align3<-
+  paste(c
+        (msaConsensusSequence(align2.2, type="upperlower"), 
+         msaConsensusSequence(align1.2, type="upperlower"))
+        ) %>%
+  str_remove_all(., "-") %>% #remove placeholders
+  AAStringSet() %>%
+  msa::msaClustalW(., 
+                   cluster="nj",
+                   maxiters = 1000,
+                   gapOpening = 100, #terminal gaps are not penalized
+                   gapExtension = 20, 
+                   substitutionMatrix = matchmatrix,
+                   type="protein") 
+align3
+
+msaConsensusSequence(align3, type="upperlower", thresh=c(2,1), ignoreGaps=FALSE)
+
+
 
 
 
@@ -316,9 +316,17 @@ ggplot(data=data6,
 #ordinal date
 
 
-#write a fasta file from tibble
-# fasta <- character(nrow(data6) * 2) #empty character vector with slots for fasta header and accompanying seq
-# fasta[c(TRUE, FALSE)] <- paste0(">", data6$Species_Individual_Panicle_Flower) #paste in IDs
-# fasta[c(FALSE, TRUE)] <- data6$seq #paste in seq data
+
+#how does size develop through time?####
 # 
-# writeLines(fasta, "gran_seqs.fasta")
+# data5<-
+#   data2 %>%
+#   filter(grepl('grandiflorum_1_1_3', Species_Individual_Panicle_Flower)) %>%
+#   na.omit() #change species name to generate separate graphs
+# 
+# qplot(data=data5, x=days, y=size)# +
+# geom_dotplot(dotsize=0.7, binwidth = 0.) +
+#   ylim(0,30) +
+#   ggtitle('Epimedium grandiflorum, flower 1')
+
+
