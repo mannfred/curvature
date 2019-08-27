@@ -4,18 +4,13 @@ pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative =
 
 #Two-sample t test power calculation 
 
-#n = 105.253 
-#d = 0.3
-#sig.level = 0.05
-#power = 0.7
-#alternative = greater
-
-#NOTE: n is number of samples needed per species
+#n = 105.253, d = 0.3, sig.level = 0.05, power = 0.7, alternative = greater
+#n is number of samples needed per species
 
 
 
 
-#plotting garden data####
+#rearranging and plotting garden data####
 
 library(stringr) 
 library(tidyverse)
@@ -117,8 +112,8 @@ data4<-
 
 
 #create new stage definitions (i.e. collapse non-sig stages) 
-#E = C stage ('crown stage')
-#G = G stage ('growthstage') 
+#E = C stage ('child stage')
+#G = G stage ('growth stage') 
 #O = T stage ('nectar producTion stage')
 #P-D-A = A stage ('anthesis')
 #use https://www.hiv.lanl.gov/content/sequence/HelpDocs/IUPAC.html for checking AA codes
@@ -170,132 +165,9 @@ ggplot(data=data5,
 
 
 
-# sequence assembly: 
-# for creating long consensus sequence from short fragments of same sequence
-
-#find the longest string to use as a reference for local alignment
-refseq<-
-  grandiflorum_stringset[
-    which.max(
-      nchar(grandiflorum_stringset)
-              )
-                        ] %>%
-  as.character()
-#     width seq                  names               
-# [1] 12    SSSSSSSRRDDD         grandiflorum_1_2_4
-
-
-pair<-pairwiseAlignment(grandiflorum_stringset, 
-                        refseq, 
-                        type="overlap",
-                        substitutionMatrix=matchmatrix,
-                        )
-
-
-conMatrix1<-consensusMatrix(pair, as.prob=TRUE)
-conMatrix2<-conMatrix1[-1,] #create conMatrix without gaps
-conMatrix2<- conMatrix[1,] + conMatrix2[,apply(conMatrix2, 2, which.max)]
-
-msaConsensusSequence(conMatrix, type="upperlower", thresh=c(10, 1), ignoreGaps=TRUE)
-#GGGGGTTTTAAA
-
-#for Epimedium grandiflorum
-align<-msa::msaClustalW(grandiflorum_stringset, 
-                        cluster="nj", #neighbour joining 
-                        maxiters = 1000,
-                        gapOpening = 100, #terminal gaps are not penalized
-                        gapExtension = 20, 
-                        substitutionMatrix = matchmatrix,
-                        type="protein")
-
-detail(align) #inspect
-str(align) #S4 'formal class MsaAAMultipleAlignment' w 6 slots
 
 
 
-msaConsensusSequence(align, type="upperlower", thresh=c(2,1), ignoreGaps=FALSE)
-
-#compute consensus seq for the two (obvious) groups (1:39 and 40:46) and then 
-#re-align the two consensus seqs
-
-
-#convert msa object (S4) to a tibble for splitting
-aligntb<-
-  align %>%
-  as.matrix() %>%
-  as_tibble %>%
-  mutate(ID = align@unmasked@ranges@NAMES) %>%
-  select(ID, everything()) #move ID column to the beginning of the tibble
-   
-#seq group 1
-align1<-
-  aligntb %>%
-  dplyr::slice(1:39) %>%
-  unite(seq, 2:18, sep="", remove=FALSE) %>%
-  pull(seq) %>% #isolate the seqs column
-  AAStringSet()  #convert to XString object for msa
-
-names(align1) = paste(aligntb %>% 
-                        pull(ID) %>% 
-                        .[1:39], 
-                      sep=""
-                      )
-
-align1.2<-msa::msaClustalW(align1, 
-                        cluster="nj",
-                        maxiters = 1000,
-                        gapOpening = 100, #terminal gaps are not penalized
-                        gapExtension = 20, 
-                        substitutionMatrix = matchmatrix,
-                        type="protein")
-
-msaConsensusSequence(align1.2, type="upperlower")
-#[1] "---------RRDDDDD---"
-
-#seq group 2
-align2<-
-  aligntb %>%
-  dplyr::slice(40:46) %>%
-  unite(seq, 2:18, sep="", remove=FALSE) %>%
-  pull(seq) %>% #isolate the seqs column
-  AAStringSet()  #convert to XString object for msa
-  
-names(align2) = paste(aligntb %>% 
-                        pull(ID) %>% 
-                        .[40:46], 
-                      sep=""
-                      )
-
-align2.2<-msa::msaClustalW(align2, 
-                           cluster="nj",
-                           maxiters = 1000,
-                           gapOpening = 100, #terminal gaps are not penalized
-                           gapExtension = 20, 
-                           substitutionMatrix = matchmatrix,
-                           type="protein")
-
-msaConsensusSequence(align2.2, type="upperlower")
-#[1] [1] "--SSSSSSSRRRD----"
-
-#final alignment of two consensus seqs
-
-align3<-
-  paste(c
-        (msaConsensusSequence(align2.2, type="upperlower"), 
-         msaConsensusSequence(align1.2, type="upperlower"))
-        ) %>%
-  str_remove_all(., "-") %>% #remove placeholders
-  AAStringSet() %>%
-  msa::msaClustalW(., 
-                   cluster="nj",
-                   maxiters = 1000,
-                   gapOpening = 100, #terminal gaps are not penalized
-                   gapExtension = 20, 
-                   substitutionMatrix = matchmatrix,
-                   type="protein") 
-align3
-
-msaConsensusSequence(align3, type="upperlower", thresh=c(2,1), ignoreGaps=FALSE)
 
 
 
