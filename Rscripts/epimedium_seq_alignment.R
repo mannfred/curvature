@@ -78,3 +78,13 @@ align<-msa::msaClustalW(grandiflorum_stringset,
                         type="protein")
 
 detail(align) #visualize
+
+
+?msaConsensusSequence
+msaConsensusSequence(align, 
+                     type="upperlower", 
+                     thresh=c(10, 0.0000000001), 
+                     ignoreGaps=FALSE)
+
+#[1] "--------GTTTAAAAA-"
+#[1] "GGGGGGGGGTTTAAAAAA" (inferred)
