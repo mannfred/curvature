@@ -20,7 +20,7 @@ grandiflorum_stringset<-
   pull(seq) %>% #isolate the seqs column
   AAStringSet() #creats AAStringSet for msa
 
-#add names
+#add names to stringset
 names(grandiflorum_stringset) = paste(
                                   data5 %>% 
                                   filter(Species_epithet == 'grandiflorum') %>%
@@ -55,9 +55,12 @@ msaConsensusSequence(align,
                      thresh=c(10, 0.01), 
                      ignoreGaps=FALSE)
 
-#[1] "--------GTTTAAAAA-"
-#[1] "GGGGGGGGGTTTAAAAAA" (inferred)
+consensusMatrix(align)
 
+#[1] "--------GTTTAAAAA-"
+#[1] "GGGGGGGGGTTTAAAAAA" (inferred from consensusMatrix(align) by disregarding gaps)
+
+#merge alignment with elapsed time
 stages_days<-
   align %>%
   as.matrix() %>%
@@ -79,47 +82,25 @@ stages_days_sort<-
 
 #stage-elapsed_days boxplot 
 ggplot(
-  data=stages_days_sort %>% filter(stage != "-"),
+  data=stages_days_sort %>% filter(stage != "-"), #remove gaps "-"
   aes(x=stage, y=elapsed_days)
        ) + 
 geom_boxplot(
-  aes(fill = factor(stage, levels=c("G", "T", "A")))
+  aes(fill = factor(stage), #colour by stage
+    factor(stage, levels=c("C", "G", "T", "A")) #reorder
+      )
              )+
-  theme_classic() + #removes gray backdrop
-  theme(legend.position="bottom")  
+theme_classic() + #removes gray backdrop
+theme(legend.position="bottom")  
 
+#elapsed_days-stage scatterplot 
+# ggplot(
+#   data=stages_days_sort %>% filter(stage != "-"), #remove gaps "-"
+#   aes(x=elapsed_days, y=stage)
+# ) +
+# geom_point(
+#   aes(x=elapsed_days, y=factor(stage, levels=c("C", "G", "T", "A")))
+#            )
+  
 
-
-
-#pairwise overlap alignment ####
-#find the longest string to use as a reference for local alignment
-refseq<-
-  grandiflorum_stringset[
-    which.max(
-      nchar(grandiflorum_stringset)
-    )
-    ] %>%
-  as.character()
-#     width seq                  names               
-# [1] 12    GGGGGGGTTAAA        grandiflorum_1_2_4
-
-pair<-pairwiseAlignment(grandiflorum_stringset, 
-                        refseq, 
-                        type="overlap",
-                        substitutionMatrix=matchmatrix,
-)
-
-#compute consensus
-conMatrix<-consensusMatrix(pair, as.prob=TRUE)[-1,] #remove row 1 to remove gaps
-t(apply(conMatrix, 1, diff)) #find differences in probability 
-
-#(G)GGGTTTTAAAA assuming state at 0 is G
-
-conseq<-"GGGGTTTTAAAA" 
-
-pair<-pairwiseAlignment(grandiflorum_stringset, 
-                        refseq, 
-                        type="overlap",
-                        substitutionMatrix=matchmatrix,
-)
-
+  

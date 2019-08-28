@@ -1,6 +1,5 @@
 TODO:
 Sit down with JS to review curvature function
-Get results and write  about them
 format citations
 import figures
 
@@ -84,23 +83,21 @@ Landmark files (.tps) were imported into R using  ```Momocs```  v.1.3.0 [@bonhom
 
 Results: 
 
-_Developmental stages within spp_
-E. grandiflorum: E and G stages are not different. But E and G are different from O and subsequent stages. O is distinct from G-E and P-D-A. P,D,A are the same. So, real stages are E-G, O, P-D-A. 
+_Developmental stages within species_
+E. grandiflorum: E and G stages are not different. But E and G are different from O and subsequent stages. O is distinct from G-E and P-D-A. P,D,A are the same. So, real stages are E-G, O, P-D-A.  E. koreaum: E, G, O are distinct. P, D, A are the same. Real stages are E, G, O, P-D-A. E. violaceum: same as koreanum.
 
-E. koreaum: E, G, O are distinct. P, D, A are the same. Real stages are E, G, O, P-D-A.
-
-E. violaceum: same as koreanum.
-
-
-_Developmental stages between spp_
+_Developmental stages between species_
 
 **E stage**: violaceum-grandiflorum and violaceum-koreanum are different. koreanum-grandiflorum  are the same size.
 **G stage**: koreanum-grandiflorum and violaceum-koreanum are different, violaceum-grandiflorum are the same size.
 **O stage**: violaceum-grandiflorum are different sizes. 
 **P-D-A stages**: all 3 spp are different
 
+_elapsed time and stages_
 
-
+E. grandiflorum
+E. koreanum
+E. violaceum 
 
 Discussion: The definition of curvature used in section 3 underlies the concept of curvature used by physiologists studying structural morphology. For example, @bastien_2014 use this definition of curvature to study plant growth in relation to gravity (graviception). In this context, curvature is discussed as the rate of change of the angle of a material element (i.e. a cell) with respect to its position (s). This points to perhaps the greatest advantage to formalizing curvature within pollination ecology. Because the macroscopic shape of a flower or pollinator has a genetic basis (e.g. XXX), the evolutionary ecologist might now consider the molecular mechanisms underlying their favourite organism with lateral curvature - as has been done with curved surfaces (@coen_2016). 
 

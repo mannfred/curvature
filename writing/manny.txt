@@ -12,8 +12,8 @@ comparing mature grandiflorum to mature koreanum and violaceum
 
 For koreanum and violaceum data:
 
-correlate size with days
 X define developmental stages (first time done for epidmedium) and correlate with size 
+correlate size with elapsed_days
 model time and size for stages 
 correlate size with curvature
 correlate time with curvature

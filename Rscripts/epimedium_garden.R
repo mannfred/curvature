@@ -143,29 +143,23 @@ data5<-
                                ~ "A",
                                stage == "O"
                                ~ "T"
-                               )) %>%
-  mutate(new_stage = factor(new_stage, 
-                            levels=c("C", "G", "T", "A") #reorder for ggplot
-                            )
-         )
+                               )) 
 
 
 
 #plot sizes at varying stages
-ggplot(data=data5,
-       aes(
-         x=new_stage, 
-         y=size 
-       )
-) +
-  geom_boxplot(
-    aes(
-      fill = factor(Species_epithet)
-    )
-  )+
-  theme(axis.text.x = element_text(angle=90)) +
-  theme_classic() + #removes gray backdrop
-  theme(legend.position="bottom")  
+ggplot(
+  data=data5,
+  aes(x=new_stage, y=size)
+       ) +
+geom_boxplot(
+  aes(fill = factor(Species_epithet), #colour by species
+      factor(new_stage, levels=c("C", "G", "T", "A")) #reorder
+      )
+             ) +
+theme(axis.text.x = element_text(angle=90)) +
+theme_classic() + #removes gray backdrop
+theme(legend.position="bottom")  
 
 
 
@@ -178,18 +172,18 @@ ggplot(data=data5,
 
 
 
-ggplot(data=data6,
-       aes(
-         x=date, 
-         y=size, 
-         group = Species_Individual_Panicle_Flower,
-         colour = factor(Species_epithet)
-       )
-) +
-  geom_boxplot() +
-  theme(axis.text.x = element_text(angle=90)) +
-  theme_classic() + #removes gray backdrop
-  theme(legend.position="bottom") 
+# ggplot(data=data5,
+#        aes(
+#          x=date, 
+#          y=size, 
+#          group = Species_Individual_Panicle_Flower,
+#          colour = factor(Species_epithet)
+#        )
+# ) +
+#   geom_boxplot() +
+#   theme(axis.text.x = element_text(angle=90)) +
+#   theme_classic() + #removes gray backdrop
+#   theme(legend.position="bottom") 
 #ordinal date
 
 
