@@ -25,7 +25,7 @@ data<-
       here("data/epimedium_growth_data.csv"), 
       header=TRUE) %>%
   select(Species_Individual_Panicle_Flower, 2:25) %>% #add ", 2:25" parameter to select data upto column 25 (col25=May 2, 2019)
-  as.tibble() %>%
+  as_tibble() %>%
   gather(key="date", value="size", -Species_Individual_Panicle_Flower) #pivot
 
 levels<- 
@@ -34,7 +34,7 @@ levels<-
 
 data_sort<-
   data %>%
-  mutate(Species_Individual_Panicle_Flower = factor(Species_Individual_Panicle_Flower, levels=levels)) %>%
+  mutate(Species_Individual_Panicle_Flower = factor(Species_Individual_Panicle_Flower, levels=levels)) %>% #groups by SIPF
   arrange(Species_Individual_Panicle_Flower) %>% #arranges observations by individual
   print(n=50) %>%
   write.csv(
@@ -143,7 +143,12 @@ data5<-
                                ~ "A",
                                stage == "O"
                                ~ "T"
-                               ))
+                               )) %>%
+  mutate(new_stage = factor(new_stage, 
+                            levels=c("C", "G", "T", "A") #reorder for ggplot
+                            )
+         )
+
 
 
 #plot sizes at varying stages
