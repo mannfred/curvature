@@ -93,6 +93,8 @@ geom_boxplot(
 theme_classic() + #removes gray backdrop
 theme(legend.position="bottom")  
 
+saveRDS(stages_days_sort, file="stages_days_sort.rds")
+
 #elapsed_days-stage scatterplot 
 # ggplot(
 #   data=stages_days_sort %>% filter(stage != "-"), #remove gaps "-"
