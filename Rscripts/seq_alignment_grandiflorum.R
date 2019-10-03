@@ -135,4 +135,3 @@ TukeyHSD(aov(lm_test))
 #            )
 #   
 
-  

@@ -145,6 +145,8 @@ data5<-
                                ~ "T"
                                )) 
 
+saveRDS(data5, file="epimedium_growth_data_pivot_redefined_stages.rds")
+
 
 
 #plot sizes at varying stages

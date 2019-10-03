@@ -14,7 +14,7 @@ For koreanum and violaceum data:
 
 X define developmental stages (first time done for epidmedium) and correlate with size 
 correlate size with elapsed_days
-model time and size for stages 
+X model time and size for stages 
 correlate size with curvature
 correlate time with curvature
 define curvature for stages 
