@@ -80,7 +80,7 @@ stages_days_sort<-
   mutate(elapsed_days = elapsed_days %>% as.numeric()) %>%
   print() 
 
-#stage-elapsed_days boxplot 
+#stage-elapsed_days boxplot (5 value spread)
 ggplot(
   data=stages_days_sort %>% filter(stage != "-"), #remove gaps "-"
   aes(x=stage, y=elapsed_days)
@@ -93,7 +93,37 @@ geom_boxplot(
 theme_classic() + #removes gray backdrop
 theme(legend.position="bottom")  
 
-saveRDS(stages_days_sort, file="stages_days_sort.rds")
+saveRDS(stages_days_sort_grandiflorum, file="stages_days_sort.rds")
+
+
+#calculate mean + variance for stages ####
+#on average, how many days have elapsed for each stage?
+
+stages_days_sort <- readRDS("stages_days_sort_grandiflorum.rds")
+
+
+#mean elapsed days per stage
+
+library(gmodels) #for CI
+
+stages_days_sort %>%
+  group_by(stage) %>%
+  na_if("-") %>%
+  summarise(mean = ci(elapsed_days)[1],
+            loCI = ci(elapsed_days)[2],
+            hiCI = ci(elapsed_days)[3],
+            stdv = ci(elapsed_days)[4])
+
+#G: 7.01 +/- 0.45 days
+#T: 10.9 +/- 0.20 days
+#A: 14.7 +/- 0.20 days
+
+
+lm_test<- 
+  lm(elapsed_days ~ stage, data = stages_days_sort %>% na_if("-"))
+     
+TukeyHSD(aov(lm_test))
+# elapsed days per stage are sig different (p=0)
 
 #elapsed_days-stage scatterplot 
 # ggplot(

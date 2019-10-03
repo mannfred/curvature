@@ -36,10 +36,10 @@ data_sort<-
   data %>%
   mutate(Species_Individual_Panicle_Flower = factor(Species_Individual_Panicle_Flower, levels=levels)) %>% #groups by SIPF
   arrange(Species_Individual_Panicle_Flower) %>% #arranges observations by individual
-  print(n=50) %>%
-  write.csv(
-      here("data/epimedium_growth_data_pivot.csv"), 
-      row.names=F) #stage info now manually entered into this file
+  print(n=50) #%>%
+  #write.csv(
+  #   here("data/epimedium_growth_data_pivot.csv"), 
+  #   row.names=F) #stage info now manually entered into this file
 
 
 #visualize and test stage-size relationship####
