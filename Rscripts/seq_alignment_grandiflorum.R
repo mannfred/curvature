@@ -93,7 +93,7 @@ geom_boxplot(
 theme_classic() + #removes gray backdrop
 theme(legend.position="bottom")  
 
-saveRDS(stages_days_sort_grandiflorum, file="stages_days_sort.rds")
+saveRDS(stages_days_sort, file="stages_days_sort_grandiflorum.rds")
 
 
 #calculate mean + variance for stages ####
@@ -125,7 +125,7 @@ lm_test<-
 TukeyHSD(aov(lm_test))
 # elapsed days per stage are sig different (p=0)
 
-#elapsed_days-stage scatterplot 
+# elapsed_days-stage scatterplot
 # ggplot(
 #   data=stages_days_sort %>% filter(stage != "-"), #remove gaps "-"
 #   aes(x=elapsed_days, y=stage)
@@ -133,6 +133,6 @@ TukeyHSD(aov(lm_test))
 # geom_point(
 #   aes(x=elapsed_days, y=factor(stage, levels=c("C", "G", "T", "A")))
 #            )
-  
+#   
 
   

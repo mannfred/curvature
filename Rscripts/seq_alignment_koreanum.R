@@ -2,6 +2,7 @@ library(here)
 library(tidyverse)
 library(msa) 
 
+
 koreanum_stringset<-
   data5 %>% 
   filter(Species_epithet == 'koreanum') %>%
@@ -70,6 +71,8 @@ stages_days_sort<-
   mutate(elapsed_days = elapsed_days %>% as.numeric()) %>%
   print() 
 
+saveRDS(stages_days_sort, file="stages_days_sort_koreanum.rds")
+
 #stage-elapsed_days boxplot 
 ggplot(
   data=stages_days_sort %>% filter(stage != "-"), #remove gaps "-"
@@ -84,3 +87,33 @@ ggplot(
   theme(legend.position="bottom")   
 
 
+
+#calculate mean + variance for stages ####
+#on average, how many days have elapsed for each stage?
+
+stages_days_sort <- readRDS("stages_days_sort_koreanum.rds")
+
+
+#mean elapsed days per stage
+
+library(gmodels) #for CI
+
+stages_days_sort %>%
+  group_by(stage) %>%
+  na_if("-") %>%
+  summarise(mean = ci(elapsed_days)[1],
+            loCI = ci(elapsed_days)[2],
+            hiCI = ci(elapsed_days)[3],
+            stdv = ci(elapsed_days)[4])
+
+#C: 8.31 +/- 0.40 days
+#G: 14.3 +/- 0.20 days
+#T: 17.1 +/- 0.20 days
+#A: 20.6 +/- 0.30 days
+
+
+lm_test<- 
+  lm(elapsed_days ~ stage, data = stages_days_sort %>% na_if("-"))
+
+TukeyHSD(aov(lm_test))
+# elapsed days per stage are sig different (p=0)
