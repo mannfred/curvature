@@ -53,4 +53,4 @@ ggplot(
   aes(x=sepal_size_mm, y=adjusted_curvature)
 ) +
   geom_point(
-    aes(colour=factor(species_epithet)))
+    aes(colour=factor(species_epithet)), size=3)

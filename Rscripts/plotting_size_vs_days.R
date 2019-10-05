@@ -1,7 +1,7 @@
 library(here)
 library(tidyverse)
 
-#for E. grandiflorum ####
+#for E. grandiflorum only (all 3 spp. done simultaneously below)####
 
 #combine alignment matrix with size data 
 
