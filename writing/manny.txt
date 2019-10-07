@@ -16,7 +16,7 @@ X define developmental stages (first time done for epidmedium) and correlate wit
 X correlate size with elapsed_days
 X model time and size for stages 
 X correlate size with curvature
-create model for size and time (days)
+X create model for size and time (days)
 correlate time with curvature
 
 
