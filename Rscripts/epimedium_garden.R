@@ -164,14 +164,58 @@ theme_classic() + #removes gray backdrop
 theme(legend.position="bottom")  
 
 
+##################################################################
+#rerun within species stage comparisons with new stage definitions
 
 
+#lm function for map()
+lm_size_new_stage<- 
+  function(df) {
+    lm(size ~ new_stage, data = df)
+  }
 
 
+#tukey function for map()
+tukey_func<-
+  function(lm_fit) {
+    TukeyHSD(aov(lm_fit))
+  }
+
+data6<-
+  data5 %>%
+  group_by(Species_epithet) %>%
+  nest() %>% #nests by Species_epithet
+  mutate(lm_fit = 
+           map(data, lm_size_new_stage) #fits lms 
+  ) %>%
+  mutate(tukey =
+           map(lm_fit, tukey_func) #compares means within species
+  ) 
 
 
+# sepal size per stage are sig different (p=0 for all within species comparisons). 
 
 
+############################################
+# calculate mean +/- CI sizes for all 3 spp.
+
+library(gmodels) #for CI
+
+data5_nest<-
+  data5 %>%
+  group_nest(Species_epithet, new_stage) #group by species, then group by new_stage
+
+
+  
+summ_func<-
+  function(sepal_sizes) {
+     summarise(mean = ci(sepal_sizes)[1],
+               loCI = ci(sepal_sizes)[2],
+               hiCI = ci(sepal_sizes)[3],
+               stdv = ci(sepal_sizes)[4])
+  }
+
+lapply(data5_nest$data, summ_func)
 
 
 # ggplot(data=data5,

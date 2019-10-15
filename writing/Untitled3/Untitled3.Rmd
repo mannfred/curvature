@@ -1,0 +1,226 @@
+---
+title: The inside curve{:} geometry and pollination ecology of curved flowers
+
+# Use letters for affiliations
+author:
+  - name: Author One
+    affiliation: a
+  - name: Author Two
+    affiliation: b
+address:
+  - code: a
+    address: Department of Botany, University of British Columbia, Vancouver, B.C., V6T 1Z4
+  - code: b
+    address: Biodiversity Research Centre,  University of British Columbia, Vancouver, BC, V6T 1Z4
+    
+
+
+# For footer text  TODO(fold into template, allow free form two-authors)
+lead_author_surname: One and Two
+
+
+
+# Abstract
+abstract: |
+  
+  The curvature of a flower along the lateral plane (‘floral curvature’) is a widespread, convergent trait with important ecological and evolutionary implications. This review summarizes the methods used to measure floral curvature, suggests a clarification of the definition of curvature and a translation into a field-portable methodology. Intuitively, curvature is the degree to which a line is not straight. In plane geometry curvature is defined as the rate at which the unit derivative changes direction with respect to arc length. To apply this definition we suggest a protocol wherein a line is regressed against landmarks placed on a lateral image of an organism, then computing curvature at many points along the fitted line and taking the sum. The utility of this metric was tested by studying the development of nectar spur curvature in _Epimedium_ (Berberidaceae). Differences in the development of floral curvature were detected between _Epimedium koreanum_ and _Epimedium grandiflorum_ var. _violaceum_. Inflection points are found in wild-type _Epimedium grandiflorum_, but are lost in the cultivated variety ‘_violaceum_’, resulting in loss of total curvature. The suite of functions used to quantify floral curvature in this study are available as an open-source R package ‘curvy’.  The major advantages of this method are 1) precision of measurement is increased without introducing expensive field equipment or computing power, 2) precision of terminology within pollination ecology is improved by adopting from the existing mathematical tools for studying line-curves, and 3)  the opportunity is opened for investigating the genetic basis of (lateral plane) curvature measured at the cellular scale.
+
+# Optional: Acknowledgements
+acknowledgements: |
+  acknowledgements go here
+  
+# Optional: One or more keywords
+keywords:
+  - curvature
+  - flower
+  - corolla
+  - hummingbird
+  - pollination
+
+# Paper size for the document, values of letter and a4
+papersize: letter
+
+# Font size of the document, values of 9pt (default), 10pt, 11pt and 12pt
+fontsize: 9pt
+
+
+#optional:
+
+secnumdepth: 5
+
+skip_final_break: true
+
+bibliography: curvature_review.bib
+
+watermark: false
+
+# Customize footer, eg by referencing the vignette
+footer_contents: "YourPackage Vignette"
+
+# Produce a pinp document
+output: pinp::pinp
+
+# Required: Vignette metadata for inclusion in a package.
+vignette: >
+  %\VignetteIndexEntry{YourPackage-vignetteentry}
+  %\VignetteKeywords{YourPackage, r, anotherkeyword}
+  %\VignettePackage{YourPackage}
+  %\VignetteEngine{knitr::rmarkdown}
+  
+---
+
+## The ecology of floral curvature
+
+> “We are beginning to understand why some hummingbird bills are long, whereas others are short, and why some hummingbird flowers are wide, whereas others are narrow. Now, why are bills of some hummingbirds and the tubes of the flowers they visit curved?” – @temeles_1996.
+
+At the center of plant-pollinator diversification is a remarkable variety of floral form.  The notion that plant communities are under selection to reduce interspecific mating ['floral isolation', @grant_1949], points to the importance of floral diversity in initiating and reinforcing reproductive isolation [@armbruster_2009]. For example, in the rapid radiation of Andean _Centropogon_ (Campanulaceae), competition for pollination led to the divergence of floral traits associated with bat and hummingbird pollination [@lagomarsino_2019]. Meanwhile, in South African _Lapeirousia_ (Iridaceae), geographic variation in floral tube length has initiated reproductive isolation between morphs with short and long flower tubes, despite sharing the same fly pollinator [@minnaar_2019]. Thus, floral morphology is a key phenotypic feature underlying the diversification of plants and pollinators [@kay_2009; @ollerton_2017]. 
+
+Flower-pollinator curvature as viewed from the side (lateral plane), has been a trait of special interest since the post-Darwin era of pollination ecology. In making pollinator observations of the Cape flora, Scott-Elliott [-@scott-elliot_1890] noticed that the flowers of _Leonotis ocymifolia_ (Lamiaceae) visited by _Nectarinia_ sunbirds were "curved with the same curvature as that of the bird's beak." (p. 272). Robertson [-@robertson_1889] insightfully notes that the curved nectar spurs of _Viola_ spp. (Violaceae) "serves to limit the insect visits much more than the mere length of the spur." (p. 172). From these early observations curvature has been synonymous with specialization; we expect curvature to limit the range of functional taxa in a plant-pollinator mutualism and strengthen interactions between the existing participants. And these expectations have largely been supported: Stiles [-@stiles_1975] first posited that neotropical _Heliconia_ partition hummingbird visitation by flower-bill curvature, and that specialization by curve-billed hummingbirds allow co-existence within the species-rich _Heliconia_ clade.  Subsequent research supports this hypothesis [@maglianesi_2014]:  along the slopes of the Central Cordillera (Costa Rica), the degree of flower-hummingbird bill curvature is proportional to plant-pollinator interaction strength [@dehling_2014] and extent of specialization (_d'_, [@bluthgen_2006]. More recently the scope of plant-pollinator research has expanded to address the biogeography of curvature. As predicted by Stiles [-@stiles_2004], Maglianesi _et al_ [-@maglianesi_2015] and Sonne _et al_ [-@sonne_2019] find curvature to be most prevalent in the lowland environments of the neotropics. Explanations for this pattern range from heightened competition at lower elevations to environmental filtering in the Andean highlands [@stiles_2004; @graham_2009]. Because the neotropical hummingbird subfamily Phaethornithinae comprises the majority of species with curved bills, we might expect plant-hummingbird curvature to have a predictable global distribution. 
+
+Pollinator specialization has major effects on macroevolutionary and biogeographic patterns [@kay_2009; @armbruster_2009; @vamosi_2018], and curvature is a component, but widespread feature of specialist systems. Therefore,  to synthesize our knowledge of curved plant-pollinator systems, curvature is a concept that needs an exact definition and method of measurement. In this review we summarize the approaches to measuring curvature within the field of plant-hummingbird pollination, identify strengths and shortcomings, and offer a solution with the aim of standardizing how curvature is studied within the field of pollination ecology. Although this review is motivated by the problem of measuring curvature in plant-hummingbird systems, the solution is general to any biological form modelled as a line curve: this case is hopefully made in the demonstration to follow. 
+
+
+
+
+## Author Affiliations 
+
+Per common academic best practice, you can include your department,
+institution, and complete address, with the ZIP/postal code, for each
+author. Use lower case letters to match authors with institutions, as
+shown in the example. Authors with an ORCID ID may supply this
+information at submission.
+
+## Document Options
+
+We support several options via the YAML header
+
+- Setting a DOI or URL footer, for example for the CRAN package URL,
+  which is placed in the bottom-left footer of the title page and even pages;
+- Setting a footer label, for example _YourPackage Vignette_ stating
+  your package, which is placed in the bottom-right footer on odd
+  pages;
+- Setting a free-form author field used on the inside footer;
+- Optional _Draft_ watermark to be added to each page;
+- Line of custom text in subtitle (`date_subtitle`) suitable to give publication info of 
+the draft, e.g. journal name in a post-print. 
+
+
+
+## References 
+
+Here we differ from PNAS and suggest natbib. References will appear in
+author-year form. Use `\citet{}`, `\citep{}`, etc as usual.
+
+We default to the `jss.bst` style. To switch to a different bibliography
+style, please use `biblio-style: style` in the YAML header.
+
+
+## Inline R Code 
+
+The PNAS sample included a fixed PNG image here, but this document prefers
+to show the results and embedding of _R_ code. 
+
+```{r figex, fig.width=3, fig.height=3, cache=TRUE, echo=TRUE, fig.cap="Narrow ggplot2 figure"}
+library(ggplot2)
+ggplot(mtcars, aes(wt, mpg)) +
+    geom_point(size=3, aes(colour=factor(cyl))) +
+    theme(legend.position="none")
+```
+
+Here we use a standard knitr bloc with explicit options for
+
+- figure width and height (`fig.width`, `fig.height`), both set to three inches;
+- whether the code is shown (`echo=TRUE`); and
+- the caption (`fig.cap`) as shown above.
+
+
+## Digital Figures 
+
+Markdown, Pandoc and LaTeX support `.eps` and `.pdf` files.
+
+Figures and Tables should be labelled and referenced in the standard way
+using the `\label{}` and `\ref{}` commands.
+
+The R examples above show how to insert a column-wide
+figure. To insert a figure wider than one column, please use the
+`\begin{figure*}...\end{figure*}` environment. 
+
+One (roundabout) way of doing this is to _not_ actually plot a figure, but to
+save it in a file as the following segment shows:
+
+```{r densityPlot, echo=TRUE}
+library(ggplot2)
+p <- ggplot(data = midwest,
+            mapping = aes(x = area,
+                          fill = state,
+                          color = state)) +
+    geom_density(alpha = 0.3)
+## save to file
+suppressMessages(ggsave("densities.pdf", p))
+```
+
+This file is then included via standard LaTeX commands.
+
+\begin{figure*}
+  \begin{center}
+    \includegraphics[width=0.66\textwidth, height=3.5in]{densities} 
+  \end{center}
+  \caption{Wide ggplot2 figure}\label{fig}
+\end{figure*}
+
+
+## Typeset Code (But Do Not Run It) 
+
+We can also just show code.
+
+```r
+xx <- faithful[,"eruptions"]
+fit <- density(xx)
+plot(fit)
+```
+
+This simply used a pandoc bloc started and ended by three backticks,
+with `r` as the language choice.  Similarly, _many_ other languages
+can be typeset directly simply by relying on pandoc.
+
+
+## Single column equations 
+
+Authors may use 1- or 2-column equations in their article, according to
+their preference.
+
+To allow an equation to span both columns, options are to use the
+`\begin{figure*}...\end{figure*}` environment mentioned above for
+figures. The `\begin{widetext}...\end{widetext}` environment as shown
+in equation \ref{eqn:example} below is deprecated, but \LaTeX commands
+`\onecolumn` and `\twocolumn` work fine.
+
+Please note that this option may run into problems with floats and
+footnotes, as mentioned in the [cuted package
+documentation](http://texdoc.net/pkg/cuted). In the case of problems
+with footnotes, it may be possible to correct the situation using
+commands `\footnotemark` and `\footnotetext`.
+
+\begin{equation}
+  \begin{aligned}
+(x+y)^3&=(x+y)(x+y)^2\\
+       &=(x+y)(x^2+2xy+y^2) \\
+       &=x^3+3x^2y+3xy^3+x^3. 
+       \label{eqn:example} 
+  \end{aligned}
+\end{equation}
+
+
+<!-- pandoc writes all tables using longtable, which fails in 2-column mode
+
+  Species                    CBS     CV     G3
+  ----------------------- ------ ------ ------
+  1\. Acetaldehyde           0.0    0.0    0.0
+  2\. Vinyl alcohol          9.1    9.6   13.5
+  3\. Hydroxyethylidene     50.8   51.2   54.0
+
+  : Comparison of the fitted potential energy surfaces and ab initio
+  benchmark electronic energy calculations
+
+-->
+
