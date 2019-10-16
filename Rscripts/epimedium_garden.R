@@ -196,26 +196,31 @@ data6<-
 # sepal size per stage are sig different (p=0 for all within species comparisons). 
 
 
+
+
+
 ############################################
 # calculate mean +/- CI sizes for all 3 spp.
+# what is the size of the flower at each stage?
 
 library(gmodels) #for CI
 
-data5_nest<-
-  data5 %>%
-  group_nest(Species_epithet, new_stage) #group by species, then group by new_stage
+data5_size_summary<-
+  readRDS(here("/data/RDS_files/epimedium_growth_data_pivot_redefined_stages.rds")) %>%
+  group_by(Species_epithet, new_stage) %>% #group by species, then group by new_stage
+  summarise(mean = ci(size)[1],
+            loCI = ci(size)[2],
+            hiCI = ci(size)[3],
+            stdv = ci(size)[4])
+
+write.csv(data5_size_summary, 
+          row.names=FALSE,
+          file=here("/data/Table_4_size_stage_summary.csv"))
 
 
-  
-summ_func<-
-  function(sepal_sizes) {
-     summarise(mean = ci(sepal_sizes)[1],
-               loCI = ci(sepal_sizes)[2],
-               hiCI = ci(sepal_sizes)[3],
-               stdv = ci(sepal_sizes)[4])
-  }
 
-lapply(data5_nest$data, summ_func)
+
+
 
 
 # ggplot(data=data5,
