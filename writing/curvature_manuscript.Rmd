@@ -92,7 +92,7 @@ Comment on why using the simplest case (polynomials) and not splines, fourier, e
 
 We tested the utility of this curvature metric by studying floral development in _Epimedium grandiflorum_ C.Morren, _Epimedium koreanum_ Nakai, and _Epimedium violaceum_ C.Morren. (Berberidaceae, Table 2 - sample sizes). The latter two 'species' are generally considered forms of _E. grandiflorum sensu lato_ [@stearn_2002], but we considered them separate for comparitive purposes.
 
-Flower size was measured daily from April 9 to May 2, 2019 at the UBC Botanical Garden (Supp Mat 1). Size was defined as the length between the apex of the two outer sepals lying on the major axis of the flower - aestivation is imbricate. Length was measured to the nearest 0.1 mm using an SPI Polymid Dial Caliper. By correlating changes in flower size to developmental landmarks (Figure 5), we were able to define 3 discrete stages of flower development in _E. grandiflorum_ and 4 stages in _E. koreanum_ and _E. violaceum_ (Table 2, & will include figure with photographs of the stages). 
+Flower size was measured daily from April 9 to May 2, 2019 at the UBC Botanical Garden (Supp Mat 1). Size was defined as the length between the apex of the two outer sepals lying on the major axis of the flower - aestivation is imbricate. Length was measured to the nearest 0.1 mm using an SPI Polymid Dial Caliper. By correlating changes in flower size to developmental landmarks (Figure 5), we were able to define 3 discrete stages of flower development in _E. grandiflorum_ and 4 stages in _E. koreanum_ and _E. violaceum_ (Table 3, & will include figure with photographs of the stages). 
 
 Flowering stage data was fragmented and staggered because of censoring, i.e. due to tracking flowers after their initial budding stage, or flowers that had succumb to herbivory or weather after several days of measurement. Therefore, stage data was aligned by using a multiple sequence alignment protocol (ClustalW implemented in ```msa``` v.3.9) with a neutral (identity) substitution matrix.  Gap opening was prohibited. By aligning phenological data within species, a consensus stage sequence was calculated and used to estimate flower age where observations were censored. Once aligned, these data represent the 'developmental dataset'.
 
@@ -109,7 +109,7 @@ Results:
 
 In _E. grandiflorum_ we identified three distinct stages of development (Tukey's HSD: p<0.01). The first stage ("G") is defined as the initiation and growth of the bud until the petals begin to separate ("T" stage). At the "T" stage nectar begins accumilating in the spurs. Anthesis takes place during the "A" stage at which point the flower opening may increase in size and anthers dehisce. In _E. koreanum_ and _E. violaceum_ we detected another distinct "C" stage in the early stage of bud development. At this stage the petals are shorter in length than the sepals that envelop them - the "G" stage begins when the petals overtake the surrounding sepals in length. 
 
--insert table with mean +/- 95%CI of sizes (mm) for all three species.
+-insert Table 4 with mean +/- 95%CI of sizes (mm) for all three species.
 
 ![Figure 5: Comparison of developmental stages. Size is in mm. Tukey's HSD: p<0.01 for all within-species comparisons](Figures/Figure_5.jpeg)
 
@@ -175,9 +175,9 @@ knitr::kable(table1, caption = 'Table 1: Summary of literature reviewed for the 
 <br><br>
 
 
-```{r table3}
+```{r table5}
 library(here)
-table3<-read.csv(here('data/Table_3_elapsed_days_per_stage.csv'), header=TRUE)
+table3<-read.csv(here('data/Table_5_elapsed_days_per_stage.csv'), header=TRUE)
 knitr::kable(table3, caption = 'Table 3: Elapsed days per stage for three Epimedium species.')
 ```
 
