@@ -218,10 +218,34 @@ write.csv(data5_size_summary,
           file=here("/data/Table_4_size_stage_summary.csv"))
 
 
+##########################################
+# testing for independent sampling units #
+##########################################
+
+library(tidyverse)
+library(stringr)
+library(here)
+
+#isolate numeric identifiers
+data5<-
+  readRDS(here("/data/RDS_files/epimedium_growth_data_pivot_redefined_stages.rds")) %>%
+  mutate(identity = str_replace(Species_Individual_Panicle_Flower,  "[a-z]+", "")) %>% #removes alphabet and leaves identifiers 
+  mutate(identity = str_replace(identity, substr(identity, 1, 1), ""))  #remove leading "_" from ID strings
+  
+#add identifiers to a list
+ID_matrix<-str_split_fixed(data5$identity, "_", n=3) #matrix of IDs in SIPC format
+
+
+data5_ids<-
+  data5 %>%
+  mutate(flower_ID = ID_matrix[,3]) %>% #create column for flower ID
+  mutate(panicle_ID = ID_matrix[,2]) %>% #create column for panicle ID
+  mutate(indiv_ID = ID_matrix[,1]) 
 
 
 
 
+size_stage_model <- lmer(size ~ days + (1|indiv_ID), data=data5_ids %>% filter(Species_epithet == 'koreanum'))
 
 # ggplot(data=data5,
 #        aes(

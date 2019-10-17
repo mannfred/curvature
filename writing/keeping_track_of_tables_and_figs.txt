@@ -1,0 +1,7 @@
+X Table 1: review of literature
+Table 2: Sample sizes
+Table 3: Stage definitions
+X Table 4: mean and 95CI of sizes for 3 spp.
+X Table 5: elapsed days per stage
+
+X Table S1: additional reviewed literature
