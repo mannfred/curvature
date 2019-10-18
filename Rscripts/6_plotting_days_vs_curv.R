@@ -1,6 +1,11 @@
 library(here)
 library(tidyverse)
 
+
+#using days estimates from logistic modelling of size-days relationship to
+#estimate days-curvature relationship
+
+#################
 #import data ####
 
 #elapsed days/ size data
@@ -21,7 +26,7 @@ size_days_data<-
   full_join(., days_viol)
 
 
-
+###############
 #curvature data
   
 curv_gran<-
@@ -42,6 +47,8 @@ curv_viol<-
     header=TRUE) %>%
   dplyr::select(4, 5)
 
+
+#####################################
 #merge curvature data into one tibble
 
 curv_data<-
@@ -59,8 +66,9 @@ all_data<-
       "[A-Z]+") #extacts uppercase letters from strings
   )
 
-
+#####
 #plot
+
 ggplot(
   data=all_data, 
   aes(x=predicted_days_elapsed, y=adjusted_curvature)

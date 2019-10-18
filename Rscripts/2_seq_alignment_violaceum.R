@@ -3,9 +3,12 @@ library(tidyverse)
 library(msa) 
 
 
-koreanum_stringset<-
+#see "2_seq_alignment_grandiflorum.R" for complete code annotations and explanations
+
+
+violaceum_stringset<-
   data5 %>% 
-  filter(Species_epithet == 'koreanum') %>%
+  filter(Species_epithet == 'violaceum') %>%
   group_by(Species_Individual_Panicle_Flower) %>%
   pivot_wider(Species_Individual_Panicle_Flower, 
               names_from=date, 
@@ -17,13 +20,13 @@ koreanum_stringset<-
 
 
 #add names to stringset
-names(koreanum_stringset) = paste(
+names(violaceum_stringset) = paste(
   data5 %>% 
-    filter(Species_epithet == 'koreanum') %>%
+    filter(Species_epithet == 'violaceum') %>%
     pull(Species_Individual_Panicle_Flower) %>%
     unique(.),
   sep=""
-                                  )
+)
 
 matchmatrix<-
   read.table(here("data/match_matrix.txt")) %>% 
@@ -32,7 +35,7 @@ matchmatrix<-
 colnames(matchmatrix)[24]<-"*" #gets turned into ".X" during read.table for some reason..
 
 #multiple sequence alignment
-align<-msa::msaClustalW(koreanum_stringset, 
+align<-msa::msaClustalW(violaceum_stringset, 
                         cluster="nj", #neighbour joining 
                         maxiters = 1000,
                         gapOpening = 100, #terminal gaps are not penalized
@@ -48,15 +51,15 @@ msaConsensusSequence(align,
                      thresh=c(10, 0.01), 
                      ignoreGaps=FALSE)
 
-#[1] "------------GG--T-AA----"
-#[1] "CCCCCCCCCCCCGGGTTTAAAAAA" (inferred from consensusMatrix(align) by disregarding gaps)
+#[1] "--------CCCGGTTAA---"
+#[1] "CCCCCCCCCCCGGTTAAAAA" (inferred from consensusMatrix(align) by disregarding gaps)
 
 #merge alignment with days 
 stages_days<-
   align %>%
   as.matrix() %>%
   as_tibble() %>%
-  rename_at(colnames(.[,1:24]), ~ as.character(c(1:24))) %>% #replace V1:V24 with 1:24 to be used as "number of days"
+  rename_at(colnames(.[,1:20]), ~ as.character(c(1:20))) %>% #replace V1:V20 with 1:20 to be used as "number of days"
   mutate(ID = align@unmasked@ranges@NAMES) %>% #create ID column
   select(ID, everything()) %>% #moves ID column to the front
   gather(key="elapsed_days", value="stage", -ID)  #pivot
@@ -71,7 +74,7 @@ stages_days_sort<-
   mutate(elapsed_days = elapsed_days %>% as.numeric()) %>%
   print() 
 
-saveRDS(stages_days_sort, file="stages_days_sort_koreanum.rds")
+saveRDS(stages_days_sort, file="stages_days_sort_violaceum.rds")
 
 #stage-elapsed_days boxplot 
 ggplot(
@@ -86,12 +89,10 @@ ggplot(
   theme_classic() + #removes gray backdrop
   theme(legend.position="bottom")   
 
-
-
 #calculate mean + variance for stages ####
 #on average, how many days have elapsed for each stage?
 
-stages_days_sort <- readRDS("stages_days_sort_koreanum.rds")
+stages_days_sort <- readRDS("stages_days_sort_violaceum.rds")
 
 
 #mean elapsed days per stage
@@ -106,10 +107,10 @@ stages_days_sort %>%
             hiCI = ci(elapsed_days)[3],
             stdv = ci(elapsed_days)[4])
 
-#C: 8.31 +/- 0.40 days
-#G: 14.3 +/- 0.20 days
-#T: 17.1 +/- 0.20 days
-#A: 20.6 +/- 0.30 days
+#C: 8.27 +/- 0.40 days
+#G: 12.0 +/- 0.20 days
+#T: 14.1 +/- 0.20 days
+#A: 16.7 +/- 0.30 days
 
 
 lm_test<- 

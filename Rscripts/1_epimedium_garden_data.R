@@ -1,3 +1,9 @@
+# this R script includes initial analyses of stage-size data 
+#collected from Epimedium spp., April 2019, UBC Botanical Garden
+
+
+
+############################################
 #power analysis for epimedium experiment####
 
 pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative = 'greater')
@@ -10,7 +16,9 @@ pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative =
 
 
 
-#rearranging and plotting garden data####
+############################################
+# Epimedium growth data collected April 2019
+# rearranging and plotting garden data ##### 
 
 library(stringr) 
 library(tidyverse)
@@ -42,6 +50,11 @@ data_sort<-
   #   row.names=F) #stage info now manually entered into this file
 
 
+
+
+
+
+###############################################
 #visualize and test stage-size relationship####
 
 #data wrangling
@@ -65,6 +78,7 @@ data2<-
 
 #test for differences between stages (within species)
 
+#creating functions to pass onto purrr::map()
 #lm function for map()
 lm_size_stage<- 
   function(df) {
@@ -76,6 +90,8 @@ tukey_func<-
   function(lm_fit) {
     TukeyHSD(aov(lm_fit))
                     }
+
+#creating tibble with comparison of mean sizes between stages (within species)
 data3<-
   data2 %>%
   group_by(Species_epithet) %>%
@@ -97,7 +113,7 @@ lm_size_species<-
   function(df) {
     lm(size ~ Species_epithet, data = df)
                 }
-
+#creating tibble with comparison of mean sizes between stages (between species)
 data4<-
   data2 %>%
   group_by(stage) %>% #grouping by stage to make between-species comparisons
@@ -112,11 +128,6 @@ data4<-
 
 
 #create new stage definitions (i.e. collapse non-sig stages) 
-#E = C stage ('child stage')
-#G = G stage ('growth stage') 
-#O = T stage ('nectar producTion stage')
-#P-D-A = A stage ('anthesis')
-#use https://www.hiv.lanl.gov/content/sequence/HelpDocs/IUPAC.html for checking AA codes
 
 data5<-
   data2 %>%
@@ -125,31 +136,35 @@ data5<-
            paste(., "_19", sep= "") %>% #add year 2019 to date format
            mdy() 
          ) %>%
-  mutate(new_stage = case_when(c(stage == "E" | 
+  mutate(new_stage = case_when(c(stage == "E" |                  #for E. grandiflorum, collapse E and G in to G
                                stage == "G") & 
                                Species_epithet == 'grandiflorum' 
                                ~ "G", 
-                               c(Species_epithet == 'koreanum' |
+                               c(Species_epithet == 'koreanum' | #for E. kore and E. viol, convert E to C
                                Species_epithet == 'violaceum') &
                                stage == "E" 
                                ~ "C",
-                               c(Species_epithet == 'koreanum' |
+                               c(Species_epithet == 'koreanum' | #keep G stage for E. kore and E. viol
                                Species_epithet == 'violaceum') &
                                stage == "G"
                                ~ "G",
-                               stage == "P" |
+                               stage == "P" |                    #collapse PDA into A 
                                stage == "D" |
                                stage == "A"
                                ~ "A",
-                               stage == "O"
+                               stage == "O"                      #convert O to T
                                ~ "T"
                                )) 
 
-saveRDS(data5, file="epimedium_growth_data_pivot_redefined_stages.rds")
+#save this frequently used tibble as an .rds file
+saveRDS(data5, file="epimedium_growth_data_pivot_redefined_stages.rds") 
 
 
 
+####################################
+#plot data with newly defined stages
 #plot sizes at varying stages
+
 ggplot(
   data=data5,
   aes(x=new_stage, y=size)
@@ -164,8 +179,10 @@ theme_classic() + #removes gray backdrop
 theme(legend.position="bottom")  
 
 
-##################################################################
-#rerun within species stage comparisons with new stage definitions
+
+
+##########################################################
+#rerun comparison of mean sizes with new stage definitions
 
 
 #lm function for map()
@@ -181,6 +198,7 @@ tukey_func<-
     TukeyHSD(aov(lm_fit))
   }
 
+#tibble with model fits and tukey's HSD results
 data6<-
   data5 %>%
   group_by(Species_epithet) %>%
@@ -208,7 +226,7 @@ library(gmodels) #for CI
 data5_size_summary<-
   readRDS(here("/data/RDS_files/epimedium_growth_data_pivot_redefined_stages.rds")) %>%
   group_by(Species_epithet, new_stage) %>% #group by species, then group by new_stage
-  summarise(mean = ci(size)[1],
+  summarise(mean = ci(size)[1],            #ci() function produces 4 results, here we assign them labels
             loCI = ci(size)[2],
             hiCI = ci(size)[3],
             stdv = ci(size)[4])
@@ -218,9 +236,10 @@ write.csv(data5_size_summary,
           file=here("/data/Table_4_size_stage_summary.csv"))
 
 
+
+
 ##########################################
 # testing for independent sampling units #
-##########################################
 
 library(tidyverse)
 library(stringr)
@@ -247,32 +266,5 @@ data5_ids<-
 
 size_stage_model <- lmer(size ~ days + (1|indiv_ID), data=data5_ids %>% filter(Species_epithet == 'koreanum'))
 
-# ggplot(data=data5,
-#        aes(
-#          x=date, 
-#          y=size, 
-#          group = Species_Individual_Panicle_Flower,
-#          colour = factor(Species_epithet)
-#        )
-# ) +
-#   geom_boxplot() +
-#   theme(axis.text.x = element_text(angle=90)) +
-#   theme_classic() + #removes gray backdrop
-#   theme(legend.position="bottom") 
-#ordinal date
-
-
-
-#how does size develop through time?####
-# 
-# data5<-
-#   data2 %>%
-#   filter(grepl('grandiflorum_1_1_3', Species_Individual_Panicle_Flower)) %>%
-#   na.omit() #change species name to generate separate graphs
-# 
-# qplot(data=data5, x=days, y=size)# +
-# geom_dotplot(dotsize=0.7, binwidth = 0.) +
-#   ylim(0,30) +
-#   ggtitle('Epimedium grandiflorum, flower 1')
 
 

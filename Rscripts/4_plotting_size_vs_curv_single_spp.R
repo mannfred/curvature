@@ -1,3 +1,6 @@
+##############################################
+#quick plotting of curvature vs size of sepals
+
 library(tidyverse)
 library(here)
 

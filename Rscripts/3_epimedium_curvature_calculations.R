@@ -1,6 +1,7 @@
 ########################################
 #measure curvature from epimedium photos
-########################################
+
+
 library(here)
 library(Momit)
 library(Momocs)
@@ -50,6 +51,7 @@ coeffs_lst <-
 #extracts the first element ($coeff) from each element ($shp) in the list. 
 #sapply stores results as a list of atomic vectors
 
+#function that takes coefficients and constructions functions parameterized by t
 aspoly.fun <- 
   function(x) x %>%
   as.numeric() %>%
@@ -87,7 +89,7 @@ lengths_lst <-
 
 
 
-
+##############################
 #calculate total curvature####
 
 poly_lst <- 
@@ -136,6 +138,8 @@ totalK.fun<-function (x.range, fun)
   k <- abs(he)/(1 + gr^2)^(3/2) #there are possibly 5000 curvature points stored in k... could sum them? also, see: https://en.wikipedia.org/wiki/Curvature "curvature of the graph of a function"
 }
 
+
+#calculate curvature many times along many curves
 curvature_tbl <- 
   totalK.fun %>%
   mapply(., baselines_lst, func_lst) %>%
@@ -145,6 +149,7 @@ curvature_tbl <-
   gather()
 
 
+#merge curvature and arclength information
 alltogether_tbl <- 
   lengths_lst %>% #list of arclengths
   unlist() %>%
@@ -166,8 +171,8 @@ alltogether_tbl <-
   } %>% 
   rename(arclength=value, 
          total_curvature=value1) %>% #old colnames were "value" and "value1"
-  mutate(adjusted_curvature = total_curvature/arclength) %>% #new column 
-  write.csv(., here("data/epimedium_curvature_koreanum.csv")) 
+  mutate(adjusted_curvature = total_curvature/arclength) %>% #new column is adjusted curvature
+ # write.csv(., here("data/epimedium_curvature_koreanum.csv")) 
   
 
 
