@@ -77,7 +77,7 @@ baselines_lst <-
 lengths_lst <- 
   mapply(arclength, polyfunc_lst, 
          baselines_lst %>%
-           sapply(., "[[", 1), #min baselines
+           sapply(., "[[", 1), #min baselines, "[[" is a subsetting function
          baselines_lst %>% 
            sapply(., "[[", 2) #max baselines
          ) %>%
@@ -116,13 +116,13 @@ func_lst<- poly_lst %>%
 #total curvature function
 totalK.fun<-function (x.range, fun) 
 {
-  stopifnot(is.atomic(x.range))
+  stopifnot(is.atomic(x.range)) # is.atomic checks that x.range cannot be a list or expression
   if (!is.numeric(x.range)) 
     stop("'x.range' must be a numeric vector!")
   if (length(x.range) != 2) 
     stop("'x.range' must be a vector of length two!")
-  if (diff(x.range) < 0) 
-    stop("please, reorder 'x.range'.")
+  if (diff(x.range) < 0) #calculates the difference between x1 and x2 to ensure it's >0
+    stop("please reorder 'x.range'.")
   if (!inherits(fun, "function")) 
     stop("'fun' must be a 'function' of x!")
   
