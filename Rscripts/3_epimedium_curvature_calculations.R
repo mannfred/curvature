@@ -131,12 +131,17 @@ totalK.fun<-function (x.range, fun)
   if (attr(dfun(x.range[1]), "gradient") == attr(dfun(x.range[2]), #make sure function is not a straight line
                                                  "gradient")) 
     stop("'fun' should not be a linear function of x!") #corrected spelling from "linar"
-  x <- seq(x.range[1], x.range[2], length.out = 5000) #splits the x range into 5000 even segments --but does it split the x-axis into 5000 pieces, or the arc length?
+  x <- seq(x.range[1], x.range[2], length.out = 5000) #splits the x range into 5000 even segments (is not arc length parameterized!)
   y <- fun(x) 
   gr <- attr(dfun(x), "gradient") #the tangents (first derv) of the 5000 x components, dfun() is defined 7 lines above. The gradient matrix has elements that are the first deriv of a function
   he <- attr(dfun(x), "hessian")[, , "x"] # x is in the third dimension of this object (df?). The hessian matrix has elements that are the second deriv of a function
   k <- abs(he)/(1 + gr^2)^(3/2) #there are possibly 5000 curvature points stored in k... could sum them? also, see: https://en.wikipedia.org/wiki/Curvature "curvature of the graph of a function"
 }
+
+
+#add assign("dx_list", dX, envir = .GlobalEnv) to trace(arclength, edit=TRUE) to inspect objects created during arclength() calculations
+
+
 
 
 #calculate curvature many times along many curves
