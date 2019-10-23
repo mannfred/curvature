@@ -141,7 +141,30 @@ totalK.fun<-function (x.range, fun)
 
 #add assign("dx_list", dX, envir = .GlobalEnv) to trace(arclength, edit=TRUE) to inspect objects created during arclength() calculations
 
+############testing START######
 
+f <- function(t) c(t,t^2)
+
+t1 <- 0; t2 <- 1
+a  <- 0; b  <- arclength(f, t1, t2)$length
+
+fParam <- function(w) {
+  fct <- function(u) arclength(f, a, u)$length - w
+  urt <- uniroot(fct, c(a, 1))
+  urt$root
+}
+
+ts <- linspace(0, 1, 250)
+plot(matrix(f(ts), ncol=2), type='l', col="blue",
+     asp=1, xlab="", ylab = "",
+     main = "crunchy!", sub="20 subparts of equal length")
+
+for (i in seq(0.05, 0.95, by=0.05)) {
+  v<-fParam(i*b) 
+  print(v) #close! search SO for 'add for loop output to growing list r" 
+}
+
+############testing END######
 
 
 #calculate curvature many times along many curves
