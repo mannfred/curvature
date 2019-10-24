@@ -159,10 +159,15 @@ plot(matrix(f(ts), ncol=2), type='l', col="blue",
      asp=1, xlab="", ylab = "",
      main = "crunchy!", sub="20 subparts of equal length")
 
+
 for (i in seq(0.05, 0.95, by=0.05)) {
-  v<-fParam(i*b) 
-  print(v) #close! search SO for 'add for loop output to growing list r" 
-}
+  v <- fParam(i*b)
+  print(v)
+} 
+  
+tester<-function(q) q^3 -10
+uniroot(tester,c(-10,10))
+
 
 ############testing END######
 
