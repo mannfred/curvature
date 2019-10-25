@@ -30,9 +30,10 @@ coo_plot(dorsal_lst[i]) #for i={1:31} to plot individually
 
 #calculate polynomials
 dorsalcurv_lst <- 
-  npoly(dorsal_lst$coo, degree=3) #31 polynomial curves estimated 
+  npoly(dorsal_lst$coo, degree=3) #Momocs::npoly object with coeffs, baselines, etc
                                   #"Call:" = function+parameters  used to create the model
-
+      
+                            
 #draw polynomials estimates over raw LMs
 dorsalcurv_lst[[i]] %>% #for i={1:31} -- LMs must be previously plotted w coo_plot() 
 npoly_i() %>%
@@ -43,7 +44,11 @@ dev.copy(figure,"Figure_1.png",width=8,height=6,units="in",res=100)
 dev.off()
 
 
+
+
+#########################
 #calculate arc length####
+
 
 #create polynomial functions from coeffs
 coeffs_lst <- 
@@ -75,13 +80,13 @@ baselines_lst <-
 
 #calculates arclength for every polynomial bounded by baselines
 lengths_lst <- 
-  mapply(arclength, polyfunc_lst, 
+  mapply(arclength, polyfunc_lst, #applies arclength() to all elements in polyfunc_lst
          baselines_lst %>%
            sapply(., "[[", 1), #min baselines, "[[" is a subsetting function
          baselines_lst %>% 
            sapply(., "[[", 2) #max baselines
          ) %>%
-  as.tibble() %>% #row 1 contains arclengths 
+  as_tibble() %>% #row 1 contains arclengths 
   slice(., 1) %>% #keep only row 1
   as.list()
 
@@ -94,7 +99,7 @@ lengths_lst <-
 
 poly_lst <- 
   coeffs_lst %>%
-  lapply(., polynomial) %>% #convert coeffs to a list of polynomials
+  lapply(., polynomial) %>% #convert coeffs to a list of polynomials (character strings, not functions)
   lapply(., as.character) #convert polynomials to character vectors
   
 
@@ -143,29 +148,32 @@ totalK.fun<-function (x.range, fun)
 
 ############testing START######
 
-f <- function(t) c(t,t^2)
-
-t1 <- 0; t2 <- 1
-a  <- 0; b  <- arclength(f, t1, t2)$length
+f<-polyfunc_lst[[1]] #t-parameterized functions
+a  <- 0; b  <- lengths_lst[[1]] %>% unlist()
 
 fParam <- function(w) {
   fct <- function(u) arclength(f, a, u)$length - w
-  urt <- uniroot(fct, c(a, 1))
+  urt <- uniroot(fct, c(a, baselines_lst[[1]][2]))
   urt$root
 }
 
-ts <- linspace(0, 1, 250)
-plot(matrix(f(ts), ncol=2), type='l', col="blue",
-     asp=1, xlab="", ylab = "",
-     main = "crunchy!", sub="20 subparts of equal length")
-
+q<-capture.output(
+  for (i in seq(0.05, 0.95, by=0.05)) {
+  v <- fParam(i*b)
+  cat(v,"\n")
+} ) %>% as.numeric()
 
 for (i in seq(0.05, 0.95, by=0.05)) {
-  v <- fParam(i*b)
-  print(v)
-} 
-  
+  v <- fParam(i*b); fv <- f(v)
+  points(fv[1], f(v)[2], col="darkred", pch=20) }
 
+
+ts <- linspace(baselines_lst[[1]][1], baselines_lst[[1]][2], 250)
+plot(matrix(f(ts), ncol=2), type='l', col="blue", 
+     asp=1, xlab="", ylab = "")
+
+#totalK.fun(baselines_lst[[1]], func_lst[[1]]) works, so format output of arc-length param func to match baselines_lst[[1]]
+#i.e. class=numeric
 
 
 ############testing END######
