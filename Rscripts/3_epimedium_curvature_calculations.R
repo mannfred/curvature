@@ -165,8 +165,7 @@ for (i in seq(0.05, 0.95, by=0.05)) {
   print(v)
 } 
   
-tester<-function(q) q^3 -10
-uniroot(tester,c(-10,10))
+
 
 
 ############testing END######
