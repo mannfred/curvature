@@ -26,7 +26,7 @@ dorsal_lst %>%
   paper %>% 
   draw_curve #draws all curves on one plot (not yet procrustes superimposed)
 rapply(dorsal_lst, coo_plot) #recursively plots all curves
-coo_plot(dorsal_lst[i]) #for i={1:31} to plot individually
+coo_plot(dorsal_lst[1]) #for i={1:31} to plot individually
 
 #calculate polynomials
 dorsalcurv_lst <- 
@@ -35,7 +35,7 @@ dorsalcurv_lst <-
       
                             
 #draw polynomials estimates over raw LMs
-dorsalcurv_lst[[i]] %>% #for i={1:31} -- LMs must be previously plotted w coo_plot() 
+dorsalcurv_lst[[1]] %>% #for i={1:31} -- LMs must be previously plotted w coo_plot() 
 npoly_i() %>%
 coo_draw()
 
@@ -148,12 +148,19 @@ totalK.fun<-function (x.range, fun)
 
 ############testing START######
 
-f<-polyfunc_lst[[1]] #t-parameterized functions
-a  <- 0; b  <- lengths_lst[[1]] %>% unlist()
+# In generating an arc-length parameterization 
+# the problem then becomes one of finding the value of 
+# t for a given arc- length L. Sharpe and Thorne, 1982
+
+f<-polyfunc_lst[[1]] #t-parameterized function
+a  <- 0
+b  <- lengths_lst[[1]] %>% unlist() #arclength range from 0 to s
+#same as arclength(polyfunc_lst[[1]], baselines_lst[[1]][1], baselines_lst[[1]][2]) 
+              
 
 fParam <- function(w) {
   fct <- function(u) arclength(f, a, u)$length - w
-  urt <- uniroot(fct, c(a, baselines_lst[[1]][2]))
+  urt <- uniroot(fct, c(a, 21.25937))
   urt$root
 }
 
@@ -163,17 +170,42 @@ q<-capture.output(
   cat(v,"\n")
 } ) %>% as.numeric()
 
-for (i in seq(0.05, 0.95, by=0.05)) {
-  v <- fParam(i*b); fv <- f(v)
-  points(fv[1], f(v)[2], col="darkred", pch=20) }
+#plotting s_coords against this *does not* work...need to overlap coo_plot and plot(matrix)
+#overplotting reveals that polynomial approximations are not good! Try 2nd order polys?
+coo_draw(dorsal_lst[1])
 
-
+#plotting s_coords against this works (but the range is off)
 ts <- linspace(baselines_lst[[1]][1], baselines_lst[[1]][2], 250)
 plot(matrix(f(ts), ncol=2), type='l', col="blue", 
      asp=1, xlab="", ylab = "")
 
-#totalK.fun(baselines_lst[[1]], func_lst[[1]]) works, so format output of arc-length param func to match baselines_lst[[1]]
-#i.e. class=numeric
+s_coords<-f(q)
+points(s_coords, col="darkred", pch=20) 
+
+
+
+for (i in seq(0.05, 0.95, by=0.05)) {
+  v <- fParam(i*b); fv <- f(v)
+  points(fv[1], f(v)[2], col="darkred", pch=20) }
+
+coo_plot(dorsal_lst[1])
+
+
+
+
+
+
+
+
+
+
+f <- function(t) -0.009558431 * t^3 + 0.3125719 * t^2 - 3.532246 * 
+  +     t + 28.75359
+
+ezplot(f, 6, 24)
+
+
+
 
 
 ############testing END######
