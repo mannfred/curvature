@@ -179,29 +179,6 @@ for (i in seq(0, 1, by=0.05)) {
 
 
 
-# get the xy coords of plotted points
-q<-capture.output(
-  for (i in seq(0, 1, by=0.05)) {
-    v <- fParam(i*b)
-    cat(v,"\n")
-  } ) %>% as.numeric()
-
-
-#corresponding y values for uniroot outputs
-q_fq<-
-  lapply(q, f) %>% 
-  transpose() %>%  
-  simplify2array()
-
-points(q_fq, col="darkgreen", pch=20)
-
-#checks that arc lengths are equal between x coordinates
-r<-vector("list", length=nrow(q_fq))
-
-for (i in 1:(nrow(q_fq)-1)) {
-  r[[i]]<-
-    arclength(f, q_fq[[i,1]], q_fq[[i+1,1]])$length }
-
 
 ############testing END######
 
