@@ -1,14 +1,14 @@
 f <- function(t) c(t, 7.024797 + 1.840848*t - 0.09349572*t^2) #  7.024797 + 1.840848*t - 0.09349572*t^2 ,  baselines 6.591728  21.259368 
 
-t1 <- 6.591728 
+t1 <- 6.591728 #t1 and t2 are the start and end x-coordinates
 t2 <- 21.259368
-a  <-  arclength(f, 0, t1)$length
-b  <-  arclength(f, t1, t2)$length
+a  <-  arclength(f, 0, t1)$length #starting length (the length of f from 0 to t1)
+b  <-  arclength(f, t1, t2)$length #ending length (the length of f from t1 to t2) 
 
 fParam <- function(w) {
-  fct <- function(u) arclength(f, t1, u)$length - w
-  urt <- uniroot(fct,  c(6.591728, 21.259368))
-  urt$root 
+  fct <- function(u) arclength(f, t1, u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
+  urt <- uniroot(fct,  c(6.591728, 21.259368)) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
+  urt$root #access t2 value (root)
 }
 
 ts <- linspace(0, 25, 250)
@@ -25,7 +25,7 @@ for (i in seq(0, 1, by=0.05)) {
 
 
 
-# get the xy coords of plotted points
+# get the x coords of plotted points
 q<-capture.output(
   for (i in seq(0, 1, by=0.05)) {
     v <- fParam(i*b)

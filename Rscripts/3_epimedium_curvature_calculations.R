@@ -148,10 +148,8 @@ totalK.fun<-function (x.range, fun)
 
 ############testing START######
 
-# In generating an arc-length parameterization 
-# the problem then becomes one of finding the value of 
-# t for a given arc- length L. Sharpe and Thorne, 1982
 
+#create a list of functions (done: polyfunc_lst)
 f <- function(t) c(t, 7.024797 + 1.840848*t - 0.09349572*t^2) #  7.024797 + 1.840848*t - 0.09349572*t^2 ,  baselines 6.591728  21.259368 
 
 t1 <- 6.591728 #t1 and t2 are the start and end x-coordinates
@@ -159,26 +157,34 @@ t2 <- 21.259368
 a  <-  arclength(f, 0, t1)$length #starting length (the length of f from 0 to t1)
 b  <-  arclength(f, t1, t2)$length #ending length (the length of f from t1 to t2) 
 
+
+t1_lengths_lst <-
+  mapply(arclength, polyfunc_lst, #applies arclength() to all elements in polyfunc_lst
+         0,                   #starting from t=0
+         baselines_lst %>%
+           sapply(., "[[", 1) #ending at t1
+        
+  ) %>%
+  as_tibble() %>% #row 1 contains arclengths 
+  slice(., 1) %>% #keep only row 1
+  as.list()
+
+
 fParam <- function(w) {
   fct <- function(u) arclength(f, t1, u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
   urt <- uniroot(fct,  c(6.591728, 21.259368)) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
   urt$root #access t2 value (root)
 }
 
-ts <- linspace(0, 25, 250)
-plot(matrix(f(ts), ncol=2), type='l', col="blue", 
-     asp=1, xlab="", ylab = "",
-     main = "marmalade!", sub="20 subparts of equal length")
+#find x values
 
-#plotting 
+q<-capture.output(
+  for (i in seq(0, 1, by=0.05)) {
+    v <- fParam(i*b)
+    cat(v,"\n")
+  } ) %>% as.numeric()
 
-for (i in seq(0, 1, by=0.05)) {
-  v <- fParam(i*b); fv <- f(v)
-  points(fv[1], f(v)[2], col="darkred", pch=20)
-} 
-
-
-
+#apply() q function (which contains fParam function) to a list of t-parameterized polynomials
 
 ############testing END######
 
