@@ -22,7 +22,7 @@ dorsal_lst <-
 
 #inspect raw LMs
 str(dorsal_lst)#LMs stored in $coo
-dorsal_lst %>% 
+dorsal_lst[1] %>% 
   paper %>% 
   draw_curve #draws all curves on one plot (not yet procrustes superimposed)
 rapply(dorsal_lst, coo_plot) #recursively plots all curves
@@ -30,7 +30,7 @@ coo_plot(dorsal_lst[1]) #for i={1:31} to plot individually
 
 #calculate polynomials
 dorsalcurv_lst <- 
-  npoly(dorsal_lst$coo, degree=3) #Momocs::npoly object with coeffs, baselines, etc
+  npoly(dorsal_lst$coo, degree=2) #Momocs::npoly object with coeffs, baselines, etc
                                   #"Call:" = function+parameters  used to create the model
       
                             
@@ -152,60 +152,55 @@ totalK.fun<-function (x.range, fun)
 # the problem then becomes one of finding the value of 
 # t for a given arc- length L. Sharpe and Thorne, 1982
 
-f<-polyfunc_lst[[1]] #t-parameterized function
-a  <- 0
-b  <- lengths_lst[[1]] %>% unlist() #arclength range from 0 to s
-#same as arclength(polyfunc_lst[[1]], baselines_lst[[1]][1], baselines_lst[[1]][2]) 
-              
+f <- function(t) c(t, 7.024797 + 1.840848*t - 0.09349572*t^2) #  7.024797 + 1.840848*t - 0.09349572*t^2 ,  baselines 6.591728  21.259368 
+
+t1 <- 6.591728 #t1 and t2 are the start and end x-coordinates
+t2 <- 21.259368
+a  <-  arclength(f, 0, t1)$length #starting length (the length of f from 0 to t1)
+b  <-  arclength(f, t1, t2)$length #ending length (the length of f from t1 to t2) 
 
 fParam <- function(w) {
-  fct <- function(u) arclength(f, a, u)$length - w
-  urt <- uniroot(fct, c(a, 21.25937))
-  urt$root
+  fct <- function(u) arclength(f, t1, u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
+  urt <- uniroot(fct,  c(6.591728, 21.259368)) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
+  urt$root #access t2 value (root)
 }
 
-q<-capture.output(
-  for (i in seq(0.05, 0.95, by=0.05)) {
-  v <- fParam(i*b)
-  cat(v,"\n")
-} ) %>% as.numeric()
-
-#plotting s_coords against this *does not* work...need to overlap coo_plot and plot(matrix)
-#overplotting reveals that polynomial approximations are not good! Try 2nd order polys?
-coo_draw(dorsal_lst[1])
-
-#plotting s_coords against this works (but the range is off)
-ts <- linspace(baselines_lst[[1]][1], baselines_lst[[1]][2], 250)
+ts <- linspace(0, 25, 250)
 plot(matrix(f(ts), ncol=2), type='l', col="blue", 
-     asp=1, xlab="", ylab = "")
+     asp=1, xlab="", ylab = "",
+     main = "marmalade!", sub="20 subparts of equal length")
 
-s_coords<-f(q)
-points(s_coords, col="darkred", pch=20) 
+#plotting 
 
-
-
-for (i in seq(0.05, 0.95, by=0.05)) {
+for (i in seq(0, 1, by=0.05)) {
   v <- fParam(i*b); fv <- f(v)
-  points(fv[1], f(v)[2], col="darkred", pch=20) }
-
-coo_plot(dorsal_lst[1])
-
+  points(fv[1], f(v)[2], col="darkred", pch=20)
+} 
 
 
 
+# get the xy coords of plotted points
+q<-capture.output(
+  for (i in seq(0, 1, by=0.05)) {
+    v <- fParam(i*b)
+    cat(v,"\n")
+  } ) %>% as.numeric()
 
 
+#corresponding y values for uniroot outputs
+q_fq<-
+  lapply(q, f) %>% 
+  transpose() %>%  
+  simplify2array()
 
+points(q_fq, col="darkgreen", pch=20)
 
+#checks that arc lengths are equal between x coordinates
+r<-vector("list", length=nrow(q_fq))
 
-
-f <- function(t) -0.009558431 * t^3 + 0.3125719 * t^2 - 3.532246 * 
-  +     t + 28.75359
-
-ezplot(f, 6, 24)
-
-
-
+for (i in 1:(nrow(q_fq)-1)) {
+  r[[i]]<-
+    arclength(f, q_fq[[i,1]], q_fq[[i+1,1]])$length }
 
 
 ############testing END######
