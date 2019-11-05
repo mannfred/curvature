@@ -148,16 +148,13 @@ totalK.fun<-function (x.range, fun)
 
 ############testing START######
 
+#t-parameterized functions stored in polyfunc_lst
+#t = t1 stored in baselines_lst[[i]][1]
+#t = t2 stored in baselines_lst[[i]][2]
+#arclength = b stored in lengths_lst
 
-#create a list of functions (done: polyfunc_lst)
-f <- function(t) c(t, 7.024797 + 1.840848*t - 0.09349572*t^2) #  7.024797 + 1.840848*t - 0.09349572*t^2 ,  baselines 6.591728  21.259368 
-
-t1 <- 6.591728 #t1 and t2 are the start and end x-coordinates
-t2 <- 21.259368
-a  <-  arclength(f, 0, t1)$length #starting length (the length of f from 0 to t1)
-b  <-  arclength(f, t1, t2)$length #ending length (the length of f from t1 to t2) 
-
-
+# arclength = a
+#list of arclengths from 0 to t1 for all curves
 t1_lengths_lst <-
   mapply(arclength, polyfunc_lst, #applies arclength() to all elements in polyfunc_lst
          0,                   #starting from t=0
@@ -169,12 +166,20 @@ t1_lengths_lst <-
   slice(., 1) %>% #keep only row 1
   as.list()
 
+# for (i in 1:length(polyfunc_lst)) {
+fParam_lst<-vector(length = length(polyfunc_lst)) 
 
-fParam <- function(w) {
-  fct <- function(u) arclength(f, t1, u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
-  urt <- uniroot(fct,  c(6.591728, 21.259368)) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
+  for (i in 1:length(polyfunc_lst)) {
+
+fParam_lst[[i]] <- function(w) {
+  fct <- function(u) arclength(polyfunc_lst[i], baselines_lst[[i]][1], u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
+  urt <- uniroot(fct,  c(baselines_lst[[i]][1], baselines_lst[[i]][2])) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
   urt$root #access t2 value (root)
-}
+} 
+  }
+
+
+
 
 #find x values
 
