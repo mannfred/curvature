@@ -119,24 +119,24 @@ func_lst<- poly_lst %>%
 #run trace(fun2form, edit=TRUE) and change width.cutoff to 500L under deparse()
 
 #total curvature function
-totalK.fun<-function (x.range, fun) 
+totalK_fun<-function (x_range, fun) 
 {
-  stopifnot(is.atomic(x.range)) # is.atomic checks that x.range cannot be a list or expression
-  if (!is.numeric(x.range)) 
-    stop("'x.range' must be a numeric vector!")
+  stopifnot(is.atomic(x_range)) # is.atomic checks that x.range cannot be a list or expression
+  if (!is.numeric(x_range)) 
+    stop("'x_range' must be a numeric vector!")
   if (length(x.range) != 2) 
-    stop("'x.range' must be a vector of length two!")
-  if (diff(x.range) < 0) #calculates the difference between x1 and x2 to ensure it's >0
-    stop("please reorder 'x.range'.")
+    stop("'x_range' must be a vector of length two!")
+  if (diff(x_range) < 0) #calculates the difference between x1 and x2 to ensure it's >0
+    stop("please reorder 'x_range'.")
   if (!inherits(fun, "function")) 
     stop("'fun' must be a 'function' of x!")
   
   dfun <- deriv3(fun2form(fun), "x", func = TRUE)
   
-  if (attr(dfun(x.range[1]), "gradient") == attr(dfun(x.range[2]), #make sure function is not a straight line
+  if (attr(dfun(x.range[1]), "gradient") == attr(dfun(x_range[2]), #make sure function is not a straight line
                                                  "gradient")) 
     stop("'fun' should not be a linear function of x!") #corrected spelling from "linar"
-  x <- seq(x.range[1], x.range[2], length.out = 5000) #splits the x range into 5000 even segments (is not arc length parameterized!)
+  x <- seq(x_range[1], x_range[2], length.out = 5000) #splits the x range into 5000 even segments (is not arc length parameterized!)
   y <- fun(x) 
   gr <- attr(dfun(x), "gradient") #the tangents (first derv) of the 5000 x components, dfun() is defined 7 lines above. The gradient matrix has elements that are the first deriv of a function
   he <- attr(dfun(x), "hessian")[, , "x"] # x is in the third dimension of this object (df?). The hessian matrix has elements that are the second deriv of a function
@@ -171,7 +171,8 @@ fParam_lst<-vector(length = length(polyfunc_lst))
 
   for (i in 1:length(polyfunc_lst)) {
 
-fParam_lst[[i]] <- function(w) {
+fParam <- function(w, i) {
+  i<<-force(i)
   fct <- function(u) arclength(polyfunc_lst[i], baselines_lst[[i]][1], u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
   urt <- uniroot(fct,  c(baselines_lst[[i]][1], baselines_lst[[i]][2])) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
   urt$root #access t2 value (root)
@@ -189,8 +190,12 @@ q<-capture.output(
     cat(v,"\n")
   } ) %>% as.numeric()
 
-#apply() q function (which contains fParam function) to a list of t-parameterized polynomials
-
+#lapply() q function (which contains fParam function) to a list of t-parameterized polynomials
+x_range<-
+ lapply(polyfunc_lst, q) %>% 
+ 
+ 
+ 
 ############testing END######
 
 
