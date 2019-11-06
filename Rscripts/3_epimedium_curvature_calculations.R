@@ -166,33 +166,32 @@ t1_lengths_lst <-
   slice(., 1) %>% #keep only row 1
   as.list()
 
-# for (i in 1:length(polyfunc_lst)) {
-fParam_lst<-vector(length = length(polyfunc_lst)) 
 
-  for (i in 1:length(polyfunc_lst)) {
 
-fParam <- function(w, i) {
-  i<<-force(i)
-  fct <- function(u) arclength(polyfunc_lst[i], baselines_lst[[i]][1], u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
-  urt <- uniroot(fct,  c(baselines_lst[[i]][1], baselines_lst[[i]][2])) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
+
+#create fParam as a function that runs over a list of polynomials
+fParam <- 
+  lapply(seq(0, 1, by=0.05)
+  function(w) {
+  fct <- function(u) arclength(polyfunc_lst, baselines_lst %>% sapply(., "[[", 1), u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
+  urt <- uniroot(fct,  c(baselines_lst %>% sapply(., "[[", 1)), baselines_lst %>% sapply(., "[[", 2)) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
   urt$root #access t2 value (root)
 } 
-  }
+  
 
 
+#need closures
+
+#find x coordinates
+sapply(seq(0, 1, by=0.05)*b, fParam)
 
 
-#find x values
-
-q<-capture.output(
-  for (i in seq(0, 1, by=0.05)) {
-    v <- fParam(i*b)
-    cat(v,"\n")
-  } ) %>% as.numeric()
 
 #lapply() q function (which contains fParam function) to a list of t-parameterized polynomials
 x_range<-
- lapply(polyfunc_lst, q) %>% 
+ lapply(polyfunc_lst, q) 
+
+tester1<-lapply(seq(0, 1, by=0.05)*b, fParam)
  
  
  

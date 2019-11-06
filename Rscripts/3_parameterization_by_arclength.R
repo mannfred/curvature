@@ -32,6 +32,12 @@ q<-capture.output(
     cat(v,"\n")
   } ) %>% as.numeric()
 
+#OR equivalent sapply, lapply that returns a vector
+
+sapply(seq(0, 1, by=0.05)*b, fParam)
+
+
+
 
 #corresponding y values for uniroot outputs
 q_fq<-
