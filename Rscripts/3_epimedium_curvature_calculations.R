@@ -179,7 +179,7 @@ fParam <-
   } 
 )
 
-#make a factory function
+#make a factory function https://stackoverflow.com/questions/12481404/how-to-create-a-vector-of-functions
 fct_lst<-list()
 make_func<- function(x) { x; function(u) arclength(polyfunc_lst, baselines_lst[[i]][1], u)$length - w }
 
