@@ -104,7 +104,7 @@ poly_lst <-
   
 
 #convert polynomials stored as character strings to quoteless expressions
-poly2.fun<- function (p) 
+poly2_fun<- function (p) 
 {
   f<- function(x) NULL
   body(f) <- parse(text=p)
@@ -113,7 +113,7 @@ poly2.fun<- function (p)
 
 
 func_lst<- poly_lst %>%
-           lapply(., poly2.fun) #create a list of polynomial functions readable by totalK()
+           lapply(., poly2_fun) #create a list of polynomial functions readable by totalK()
 
 
 #run trace(fun2form, edit=TRUE) and change width.cutoff to 500L under deparse()
@@ -156,7 +156,8 @@ totalK_fun<-function (x_range, fun)
 # arclength = a
 #list of arclengths from 0 to t1 for all curves
 t1_lengths_lst <-
-  mapply(arclength, polyfunc_lst, #applies arclength() to all elements in polyfunc_lst
+  mapply(arclength, 
+         polyfunc_lst,        #applies arclength() to all elements in polyfunc_lst
          0,                   #starting from t=0
          baselines_lst %>%
            sapply(., "[[", 1) #ending at t1
@@ -171,21 +172,32 @@ t1_lengths_lst <-
 
 #create fParam as a function that runs over a list of polynomials
 fParam <- 
-  lapply(seq(0, 1, by=0.05)
   function(w) {
-  fct <- function(u) arclength(polyfunc_lst, baselines_lst %>% sapply(., "[[", 1), u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
-  urt <- uniroot(fct,  c(baselines_lst %>% sapply(., "[[", 1)), baselines_lst %>% sapply(., "[[", 2)) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
+  fct <- function(u) arclength(polyfunc_lst, baselines_lst %>% lapply(., "[[", 1), u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
+  urt <- uniroot(fct,  c(baselines_lst %>% lapply(., "[[", 1), baselines_lst %>% lapply(., "[[", 2))) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
   urt$root #access t2 value (root)
-} 
-  
+  } 
+)
+
+#make a factory function
+fct_lst<-list()
+make_func<- function(x) { x; function(u) arclength(polyfunc_lst, baselines_lst[[i]][1], u)$length - w }
 
 
-#need closures
+for (i in 1:3) fct_lst[[i]] <- make_func(i)
 
-#find x coordinates
-sapply(seq(0, 1, by=0.05)*b, fParam)
+fct_lst<-for (i in length(polyfunc_lst)) 
 
+#this might work if fct is a list of functions
+mapply(uniroot, 
+       fct_lst, 
+       c(baselines_lst %>% sapply(., "[[", 1), baselines_lst %>% sapply(., "[[", 2)))
 
+#find x coords
+calc_xrange<-sapply(seq(0, 1, by=0.05)*b, fParam)
+
+#find x coords for every polynomial
+lapply(polyfunc_lst, calc_xrange)
 
 #lapply() q function (which contains fParam function) to a list of t-parameterized polynomials
 x_range<-
