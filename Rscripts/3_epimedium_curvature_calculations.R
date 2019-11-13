@@ -148,6 +148,8 @@ totalK_fun<-function (x_range, fun)
 
 ############testing START######
 
+
+
 #t-parameterized functions stored in polyfunc_lst
 #t = t1 stored in baselines_lst[[i]][1]
 #t = t2 stored in baselines_lst[[i]][2]
@@ -179,16 +181,8 @@ fParam <-
   } 
 )
 
-#make a factory function https://stackoverflow.com/questions/12481404/how-to-create-a-vector-of-functions
-fct_lst<-list()
-make_func<- function(i) {  function(u) arclength(function(t) c(t, t^2), 1, u)$length }
 
 
-for (i in 1:3) {
-fct_lst[[i]] <- make_func(i) }
-fct_lst[[1]](1)
-
-fct_lst<-for (i in length(polyfunc_lst)) 
  
 #this might work if fct is a list of functions
 mapply(uniroot, 
@@ -201,14 +195,25 @@ calc_xrange<-sapply(seq(0, 1, by=0.05)*b, fParam)
 #find x coords for every polynomial
 lapply(polyfunc_lst, calc_xrange)
 
-#lapply() q function (which contains fParam function) to a list of t-parameterized polynomials
-x_range<-
- lapply(polyfunc_lst, q) 
 
-tester1<-lapply(seq(0, 1, by=0.05)*b, fParam)
- 
- 
- 
+
+
+#https://www.google.com/search?client=firefox-b-d&q=for+loop+create+functions+r
+#https://stackoverflow.com/questions/31556088/r-defining-functions-within-a-loop
+par<-1:2
+fct_lst<-list()
+
+for(i in 1:2){
+  fct_lst[[i]] <- 
+    local({
+    b<-par[i]
+    function(...) {arclength(f, t1, ...) - b}
+    })
+}
+
+env_print(fct_lst[[1]]$b) #gives 1
+env_print(fct_lst[[2]]$b) #gives 2
+
 ############testing END######
 
 
