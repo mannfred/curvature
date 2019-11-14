@@ -200,19 +200,39 @@ lapply(polyfunc_lst, calc_xrange)
 
 #https://www.google.com/search?client=firefox-b-d&q=for+loop+create+functions+r
 #https://stackoverflow.com/questions/31556088/r-defining-functions-within-a-loop
-par<-1:2
-fct_lst<-list()
 
-for(i in 1:2){
+
+f<- function(t) c(t, t^2)
+t1<- 0
+b<- arclength(f, 0, 1)$length
+
+iter<- seq(0, 1, by=0.05)
+
+fct_lst<- list()
+
+for(i in seq_along(iter)){
   fct_lst[[i]] <- 
     local({
-    b<-par[i]
-    function(...) {arclength(f, t1, ...) - b}
-    })
+    b_sub<-iter[i]*b
+    function(u) arclength(f, t1, u)$length - b_sub
+    }) 
 }
 
-env_print(fct_lst[[1]]$b) #gives 1
-env_print(fct_lst[[2]]$b) #gives 2
+#f, t1 and u are free variables
+#b_sub is a local variable 
+
+
+library(rlang)
+env_print(fct_lst[[1]])$b_sub #iter[1]*b = 0.0000)
+env_print(fct_lst[[2]])$b_sub #iter[2]*b = 0.0739)
+
+identical(env_print(fct_lst[[2]])$b_sub, 0.05*b) #TRUE
+
+
+#try to evaluate one of the functions in fct_lst
+fct_lst[[1]](0.5)
+
+
 
 ############testing END######
 
