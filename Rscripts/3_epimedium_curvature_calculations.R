@@ -119,12 +119,12 @@ func_lst<- poly_lst %>%
 #run trace(fun2form, edit=TRUE) and change width.cutoff to 500L under deparse()
 
 #total curvature function
-totalK_fun<-function (x_range, fun) 
+totalK_fun<-function (x_range, fun, param_fun) 
 {
   stopifnot(is.atomic(x_range)) # is.atomic checks that x.range cannot be a list or expression
   if (!is.numeric(x_range)) 
     stop("'x_range' must be a numeric vector!")
-  if (length(x.range) != 2) 
+  if (length(x_range) != 2) 
     stop("'x_range' must be a vector of length two!")
   if (diff(x_range) < 0) #calculates the difference between x1 and x2 to ensure it's >0
     stop("please reorder 'x_range'.")
@@ -133,14 +133,29 @@ totalK_fun<-function (x_range, fun)
   
   dfun <- deriv3(fun2form(fun), "x", func = TRUE)
   
-  if (attr(dfun(x.range[1]), "gradient") == attr(dfun(x_range[2]), #make sure function is not a straight line
+  if (attr(dfun(x_range[1]), "gradient") == attr(dfun(x_range[2]), #make sure function is not a straight line
                                                  "gradient")) 
     stop("'fun' should not be a linear function of x!") #corrected spelling from "linar"
-  x <- seq(x_range[1], x_range[2], length.out = 5000) #splits the x range into 5000 even segments (is not arc length parameterized!)
+  
+  iter<- seq(0, 1, by=0.002) #5000 iterations
+  arcfct_lst<- list() #empty bin
+  b<- arclength(param_fun, x_range[1], x_range[2])$length #arc length of 
+  
+  for(i in seq_along(iter)){ 
+    arcfct_lst[[i]] <- 
+      local({
+        b_sub<-iter[i]*b
+        function(u) arclength(param_fun, x_range[1], u)$length - b_sub
+      }) 
+  }
+  
+  root_find<- function(x) uniroot(x, x_range)$root
+  
+  x <- sapply(arcfct_lst, root_find)  #splits the x range into 5000 even segments (is not arc length parameterized!)
   y <- fun(x) 
-  gr <- attr(dfun(x), "gradient") #the tangents (first derv) of the 5000 x components, dfun() is defined 7 lines above. The gradient matrix has elements that are the first deriv of a function
+  gr <- attr(dfun(x), "gradient") #the tangents (first derv) of the 5000 x components, dfun() is defined above. The gradient matrix has elements that are the first deriv of a function
   he <- attr(dfun(x), "hessian")[, , "x"] # x is in the third dimension of this object (df?). The hessian matrix has elements that are the second deriv of a function
-  k <- abs(he)/(1 + gr^2)^(3/2) #there are possibly 5000 curvature points stored in k... could sum them? also, see: https://en.wikipedia.org/wiki/Curvature "curvature of the graph of a function"
+  k <- abs(he)/(1 + gr^2)^(3/2) #there are 5000 curvature points stored in k. Will be summed later in the pipe. 
 }
 
 
@@ -172,50 +187,21 @@ t1_lengths_lst <-
 
 
 
-#create fParam as a function that runs over a list of polynomials
-fParam <- 
-  function(w) {
-  fct <- function(u) arclength(polyfunc_lst, baselines_lst %>% lapply(., "[[", 1), u)$length - w #creates a function with unknown variable u (t2 value that produces some arclength b*i)
-  urt <- uniroot(fct,  c(baselines_lst %>% lapply(., "[[", 1), baselines_lst %>% lapply(., "[[", 2))) #solves fct for t2 value that gives arclength b*i (Sharpe and Thorne 1982)
-  urt$root #access t2 value (root)
-  } 
-)
 
-
-
- 
-#this might work if fct is a list of functions
-mapply(uniroot, 
-       fct_lst, 
-       c(baselines_lst[[1]][1], baselines_lst[[1]][2]))
-
-#find x coords
-calc_xrange<-sapply(seq(0, 1, by=0.05)*b, fParam)
-
-#find x coords for every polynomial
-lapply(polyfunc_lst, calc_xrange)
-
-
-
-
-#https://www.google.com/search?client=firefox-b-d&q=for+loop+create+functions+r
-#https://stackoverflow.com/questions/31556088/r-defining-functions-within-a-loop
-
-
-#generate a list of functions
+#generate a list of arclength functions
 f<- polyfunc_lst[[1]]
 t1<- baselines_lst[[1]][1]
-b<- lengths_lst[[1]] %>% as.numeric()
+b<- arclength(polyfunc_lst, )
 
 iter<- seq(0, 1, by=0.05)
 
-fct_lst<- list()
+arcfct_lst<- list()
 
 for(i in seq_along(iter)){
   fct_lst[[i]] <- 
     local({
     b_sub<-iter[i]*b
-    function(u) arclength(f, t1, u)$length - b_sub
+    function(u) arclength(param_fun, x_range[1], u)$length - b_sub
     }) 
 }
 
@@ -223,24 +209,12 @@ for(i in seq_along(iter)){
 #solve for roots
 
 root_find<-
-  function(x) uniroot(x, c(baselines_lst[[1]][1], baselines_lst[[1]][2]))$root
+  function(x) uniroot(x, x_range)$root
 
 root_vec<-sapply(fct_lst, root_find)
 
        
        
-       
- 
-# library(rlang)
-# env_print(fct_lst[[1]])$b_sub #iter[1]*b = 0.0000)
-# env_print(fct_lst[[2]])$b_sub #iter[2]*b = 0.0739)
-# 
-# identical(env_print(fct_lst[[2]])$b_sub, 0.05*b) #TRUE
-
-
-#try to evaluate one of the functions in fct_lst
-fct_lst[[1]](0.5)
-
 
 
 ############testing END######
@@ -248,8 +222,8 @@ fct_lst[[1]](0.5)
 
 #calculate curvature many times along many curves
 curvature_tbl <- 
-  totalK.fun %>%
-  mapply(., baselines_lst, func_lst) %>%
+  totalK_fun %>%
+  mapply(., baselines_lst, func_lst, polyfunc_lst) %>%
   as.tibble() %>%
   rapply(., sum) %>% #integration of f dx 
   as.tibble() %>%
@@ -278,7 +252,7 @@ alltogether_tbl <-
   } %>% 
   rename(arclength=value, 
          total_curvature=value1) %>% #old colnames were "value" and "value1"
-  mutate(adjusted_curvature = total_curvature/arclength) %>% #new column is adjusted curvature
+  mutate(adjusted_curvature = total_curvature/arclength) #%>% #new column is adjusted curvature
  # write.csv(., here("data/epimedium_curvature_koreanum.csv")) 
   
 
