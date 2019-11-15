@@ -137,9 +137,9 @@ totalK_fun<-function (x_range, fun, param_fun)
                                                  "gradient")) 
     stop("'fun' should not be a linear function of x!") #corrected spelling from "linar"
   
-  iter<- seq(0, 1, by=0.002) #5000 iterations
+  iter<- seq(0, 1, by=0.0002) #5000 iterations
   arcfct_lst<- list() #empty bin
-  b<- arclength(param_fun, x_range[1], x_range[2])$length #arc length of 
+  b<- arclength(param_fun, x_range[1], x_range[2])$length #arc length of t-parameterized function
   
   for(i in seq_along(iter)){ 
     arcfct_lst[[i]] <- 
@@ -151,7 +151,7 @@ totalK_fun<-function (x_range, fun, param_fun)
   
   root_find<- function(x) uniroot(x, x_range)$root
   
-  x <- sapply(arcfct_lst, root_find)  #splits the x range into 5000 even segments (is not arc length parameterized!)
+  x <- sapply(arcfct_lst, root_find)  #splits the x range into 5000 even segments (is arc length parameterized!)
   y <- fun(x) 
   gr <- attr(dfun(x), "gradient") #the tangents (first derv) of the 5000 x components, dfun() is defined above. The gradient matrix has elements that are the first deriv of a function
   he <- attr(dfun(x), "hessian")[, , "x"] # x is in the third dimension of this object (df?). The hessian matrix has elements that are the second deriv of a function
@@ -229,6 +229,7 @@ curvature_tbl <-
   as.tibble() %>%
   gather()
 
+saveRDS(curvature_tbl, file=here("data/RDS_files/curvature_tbl.rds"))
 
 #merge curvature and arclength information
 alltogether_tbl <- 
