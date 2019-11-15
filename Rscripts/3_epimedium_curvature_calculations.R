@@ -202,9 +202,10 @@ lapply(polyfunc_lst, calc_xrange)
 #https://stackoverflow.com/questions/31556088/r-defining-functions-within-a-loop
 
 
-f<- function(t) c(t, t^2)
-t1<- 0
-b<- arclength(f, 0, 1)$length
+#generate a list of functions
+f<- polyfunc_lst[[1]]
+t1<- baselines_lst[[1]][1]
+b<- lengths_lst[[1]] %>% as.numeric()
 
 iter<- seq(0, 1, by=0.05)
 
@@ -218,15 +219,23 @@ for(i in seq_along(iter)){
     }) 
 }
 
-#f, t1 and u are free variables
-#b_sub is a local variable 
 
+#solve for roots
 
-library(rlang)
-env_print(fct_lst[[1]])$b_sub #iter[1]*b = 0.0000)
-env_print(fct_lst[[2]])$b_sub #iter[2]*b = 0.0739)
+root_find<-
+  function(x) uniroot(x, c(baselines_lst[[1]][1], baselines_lst[[1]][2]))$root
 
-identical(env_print(fct_lst[[2]])$b_sub, 0.05*b) #TRUE
+root_vec<-sapply(fct_lst, root_find)
+
+       
+       
+       
+ 
+# library(rlang)
+# env_print(fct_lst[[1]])$b_sub #iter[1]*b = 0.0000)
+# env_print(fct_lst[[2]])$b_sub #iter[2]*b = 0.0739)
+# 
+# identical(env_print(fct_lst[[2]])$b_sub, 0.05*b) #TRUE
 
 
 #try to evaluate one of the functions in fct_lst
