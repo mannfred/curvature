@@ -1,8 +1,28 @@
+﻿#######################
+Vector-valued functions
+#######################
+
+We first introduce the concept of a vector-valued function. Physically, a vector can be thought of as an arrow-like object with length and direction [Figure 4](Figures/Figure_4.jpg). A vector that exists in a coordinate plane "points" to an $(x, y)$ location and is called a _position vector_.  The $x$ and $y$ components of a position vector can be handled separately as scaled _unit vectors_ of length 1.  Therefore, the length of a position vector is computed as the Euclidian distance (hypotenuse) between its rectangular $x$ and $y$  unit vector components (Figure 4). A vector's direction is determined by its relative orientation to an arbitrarily chosen fixed line (_e.g._ the $x$-axis). Because vectors can "point" to a location on a coordinate plane, an $(x, y)$ coordinate can 
+can be rewritten as a position vector <center> $\mathbf{r} = x\mathbf{i} + y\mathbf{j}$,  </center> 
+
+Where $\mathbf{i}$  and $\mathbf{j}$ are orthogonal unit vectors fixed on the $x$ and $y$ axes, respectively, and $\mathbf{r}$ is the resultant position vector pointing to some point $(x, y)$ ([Figure 4](Figures/Figure_4.jpg)).  
+
+Now, instead of the typical $f(x) = y$ notation for a function, consider a curve as the path traced by a moving particle that passes through a set of $(x, y)$ points, described by two time-dependent functions <center> $x = \hat{x}(t)$, <br> $y = \hat{y}(t)$, </center>
+
+where $\hat{x}$ and $\hat{y}$ denote that $x$ and $y$ are functions of time $t$.  This parameterization is convenient because we would like to treat position vectors as composites of the unit vectors $\mathbf{i}$ and $\mathbf{j}$.  Consequently, we can combine the concepts of eqs 1 and 2 to produce a _vector-valued function_  <center> $\mathbf{\hat{r}}(t) = \hat{x}(t)\mathbf{i} + \hat{y}(t)\mathbf{j}$ ,  </center> 
+
+where $\mathbf{\hat{r}}(t)$ is a function that produces a position vector $\mathbf{r} = x\mathbf{i} + y\mathbf{j}$ determined by $t$. 
+
+#################
 Measuring flowers
+#################
+
 In E. grandiflorum, the distance separating the outer sepals (sensu Stearn 2002) was measured using dial calipers (graduation = 0.1 mm), until the length of the inner sepals exceeded the length of the outer sepals (stage 4, Table 2 - describing the stages). From this point onwards, the inner sepal distance was measured. Because the aestivation was imbricate, we measured the sepals of the major axis (Figure demonstrating measurement technique). In _E. koreanum_, the inner sepals lack pigmentation and adhere closely to the petals, making them difficult to measure accurately in situ. For this reason, the outer sepals were measured until they abscised (stage 5, table 2). Flowers were sampled opportunistically and preserved in 70% ethanol. 
 
-Supp Mat 2:
-#### Landmarking
+############
+Landmarking
+############
+
 1. Rotate the photographs so that the opening of the corolla tube is parallel to the y-axis. 
 2. Build tps file (a file listing all specimens) using tpsUtil. This tps file is used by tpsdig to add landmarks to.
 3. Landmark specimens from tps file using tpsDig (steps 1 and 2 will soon be possible in MomX and could be done in geomorph). Landmarks used to measure the dorsal arc are 1) the farthest point on the apex of the spur before the spur diminishes to a tip (E. violaceum) or widens into a nectar bucket (E. koreanum), and 2) the dorsal point at which the spur widens to become an attachment point for the petal to the stem(?). 13 semi-landmarks are placed between them (15 points total). 
