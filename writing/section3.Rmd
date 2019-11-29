@@ -23,7 +23,9 @@ citecolor: blue
 
 Reviewing the literature leads us to ask, “what is curvature?”. Turning to the field of geometry, we find several related definitions, resulting from a history of independent mathematical derivations [reviewed in @coolidge_1952; @bardini_2016]. Here, we follow the conventions of @casey_1996 and @rutter_2000, and present a definition relevant to the problem of analyzing biological shapes. 
 
-Intuitively, when a line deviates from being straight we say it is curved. Then, at any given point, the extent to which a line is not straight is its curvature. More technically, a line deviates from being straight when its second derivative is non-zero. Curvature is the rate at which the tangent is changing direction ([Figure 3](Figures/Figure_3.jpg)). We can formalize the above concepts as follows:
+Intuitively, when a line deviates from being straight we say it is curved. Then, at any given point, the extent to which a line is not straight is its curvature. More technically, a line deviates from being straight when its first derivative - the tangent - changes direction. Therefore, curvature can be thought of as the rate at which the tangent is changing direction ([Figure 3](Figures/Figure_3.jpg)). On a straight line, the tangent has the same direction everywhere and its rate of change (curvature) will be zero. On a curve, the tangent changes directions from point to point and will have some degree of curvature. 
+
+We can formalize the above concepts as follows:
 
 An ordinary function of the form $y=f(x)$ allows one value of $y$ at a single $x$ position. However, biological curves are better described by parametric fuctions that allow the curve to have multiple $y$ values at a single value of $x$ (_e.g._ spirals). Parametric functions use a 'hidden' variable that determines the values of $x$ and $y$ independently. For example, if we take the hidden parameter to be the arc length $s$ of a curve, $(x, y)$ will be determined by our position $s_i$ on the curve. We can express the relationship between arc length $s$ and position $(x, y)$ as a parametric equation:
 
@@ -35,24 +37,25 @@ y(s) \\
 \end{array}\right]$$
 
 
-Where $r(s)$ indicates that our position $r_i = (x_i, y_i)$ on the curve is determined by the length of the segment $s_i$. Although we could parameterize a curve by any arbitrary variable, arc length is a useful parameter because it allows us to move along the curve at even increments of $\Delta s$. This proves convienient when taking repeated, equally-spaced measurements along a curve, such as curvature. 
+Where $r(s_i)$ indicates that our position $r_i = (x_i, y_i)$ on the curve is determined by the length of the segment $s_i$. Although we could parameterize a curve by any arbitrary variable, arc length is a convienient parameter because it allows us to move along the curve at even increments of $\Delta s$. This proves useful when taking repeated, equally-spaced measurements along a curve, such as curvature. 
 
 
 If we are interested in the derivative properties of our arc-length parameterized function, we can differentiate $r(s)$ with respect to arc length $s$ as <center> $\lim\limits_{\Delta s \to 0} \frac{\Delta r}{\Delta s} = \frac{dr}{ds} = T$  </center>
 
 The resultant tangent function $T = \frac{dr}{ds}$ is the first derivative of the parametric equation $r(s)$. The tangent $T_i$ contains information about the direction of the curve at position $r(s_i)$ that we will use to calculate curvature. 
 
-At the beginning of this section we defined curvature ($\kappa$) as the rate at which the tangent is changing direction. We can now formalize this as: <center> $\kappa = \frac{dT}{ds}$ </center> 
+At the beginning of this section we defined curvature ($\kappa$) as the rate at which the tangent is changing direction. We can now formalize this by differentiating $T$ with respect to arc length: <center> $\kappa = \frac{dT}{ds}$ </center> 
 
-When the unit tangent is placed into a cartesian plane its direction is related to be the angle ($\phi$) formed with the $x$-axis. We can then re-state curvature at a single point as <center> $\kappa = \frac{d\phi}{ds}$ </center>
+When the tangent is placed into a cartesian plane its direction is related to the angle $\phi$ formed with the $x$-axis. We can then re-state curvature at a single point as <center> $\kappa = \frac{d\phi}{ds}$ </center>
 
-This definition provides an intuitive unit of measurement for reporting curvature: degrees per unit arc length. For example if arc length has been measured in millimeters, we would report its curvature as degrees per millimeter $\phi \cdot mm^{-1}$ 
 
-Furthermore, it is likely to be just as useful to summarize the _total curvature_ of a specimen. This is calculated as <center> $\kappa_{total} = \int_{0}^{s} \kappa ds$ </center>
+This definition provides an intuitive unit of measurement for reporting curvature: degrees per unit arc length. For example, if arc length has been measured in millimeters, we would report its curvature as degrees per millimeter $\phi \cdot mm^{-1}$ 
+
+This notion of curvature differs from the concepts reviewed in section 2. Here, curvature is a property of every point along a curve whereas in previous definitions, curvature is a single property of an entire shape. However, it is just as useful to summarize the _total curvature_ [@milnor_1954] of a specimen. This is calculated as <center> $\kappa_{total} = \int_{0}^{s} \kappa$ $ds$ </center>
 
 with units
 
-To account for size variation between specimens, _total adjusted curvature_ would be total curvature divided by arc length <center> $\kappa_{adj} = \frac{\kappa_{total}}{s}$ </center>
+To account for size variation between specimens, we propose _total adjusted curvature_ to be total curvature divided by arc length <center> $\kappa_{adj} = \frac{\kappa_{total}}{s}$ </center>
 
 
 

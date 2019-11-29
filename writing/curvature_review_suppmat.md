@@ -15,6 +15,17 @@ where $\hat{x}$ and $\hat{y}$ denote that $x$ and $y$ are functions of time $t$.
 
 where $\mathbf{\hat{r}}(t)$ is a function that produces a position vector $\mathbf{r} = x\mathbf{i} + y\mathbf{j}$ determined by $t$. 
 
+$$
+\begin{align}
+\mathbf{\bar{r}}(s) = \bar{x}(s)\mathbf{i} + \bar{y}(s)\mathbf{j} && \text{(eq. 1)}
+\end{align}
+$$
+
+Where $\mathbf{\bar{r}}(s)$ indicates that the position vector $\mathbf{r}$ is determined by its arc length $s$. 
+When a curve is parameterized by its arc length, for every arc length increment ($ds$) that we move along the curve, we generate a position vector $\mathbf{r}$ indicating the $(x, y)$ location in the coordinate plane. 
+
+
+This is because as ${\Delta s \to 0}$, the length of the tangent vector ($d\mathbf{r}$) and the length of the arc segment ($ds$) become equal. In this case, the tangent vector is called the _unit tangent vector_. 
 #################
 Measuring flowers
 #################
