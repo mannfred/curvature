@@ -2,6 +2,8 @@
 Vector-valued functions
 #######################
 
+The curves found in nature are sometimes best described by multi-valued fuctions, i.e. functions that allow the curve to have several Y-values for a single X-position (e.g. spirals). For this reason, the standard y=f(x) notation will not suffice, and instead we introduce the concept of a vector-valued function. 
+
 We first introduce the concept of a vector-valued function. Physically, a vector can be thought of as an arrow-like object with length and direction [Figure 4](Figures/Figure_4.jpg). A vector that exists in a coordinate plane "points" to an $(x, y)$ location and is called a _position vector_.  The $x$ and $y$ components of a position vector can be handled separately as scaled _unit vectors_ of length 1.  Therefore, the length of a position vector is computed as the Euclidian distance (hypotenuse) between its rectangular $x$ and $y$  unit vector components (Figure 4). A vector's direction is determined by its relative orientation to an arbitrarily chosen fixed line (_e.g._ the $x$-axis). Because vectors can "point" to a location on a coordinate plane, an $(x, y)$ coordinate can 
 can be rewritten as a position vector <center> $\mathbf{r} = x\mathbf{i} + y\mathbf{j}$,  </center> 
 
