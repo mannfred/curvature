@@ -23,7 +23,7 @@ citecolor: blue
 
 Reviewing the literature leads us to ask, “what is curvature?”. Turning to the field of geometry, we find several related definitions, resulting from a history of independent mathematical derivations [reviewed in @coolidge_1952; @bardini_2016]. Here, we follow the conventions of @casey_1996 and @rutter_2000, and present a definition relevant to the problem of analyzing biological shapes. 
 
-Intuitively, when a line deviates from being straight we say it is curved. Then, at any given point, the extent to which a line is not straight is its curvature. More technically, a line deviates from being straight when its first derivative - the tangent - changes direction. Therefore, curvature can be thought of as the rate at which the tangent is changing direction ([Figure 3](Figures/Figure_3.jpg)). On a straight line, the tangent has the same direction everywhere and its rate of change (curvature) will be zero. On a curve, the tangent changes directions from point to point and will have some degree of curvature. 
+Intuitively, when a line deviates from being straight we say it is curved. Then, at any given point, the extent to which a line is not straight is its curvature. More technically, a line deviates from being straight when its first derivative - the tangent - changes direction. Therefore, curvature can be thought of as the rate at which the tangent is changing direction as we move across the curve [(Figure 3)](Figure_3.jpg). On a straight line, the tangent has the same direction everywhere and its rate of change (curvature) will be zero. On a curve, the tangent changes directions from point to point and will have some degree of curvature. 
 
 We can formalize the above concepts as follows:
 
@@ -49,19 +49,21 @@ At the beginning of this section we defined curvature ($\kappa$) as the rate at 
 When the tangent is placed into a cartesian plane its direction is related to the angle $\phi$ formed with the $x$-axis. We can then re-state curvature at a single point as <center> $\kappa = \frac{d\phi}{ds}$ </center>
 
 
-This definition provides an intuitive unit of measurement for reporting curvature: degrees per unit arc length. For example, if arc length has been measured in millimeters, we would report its curvature as degrees per millimeter $\phi \cdot mm^{-1}$ 
+This definition provides an intuitive unit of measurement for reporting curvature: degrees of rotation per unit arc length. For example, if arc length has been measured in millimeters, we would report its curvature as degrees per millimeter $\phi \cdot mm^{-1}$. Framed this way, curvature is a measurement of rotation per distance. This notion of curvature differs from the concepts reviewed in the previous section. Here, curvature is a property of every point along a curve whereas in previous definitions, curvature is a single property of an entire shape. However, it is just as useful to summarize the _total curvature_ [@milnor_1954] of a specimen. To do this, we can sum the individual curvature measurements made across the curve. This is calculated as: <center> $\kappa_{total} = \int_{0}^{s} \kappa$ $ds$ </center>
 
-This notion of curvature differs from the concepts reviewed in section 2. Here, curvature is a property of every point along a curve whereas in previous definitions, curvature is a single property of an entire shape. However, it is just as useful to summarize the _total curvature_ [@milnor_1954] of a specimen. This is calculated as <center> $\kappa_{total} = \int_{0}^{s} \kappa$ $ds$ </center>
+Units for _total curvature_ are no longer expressed as $\phi \cdot mm^{-1}$ because we are not measuring curvature at a single point. Instead we are summarizing tangent rotations across the curve, expressed simply as $\phi$.
 
-with units
+To account for size variation between specimens, we propose using _total adjusted curvature_, that is, total curvature divided by arc length <center> $\kappa_{adj} = \frac{\kappa_{total}}{s}$ </center>
 
-To account for size variation between specimens, we propose _total adjusted curvature_ to be total curvature divided by arc length <center> $\kappa_{adj} = \frac{\kappa_{total}}{s}$ </center>
-
-
-
-[Figure 3](Figure_3.jpg)
+Units for $\kappa_{adj}$ are expressed as $\phi \cdot mm^{-1}$.  _Total adjusted curvature_ also represents mean curvature of the curve.  
 
 
 
-![Figure 4. Illustrations of vectors. Left: On the x and y axis are the unit vectors i and j, respectively, of length 1. The point P = (2,1) can be rewritten as a position vector r, that is made of two i unit vectors and one j unit vector, r = 2i + j. The length of r is ||r|| = sqrt 2^2 + 1^2.  Right: A vector valued function describing a curve, parameterized by arc length.
-](Figures/Figure_4.jpg)
+![Figure 3. A curve parameterized by arc length ($s$). $T_0$ and $T_2$ are the tangents ($\frac{dr}{ds}$) at $s=0$ and $s=2$, respectively. Curvature at $s_7$ is $\kappa_7 = \lim\limits_{\Delta s \to 0} \frac{T_{7+ \Delta s} - T_{7- \Delta s}}{2 \Delta s} = \frac{dT_7}{ds_7}$. ](Figures/Figure_3.jpg)
+
+ 
+
+
+
+
+
