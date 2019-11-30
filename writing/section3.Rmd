@@ -3,12 +3,12 @@ title: "The geometry and ecology of curved flowers and their pollinators"
 author:
 date: ""
 output: 
-  # word_document:
-  #   fig_caption: yes
-  #   reference_docx: curvature_review_reference.docx
-  html_document:
-    number_sections: no
-    theme: flatly
+   word_document:
+     fig_caption: yes
+     reference_docx: curvature_review_reference.docx
+  #html_document:
+   # number_sections: no
+    #theme: flatly
   # pdf_document:
   #   latex_engine: xelatex
 bibliography: curvature_review.bib
@@ -49,7 +49,7 @@ At the beginning of this section we defined curvature ($\kappa$) as the rate at 
 When the tangent is placed into a cartesian plane its direction is related to the angle $\phi$ formed with the $x$-axis. We can then re-state curvature at a single point as <center> $\kappa = \frac{d\phi}{ds}$ </center>
 
 
-This definition provides an intuitive unit of measurement for reporting curvature: degrees of rotation per unit arc length. For example, if arc length has been measured in millimeters, we would report its curvature as degrees per millimeter $\phi \cdot mm^{-1}$. Framed this way, curvature is a measurement of rotation per distance. This notion of curvature differs from the concepts reviewed in the previous section. Here, curvature is a property of every point along a curve whereas in previous definitions, curvature is a single property of an entire shape. However, it is just as useful to summarize the _total curvature_ [@milnor_1954] of a specimen. To do this, we can sum the individual curvature measurements made across the curve. This is calculated as: <center> $\kappa_{total} = \int_{0}^{s} \kappa$ $ds$ </center>
+This definition provides an intuitive unit of measurement for reporting curvature: degrees of rotation per unit arc length [(Figure 4)](Figure_4.jpg). For example, if arc length has been measured in millimeters, we would report its curvature as degrees per millimeter $\phi \cdot mm^{-1}$. Framed this way curvature is a measurement of rotation per distance. This notion of curvature differs from the concepts reviewed in the previous section. Here, curvature is a property of every point along a curve whereas in previous definitions, curvature is a single property of an entire shape. However, it is just as useful to summarize the _total curvature_ [@milnor_1954] of a specimen. To do this, we can sum the individual curvature measurements made across the curve. This is calculated as: <center> $\kappa_{total} = \int_{0}^{s} \kappa$ $ds$ </center>
 
 Units for _total curvature_ are no longer expressed as $\phi \cdot mm^{-1}$ because we are not measuring curvature at a single point. Instead we are summarizing tangent rotations across the curve, expressed simply as $\phi$.
 
@@ -60,10 +60,14 @@ Units for $\kappa_{adj}$ are expressed as $\phi \cdot mm^{-1}$.  _Total adjusted
 
 
 ![Figure 3. A curve parameterized by arc length ($s$). $T_0$ and $T_2$ are the tangents ($\frac{dr}{ds}$) at $s=0$ and $s=2$, respectively. Curvature at $s_7$ is $\kappa_7 = \lim\limits_{\Delta s \to 0} \frac{T_{7+ \Delta s} - T_{7- \Delta s}}{2 \Delta s} = \frac{dT_7}{ds_7}$. ](Figures/Figure_3.jpg)
-
  
+#### 4. A proposed protocol for measuring curvature
+
+As illustrated in the methodology review, our current protocols for measuring flower-pollinator curvature lack a conceptual unity. In each method, curvature takes on a new meaning. Therefore, there are two main advantages of the curvature definition described above. First, curvature becomes a local property of the tissue or organ under study. This means that shape information is gathered at every point along the curve and can be examined and compared to other points within or between specimens. This differs from previous methods that take curvature as a total property of the entire curve. In these measurements curvature cannot be parsed into smaller elements. Second, because the revised definition is explicitly adapted from the field of differential geometry, we benefit from citeable geometric concepts that allow us to be clear about what we mean by 'curvature'. 
 
 
+In order to apply the above definition of curvature, a biological organ or tissue needs to be reduced to a continuous function.  We propose a workflow as illustrated in [Figure 4](Figures/Figure_4.jpg). Cosgrove [-@cosgrove_1990] uses an analogous approach to study the development of cucumber hypocotyls. By fitting cubic splines to hand-marked seedlings, curvature was computed using the same definition as above.  However, since Cosgrove [-@cosgrove_1990], the entire field of landmark-based geometric morphometrics has unfolded [reviewed in @adams_2013]. This rigorous, reproducible toolkit has been used extensively in pollination ecology, but has not yet been leveraged to calculate curvature ([Table 1](Tables/Table_1.csv)).  Terral et al [-@terral_2004] use these tools to digitally landmark olive stones and fit polynomials to the landmarks: synthesizing the concepts of Cosgrove [-@cosgrove_1990] and Terral [-@terral_2004] produces a modernized method for fitting curves and computing curvature from biological forms [(Figure 4)](Figures/Figure_4.jpg)
 
+![Figure 4: Proposed protocol for measuring curvature. 1. A petal of _Epimedium violaceum_ is landmarked and rotated. 2. A polynomial curve is fitted to the landmarks. 3. Curvature is calculated as the rate of change of the tangent vector at every point along the curve. Total curvature can be calculated by the methods outlined in Section 3.](Figures/Figure_4.jpg)
 
-
+Comment on why using we're using polynomials and not splines, fourier, etc.
