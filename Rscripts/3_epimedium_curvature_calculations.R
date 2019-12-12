@@ -1,6 +1,6 @@
 ########################################
 #measure curvature from epimedium photos
-
+21.259368  2.013752
 
 library(here)
 library(Momit)
@@ -20,6 +20,19 @@ dorsal_lst <-
   Ldk() #adds "$shp{i}" as list element headers
         
 
+
+  
+#import data
+dorsal_data<-
+  here("data/epimedium_photos/koreanum/koreanum_dorsal_appended.TPS") %>%
+  import_tps() 
+  
+#format data
+dorsal_lst<-
+  map2(dorsal_data$coo, dorsal_data$scale, function(x, y) x*y) %>%   #apply scaling
+  
+#DO WE REALLY NEED THE LDK() FUNCTION? CHECK DOWNSTREAM...
+  
 #inspect raw LMs
 str(dorsal_lst)#LMs stored in $coo
 dorsal_lst[1] %>% 
