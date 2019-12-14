@@ -1,5 +1,5 @@
 ---
-title: "The geometry and ecology of curved flowers and their pollinators"
+title: "Specialized pollination systems: Origin and measurement of curvature"
 author:
 date: ""
 output:
@@ -21,17 +21,17 @@ citecolor: blue
 
 #### 3. What is curvature?
 
-Reviewing the literature leads us to ask, “what is curvature?”. Turning to the field of geometry, we find several related definitions, resulting from a history of independent mathematical derivations [reviewed in @coolidge_1952; @bardini_2016]. Here, we follow the conventions of @casey_1996 and @rutter_2000, and present a definition relevant to the problem of analyzing biological shapes. 
+Reviewing the literature leads us to ask, “what is curvature?”. There are at least four definitions in use, making it unclear how to compare studies that use different metrics. Ultimately, curvature is a concept most studied by geometers. Turning to the field of geometry we find several definitions resulting from a history of independent derivations [reviewed in @coolidge_1952; @bardini_2016]. However, these definitions share a conceptual theme: curvature is a point-wise property that can measured anywhere on a line. This concept is a refinement to those reviewed in the previously, where curvature is single property of an entire shape. Here, we follow the conventions of @casey_1996 and @rutter_2000, and present a definition of curvature that is tractable for analyzing biological shapes. 
 
-Intuitively, when a line deviates from being straight we say it is curved, the extent to which it is not straight is its curvature. More technically, a line deviates from being straight when its first derivative - the tangent (shown by $T_0$, $T_2$, $T_n$ in [Figure 3](Figure_3.jpg)) - changes direction (e.g. the difference in direction of $T_i$ to $T_{i+1}$.  Therefore, curvature can be thought of as the rate of change in the tangent as we move across the curve. Hence, the tangent of a straight line has the same direction everywhere and a curvature of zero, whereas the tangents of the curve shown in [Figure 3](Figure_3.jpg) will have a non-zero curvature. 
+Intuitively, when a line deviates from being straight we say it is curved, the extent to which it is not straight is its curvature. More technically, a line deviates from being straight when its first derivative - the tangent (shown by $\mathbf{T}_0$, $\mathbf{T}_2$, $\mathbf{T}_n$ in [Figure 3](Figure_3.jpg)) - changes direction (e.g. the difference in direction of $\mathbf{T}_i$ to $\mathbf{T}_{i+1}$. Therefore, curvature can be thought of as the rate of change in the tangent as we move across the curve. Hence, the tangent of a straight line has the same direction everywhere and a curvature of zero, whereas the tangents of the curve shown in [Figure 3](Figure_3.jpg) will have a non-zero curvature. 
 
-To formalize these concepts mathematically we begin by considering an ordinary function of the form $y=f(x)$, where $f(x)$ specifies one value of $y$ for each value of $x$. Biological curves, however, often loop back on themselves (e.g. spirals) and are better described by parametric fuctions that allow the curve to have multiple $y$ values for a single $x$. Parametric functions use a 'hidden' variable that determines the values of $x$ and $y$ independently. For example, we use the parameter arc length, $s$, along the curve. The position $(x_i, y_i)$ is solely determined by the corresponding arc length, $s_i$, along the curve. We define the location along the curve by a vector $\mathbf{\bar{r}}$, which is a function of arc length $s$: 
+To formalize these concepts mathematically we begin by considering an ordinary function of the form $y=f(x)$, where $f(x)$ specifies one value of $y$ for each value of $x$. Biological curves, however, often loop back on themselves (e.g. spirals) and are better described by parametric fuctions that allow the curve to have multiple $y$ values for a single $x$. Parametric functions use a 'hidden' variable that determines the values of $x$ and $y$ independently. Here, we use the parameter variable arc length, $s$, along the curve. Letting $\mathbf{\bar{r}}_i$ be the position $(x_i, y_i)$, we can express $\mathbf{\bar{r}}_i$ as a function solely of $s_i$. Specifically, using vector notation we have:
 
 \begin{equation}
 \tag{1}
 
-r_i =
-\mathbf{\bar{r}}(s_i) \equiv \left[\begin{array}
+\mathbf{\bar{r}}(s_i) =
+\mathbf{\bar{r}}_i \equiv \left[\begin{array}
 {rrr}
 x(s_i) \\
 y(s_i) \\
@@ -40,41 +40,41 @@ y(s_i) \\
 \end{equation}
 
 
-Where $\mathbf{\bar{r}}(s_i)$ indicates that our position $r_i = (x_i, y_i)$ on the curve is determined by the length of the segment $s_i$. Although we could parameterize a curve by any arbitrary variable, arc length is a convienient parameter because it allows us to move along the curve at even increments of $\Delta s$. This proves useful when taking repeated, equally-spaced measurements along a curve, such as curvature. 
+Where $\mathbf{\bar{r}}_i$ is shorthand for $\mathbf{\bar{r}}(s_i)$ which indicates that our position $(x_i, y_i)$ on the curve is determined by the length of the segment $s_i$. Although we could parameterize a curve by many potential parametric variables, arc length is a convienient choice because it allows us to move along the curve at even increments, which we denote as $\Delta s$. This proves useful when taking repeated, equally-spaced measurements along a curve, such as curvature. 
 
 
-If we are interested in the derivative properties of our arc-length parameterized function, we can differentiate $\mathbf{\bar{r}}(s)$ with respect to arc length $s$ as: 
+As we are interested in the derivative properties of our arc-length parameterized curve, we can differentiate $\mathbf{\bar{r}}(s)$ with respect to arc length $s$ in the following way (using the formal definition of the derivative):
 
 \begin{equation}
 \tag{2}
 
-\lim\limits_{\Delta s \to 0} \frac{\Delta \mathbf{\bar{r}}}{\Delta s} = \frac{d \mathbf{\bar{r}}}{ds} = T  
+\lim\limits_{\Delta s \to 0} \frac{\Delta \mathbf{\bar{r}}(s)}{\Delta s} = \frac{d \mathbf{\bar{r}}(s)}{ds} = \mathbf{T}(s)  
 
 \end{equation}
 
-The resultant tangent function $T = \frac{d \mathbf{\bar{r}}}{ds}$ is the first derivative of the parametric equation $\mathbf{\bar{r}}(s)$. The tangent $T_i$ contains information about the direction of the curve at position $\mathbf{\bar{r}}(s_i)$ that we will use to calculate curvature. 
+This produces a tangent function $\mathbf{T}(s) = \frac{d \mathbf{\bar{r}}}{ds}$ giving the first derivative of the parametric equation $\mathbf{\bar{r}}(s)$. The tangent $\mathbf{T}_i = \mathbf{T}(s_i)$ contains information about the direction of the curve at position $\mathbf{\bar{r}}(s_i)$ that we will use to calculate curvature. 
 
 
 
-At the beginning of this section we defined curvature ($\kappa$) as the rate at which the tangent is changing direction. We can now formalize this by differentiating $T$ with respect to arc length: 
+At the beginning of this section we defined curvature, $\kappa$, as the rate at which the tangent is changing direction. We can now formalize this by differentiating $\mathbf{T}$ with respect to arc length: 
 
 \begin{equation}
 \tag{3}
 
-\kappa = \frac{dT}{ds}
+\kappa = \frac{d $\mathbf{T}}{ds}
 
 \end{equation}
 
-Where $\frac{dT}{ds}$ is the second derivative of the parameteric function $\mathbf{\bar{r}}(s_i)$: 
+Where $\frac{d \mathbf{T}}{ds}$ is the second derivative of the parameteric function $\mathbf{\bar{r}}(s_i)$: 
 
 \begin{equation}
 \tag{4}
 
-\kappa_n = \lim\limits_{\Delta s \to 0} \frac{T_{n+ \Delta s} - T_{n- \Delta s}}{2 \Delta s} = \frac{dT_n}{ds_n}
+\kappa_i = \lim\limits_{\Delta s \to 0} \frac{\mathbf{T}_i - \mathbf{T}_{i- \Delta s}}{\Delta s} = \frac{dT_i}{ds}
 
 \end{equation}
 
-When the tangent is placed into a cartesian plane its direction is related to the angle $\phi$ formed with the $x$-axis. We can then re-state curvature at a single point as: 
+When the tangent $\mathbf{T}$ is placed into a cartesian plane its direction is related to the angle $\phi$ formed with the $x$-axis. Using this relation we can express the curvature as:
 
 \begin{equation}
 \tag{5}
@@ -84,27 +84,27 @@ When the tangent is placed into a cartesian plane its direction is related to th
 \end{equation}
 
 
-This definition provides an intuitive unit of measurement for reporting curvature: degrees of rotation per unit arc length [(Figure 4)](Figure_4.jpg). For example, if arc length has been measured in millimeters, we would report its curvature as degrees per millimeter $\phi \cdot mm^{-1}$. Framed this way curvature is a measurement of rotation per distance. In previous defintions (reviewed in the preceeding section) curvature is an indivisble, single property of an entire shape. Here, curvature is a property of every point along the curve. Consequently, we can summarize the _total curvature_ [@milnor_1954] of a specimen. To do this, we sum the individual curvature measurements made along the curve. This is calculated as: 
+This definition provides an intuitive unit of measurement for reporting curvature: degrees of rotation per unit arc length [(Figure 4)](Figure_4.jpg). For example, if arc length has been measured in millimeters, we would report its curvature as degrees per millimeter $degrees \cdot mm^{-1}$. Framed this way curvature is a measure of rotation per distance. In contrast to previous defintions, where curvature is an indivisble, single property of an entire shape, here, curvature is a property of every point along the curve. Under our point-wise defintion, we can summarize the _total curvature_ [@milnor_1954] of a specimen as the of sum the individual curvature measurements made along the curve:
 
 \begin{equation}
 \tag{6}
 
-\kappa_{total} = \int_{0}^{s} \kappa \; ds 
+\kappa_{total} = \int_{0}^{s_{max}} \kappa \; ds 
 
 \end{equation}
 
-Units for _total curvature_ are no longer expressed as $\phi \cdot mm^{-1}$ because we are not measuring curvature at a single point. Instead we are summarizing all tangent rotations along the curve, expressed simply as $\phi$.
+Units for _total curvature_ are no longer expressed as $degrees \cdot mm^{-1}$ because we are not measuring curvature at a single point. Instead we are summarizing all tangent rotations along the curve, expressed simply as $degrees$.
 
 To account for size variation between specimens, we propose using _total adjusted curvature_, that is, total curvature divided by arc length:
 
 \begin{equation}
 \tag{7}
 
-\kappa_{adj} = \frac{\kappa_{total}}{s} 
+\kappa_{adj} = \frac{\kappa_{total}}{s_{max}} 
 
 \end{equation}
 
-Units for $\kappa_{adj}$ are expressed as $\phi \cdot mm^{-1}$.  _Total adjusted curvature_ also represents mean curvature of the curve.  
+Units for $\kappa_{adj}$ are expressed as $degrees \cdot mm^{-1}$.  _Total adjusted curvature_ also represents mean curvature of the curve.  
 
 
 ![Figure 3. A curve parameterized by arc length ($s$). When $s=5$, the vector $\mathbf{\bar{r}}(s_5)$ points to the location on the curve $(x_5, y_5)$. $T_0$, $T_2$, and $T_5$ are the tangents ( $\frac{d \mathbf{\bar{r}}}{ds}$ ) at $s=0$, $s=2$, and $s=5$, respectively. Curvature at $s_n$ is defined in equation (4).](Figures/Figure_3.jpg)
@@ -114,7 +114,7 @@ Units for $\kappa_{adj}$ are expressed as $\phi \cdot mm^{-1}$.  _Total adjusted
  
 #### 4. A proposed protocol for measuring curvature
 
-As illustrated in the methodology review, our current protocols for measuring flower-pollinator curvature lack a conceptual unity. In each method, curvature takes on a new meaning. Therefore, there are two main advantages of the curvature definition described above. First, curvature becomes a local property of the tissue or organ under study. This means that shape information is gathered at every point along the curve and can be examined and compared to other points within or between specimens. This differs from previous methods that take curvature as a total property of the entire curve. In these measurements curvature cannot be parsed into smaller elements. Second, because the revised definition is explicitly adapted from the field of differential geometry, we benefit from citeable geometric concepts that allow us to be clear about what we mean by 'curvature'. 
+As illustrated in the methodology review, our current protocols for measuring flower-pollinator curvature lack a conceptual unity. In each method, curvature takes on a new meaning. Therefore, there are two main advantages of the curvature definition described above. First, curvature becomes a local property of the tissue or organ under study. This means that shape information is gathered at every point along the curve and can be examined and compared to other points within or between specimens. This differs from previous methods that take curvature as a total property of the entire curve. In previous methods curvature cannot be parsed into smaller elements. Second, because the revised definition is explicitly adapted from the field of differential geometry, we benefit from citeable geometric concepts that allow us to be clear about what we mean by 'curvature'. 
 
 
 In order to apply the above definition of curvature, a biological organ or tissue needs to be reduced to a continuous function.  We propose a workflow as illustrated in [Figure 4](Figures/Figure_4.jpg). Cosgrove [-@cosgrove_1990] uses an analogous approach to study the development of cucumber hypocotyls. By fitting cubic splines to hand-marked seedlings, curvature was computed using the same definition as above.  However, since Cosgrove [-@cosgrove_1990], the entire field of landmark-based geometric morphometrics has unfolded [reviewed in @adams_2013]. This rigorous, reproducible toolkit has been used extensively in pollination ecology, but has not yet been leveraged to calculate curvature ([Table 1](Tables/Table_1.csv)).  Terral et al [-@terral_2004] use these tools to digitally landmark olive stones and fit polynomials to the landmarks: synthesizing the concepts of Cosgrove [-@cosgrove_1990] and Terral [-@terral_2004] produces a modernized method for fitting curves and computing curvature from biological forms [(Figure 4)](Figures/Figure_4.jpg)
