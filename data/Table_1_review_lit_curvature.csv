@@ -1,25 +1,33 @@
 Citation,System,Stated Method (Inferred Method)
-@stiles_1975,"Corolla morphology of Heliconia and bill morphology of nine hummingbird species at La Selva, Costa Rica.","Qualitative (e.g. ‘strongly curved, moderately curved, etc.)."
-@buttrose_1977,Significance of curvature of style branches in Hibiscus trionum for pollination,Qualitative
-@gill_1978,Sunbird bill diversity and abilities to extract nectar from Kenyan Leonotis nepetifolia (Lamiaceae).,"Not defined  (Mandibular index): Curvature is “the ratio x/y, where x is the bill length measured from the anterior edge of the nostril and y is the maximum height above the longest chord of the bill.”"
-@paton_1989,"Correlates (Geography, Age, Sex, Tongue structure, foraging mode) of bill morphology on nectar extraction 198 hummers (and other birds).","Curvature index (Mandibular index): “Bill curvatures were defined as the maximum perpendicular height of the bottom edge of the culmen above the chord from the gape to the tip of the bill, divided by the length of this chord”."
-@stiles_1995,"Effects of bill morphology on insect foraging strategy by 11 species of hummingbirds at La Selva, Costa Rica.",Arc:chord ratio of exposed culmen  – silhouette projected onto a screen.
-@mcintyre_1996,Phototropism in Helianthus and effects on cotyledon curvature,"Protractor - further details not provided, presumably angle of deflection method."
-@cotton_1998,"Survey and description of 16  hummingbird species  occurring at Amacayacu National Park, Colombia.",Qualitative
-@temeles_2000,"Sexual dimorphism of bill shape in Purple-throated caribs (Eulampis jugularis), pollinatiors of Heliconia at Quilesse Reserve, Saint Lucia.","Not described, but presumably the same method as Temeles 2009, Temeles 2010."
-@borgella_2001,"Effects of bill morphology (21 hummingbird spp.) on pollen loads (35 plant spp.) at Coto Brus, Costa Rica.","Not defined: ""For species with decurved bills, we also used a ruler to measure a few bills along the curve to calculate a correction factor."""
-@temeles_2005,"Sexual dimorphism of bill shape in Purple-throated caribs (Eulampis jugularis), pollinatiors of Heliconia at Quilesse Reserve, Saint Lucia.","Not described, but presumably the same method as Temeles 2010, Temeles 2009."
-@collins_2008,"Foraging efficiency from artificial and natural (15 spp.) flowers by 4 species of hummingbirds at Monteverde, Costa Rica",Paton and Collins 1989
-@stiles_2008,Correlations of bill morphology to the elevational distributions of 150 spp. of hummingbirds in the Andes.,Arc:chord ratio of exposed culmen
-@marten_2009,Testing the pollination syndrome hypothesis in Antillean Gesneriaceae.,Protractor aligned with the dorsal side of the corolla tube. (Angle of deflection)
-@temeles_2009,Effects of natural (Heliconia) and artificial flower morphologies on foraging performance of Purple-throated caribs (Eulampis jugularis) at Saint Lucia.,Inverse radius calculated from the angle of declension method.
-@temeles_2010,Sexual dimorphism of bill shape in 21 species of Central and South American hummingbirds.,Inverse radius calculated from the angle of declension method.
-@berns_2010,Sexual dimorphism of bill shape in Black-chinned hummingbird (Archilochus alexandri) and Ruby-throated hummingbird (Archilochus colubris).,"Comparison of 3 methods: Paton and Collins 1989 (maxilla), Stiles 1975 (mandible), Temeles 2009 (inverse radius)."
-@berns_2013,Sexual dimorphism of bill shape in 219 hummingbird spp.,"Geometric morphometrics (” Thin-plate spline deformation grids revealed that in these species, females have longer, more curved bills at both the tip and main body of the bill relative to the mean, while males have straighter and shorter bills and M. minima has the largest magnitude of sexual shape dimorphism” – used GeoMorphometrics but in the end resort to just saying that the deformations of the spline ‘look different’.)"
-@maglianesi_2014,"Trait matching and resource use in a plant-hummingbird network, La Selva, Costa Rica.",Angle of deflection
-@rico_2014,"Bills as weapons in lekking Phaethornis longirostris at La Selva, Costa Rica.",Arc:chord ratio of exposed culmen.
-@maglianesi_2015,"Differential preferences of artificial and natural (65 spp.) flower populations visited by 3 species of hummingbird in Braulio Carrillo National Park, Costa Rica.",Angle of deflection
-@maglianesi_2016,"Plant-pollinator specialization along an elevational gradient at Braulio Carrillo National Park, Costa Rica. 21 hummingbird spp. and 208 plant species examined.",Angle of deflection
-@lagomarsino_2017,Evolution of pollination syndromes in Andean Campanulaceae.,Arc:chord ratio of corolla midline and base-to-opening line.
-@hadley_2018,"Effects of forest fragmentation on hummingbird bill morphologies (19 spp.) representative of specialization. Coto Brus, Costa Rica.",Bill curvature was calculated as the angle between a horizontal line across the top of the bill and a line running the length of the bill. (Arc:chord ratio)
-@sonne_2019,Distribution of morphological specialization along an elevational gradientin Ecuador.,Arc:chord ratio of exposed culmen.
+#NAME?,"Corolla morphology of Heliconia and bill morphology of nine hummingbird species at La Selva, Costa Rica.","Qualitative (e.g. ‘strongly curved, moderately curved, etc.)."
+#NAME?,Significance of curvature of style branches in Hibiscus trionum for pollination,Qualitative
+#NAME?,Sunbird bill diversity and abilities to extract nectar from Kenyan Leonotis nepetifolia (Lamiaceae).,"Not defined  (Mandibular index): Curvature is “the ratio x/y, where x is the bill length measured from the anterior edge of the nostril and y is the maximum height above the longest chord of the bill.”"
+#NAME?,"Correlates (Geography, Age, Sex, Tongue structure, foraging mode) of bill morphology on nectar extraction 198 hummers (and other birds).","Curvature index (Mandibular index): “Bill curvatures were defined as the maximum perpendicular height of the bottom edge of the culmen above the chord from the gape to the tip of the bill, divided by the length of this chord”."
+#NAME?,"Effects of bill morphology on insect foraging strategy by 11 species of hummingbirds at La Selva, Costa Rica.",Arc:chord ratio of exposed culmen  – silhouette projected onto a screen.
+#NAME?,Phototropism in Helianthus and effects on cotyledon curvature,"Protractor - further details not provided, presumably angle of deflection method."
+#NAME?,"Survey and description of 16  hummingbird species  occurring at Amacayacu National Park, Colombia.",Qualitative
+#NAME?,"Sexual dimorphism of bill shape in Purple-throated caribs (Eulampis jugularis), pollinatiors of Heliconia at Quilesse Reserve, Saint Lucia.","Not described, but presumably the same method as Temeles 2009, Temeles 2010."
+#NAME?,"Effects of bill morphology (21 hummingbird spp.) on pollen loads (35 plant spp.) at Coto Brus, Costa Rica.","Not defined: ""For species with decurved bills, we also used a ruler to measure a few bills along the curve to calculate a correction factor."""
+#NAME?,"Sexual dimorphism of bill shape in Purple-throated caribs (Eulampis jugularis), pollinatiors of Heliconia at Quilesse Reserve, Saint Lucia.","Not described, but presumably the same method as Temeles 2010, Temeles 2009."
+#NAME?,"Foraging efficiency from artificial and natural (15 spp.) flowers by 4 species of hummingbirds at Monteverde, Costa Rica",Paton and Collins 1989
+#NAME?,Correlations of bill morphology to the elevational distributions of 150 spp. of hummingbirds in the Andes.,Arc:chord ratio of exposed culmen
+#NAME?,Testing the pollination syndrome hypothesis in Antillean Gesneriaceae.,Protractor aligned with the dorsal side of the corolla tube. (Angle of deflection)
+#NAME?,Effects of natural (Heliconia) and artificial flower morphologies on foraging performance of Purple-throated caribs (Eulampis jugularis) at Saint Lucia.,Inverse radius calculated from the angle of declension method.
+#NAME?,Sexual dimorphism of bill shape in 21 species of Central and South American hummingbirds.,Inverse radius calculated from the angle of declension method.
+#NAME?,Sexual dimorphism of bill shape in Black-chinned hummingbird (Archilochus alexandri) and Ruby-throated hummingbird (Archilochus colubris).,"Comparison of 3 methods: Paton and Collins 1989 (maxilla), Stiles 1975 (mandible), Temeles 2009 (inverse radius)."
+#NAME?,Sexual dimorphism of bill shape in 219 hummingbird spp.,"Geometric morphometrics (” Thin-plate spline deformation grids revealed that in these species, females have longer, more curved bills at both the tip and main body of the bill relative to the mean, while males have straighter and shorter bills and M. minima has the largest magnitude of sexual shape dimorphism” – used GeoMorphometrics but in the end resort to just saying that the deformations of the spline ‘look different’.)"
+#NAME?,"Trait matching and resource use in a plant-hummingbird network, La Selva, Costa Rica.",Angle of deflection
+#NAME?,"Bills as weapons in lekking Phaethornis longirostris at La Selva, Costa Rica.",Arc:chord ratio of exposed culmen.
+#NAME?,"Differential preferences of artificial and natural (65 spp.) flower populations visited by 3 species of hummingbird in Braulio Carrillo National Park, Costa Rica.",Angle of deflection
+#NAME?,"Plant-pollinator specialization along an elevational gradient at Braulio Carrillo National Park, Costa Rica. 21 hummingbird spp. and 208 plant species examined.",Angle of deflection
+#NAME?,Evolution of pollination syndromes in Andean Campanulaceae.,Arc:chord ratio of corolla midline and base-to-opening line.
+#NAME?,"Effects of forest fragmentation on hummingbird bill morphologies (19 spp.) representative of specialization. Coto Brus, Costa Rica.",Bill curvature was calculated as the angle between a horizontal line across the top of the bill and a line running the length of the bill. (Arc:chord ratio)
+#NAME?,Distribution of morphological specialization along an elevational gradientin Ecuador.,Arc:chord ratio of exposed culmen.
+,,
+#NAME?,curved bristles on the proboscis on European bees for the extraction of pollen.,qualitative
+#NAME?,Hawkmoth pollination of Mirabilis longiflora (Nyctaginaceae),qualitative
+Travers et al 2003,"Nectar spurs of Impatiens spp. and Ruby-throated hummingbird (Archilochus colubris) at Franklin County, Massachusetts.",“Angle at which the spur deviates from an arbitrary line drawn through the flower.” (Angle of deflection)
+oritz_2000,"Pollination and breeding system of Putoria calabrica (Rubiaceae), a Mediterranean dwarf shrub",qualitative
+Alexandre et al 2015,QTL analysis comparing hummingbird pollinated and generalist Rhytidophyllum flowers (Gesneriaceae).,Angle between flower opening and flower base.
+wang_2013,Pollinators and nectar robbers cause directional selection for large spur circle in Impatiens oxyanthera (Balsaminaceae),angle of deflection
+boehm_2018,Review of nectar robbing in Centropogon,

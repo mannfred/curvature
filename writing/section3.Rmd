@@ -1,5 +1,5 @@
 ---
-title: "Specialized pollination systems: Origin and measurement of curvature"
+title: "Plant-pollinator specialization: Origin and measurement of curvature"
 author:
 date: ""
 output:
@@ -61,7 +61,7 @@ At the beginning of this section we defined curvature, $\kappa$, as the rate at 
 \begin{equation}
 \tag{3}
 
-\kappa = \frac{d $\mathbf{T}}{ds}
+\kappa = \frac{d \mathbf{T}}{ds}
 
 \end{equation}
 
@@ -70,11 +70,50 @@ Where $\frac{d \mathbf{T}}{ds}$ is the second derivative of the parameteric func
 \begin{equation}
 \tag{4}
 
-\kappa_i = \lim\limits_{\Delta s \to 0} \frac{\mathbf{T}_i - \mathbf{T}_{i- \Delta s}}{\Delta s} = \frac{dT_i}{ds}
+\kappa_i = \lim\limits_{\Delta s \to 0} \frac{\mathbf{T}_i - \mathbf{T}_{i- \Delta s}}{\Delta s} = \frac{d \mathbf{T}_i}{ds}
 
 \end{equation}
 
-When the tangent $\mathbf{T}$ is placed into a cartesian plane its direction is related to the angle $\phi$ formed with the $x$-axis. Using this relation we can express the curvature as:
+When the tangent $\mathbf{T}$ is placed into a cartesian plane its direction is related to the angle $\phi$ formed with the $x$-axis (Figure 3b). Thus the $x(s_i)$ and $y(s_i)$ components of the tangent vector $\mathbf{T_i}$ can be expressed as: 
+
+\begin{equation}
+\tag{5}
+
+\mathbf{T_i} = 
+
+\left[\begin{array}
+{rrr}
+x(s_i) \\
+y(s_i) \\
+\end{array}\right] =
+
+\left[\begin{array}
+{rrr}
+cos(\phi_i) \\
+sin(\phi_i) \\
+\end{array}\right]
+
+\end{equation}
+
+Where:
+
+\begin{equation}
+\tag{5}
+
+\tan(\phi_i) = \frac{y(s_i)}{x(s_i)}
+
+\end{equation}
+
+And:
+
+\begin{equation}
+\tag{5}
+
+\phi_i = \arctan{\frac{y(s_i)}{x(s_i)}}
+
+\end{equation}
+
+Using this relation we can express the curvature as:
 
 \begin{equation}
 \tag{5}
