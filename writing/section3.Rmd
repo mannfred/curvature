@@ -23,7 +23,7 @@ citecolor: blue
 
 Reviewing the literature leads us to ask, “what is curvature?”. There are at least four definitions in use within pollination ecology, with few references to their mathematical origins. Ultimately, curvature is a concept most studied by geometers. Turning to the field of geometry we find several definitions resulting from a history of independent derivations [reviewed in @coolidge_1952; @bardini_2016]. However, these definitions share a conceptual theme: curvature is a point-wise property that can measured anywhere on a line. This concept is a refinement to those reviewed in the previously, where curvature is single property of an entire shape. Here, we follow the conventions of @casey_1996 and @rutter_2000, and present a definition of curvature that is tractable for analyzing biological shapes. 
 
-Intuitively, when a line deviates from being straight we say it is curved, the extent to which it is not straight is its curvature. More technically, a line deviates from being straight when its first derivative - the tangent (shown by $\mathbf{T}_0$, $\mathbf{T}_2$, $\mathbf{T}_n$ in [Figure 3](Figure_3.jpg)) - changes direction (e.g. the difference in direction of $\mathbf{T}_i$ to $\mathbf{T}_{i+1}$. Therefore, curvature can be thought of as the rate of change in the tangent as we move across the curve. Hence, the tangent of a straight line has the same direction everywhere and a curvature of zero, whereas the tangents of the curve shown in [Figure 3](Figure_3.jpg) will have a non-zero curvature. 
+Intuitively, when a line deviates from being straight we say it is curved, the extent to which it is not straight is its curvature. More technically, a line deviates from being straight when its first derivative - the tangent (shown by $\mathbf{T}_0$, $\mathbf{T}_2$, $\mathbf{T}_n$ in [Figure 3](Figure_3.jpg)) - changes direction (e.g. the difference in direction of $\mathbf{T}_i$ to $\mathbf{T}_{i+1}$. Therefore, curvature can be thought of as the rate of change in the tangent as we move across the curve. Hence, the tangents of a straight line will have the same direction everywhere and a curvature of zero, whereas the tangents of the curve shown in [Figure 3](Figure_3.jpg) will change direction and have a non-zero curvature. 
 
 To formalize these concepts mathematically we begin by considering an ordinary function of the form $y=f(x)$, where $f(x)$ specifies one value of $y$ for each value of $x$. Biological curves, however, often loop back on themselves (e.g. spirals) and are better described by parametric fuctions that allow the curve to have multiple $y$ values for a single $x$. Parametric functions use a 'hidden' variable that determines the values of $x$ and $y$ independently. Here, we use the parameter variable arc length, $s$, along the curve. Letting $\mathbf{\bar{r}}_i$ be the position $(x_i, y_i)$, we can express $\mathbf{\bar{r}}_i$ as a function solely of $s_i$. Specifically, using vector notation we have:
 
@@ -98,7 +98,7 @@ sin(\phi_i) \\
 Where:
 
 \begin{equation}
-\tag{5}
+\tag{6}
 
 \tan(\phi_i) = \frac{y(s_i)}{x(s_i)}
 
@@ -107,18 +107,18 @@ Where:
 And:
 
 \begin{equation}
-\tag{5}
+\tag{7}
 
 \phi_i = \arctan{\frac{y(s_i)}{x(s_i)}}
 
 \end{equation}
 
-Using this relation we can express the curvature as:
+Thus, curvature $\kappa$ can be expressed as the change in the angle $\phi$ formed between the tangent $\mathbf{T}$ and the $x$-axis:
 
 \begin{equation}
-\tag{5}
+\tag{8}
 
-\kappa = \frac{d\phi}{ds}
+\kappa = \frac{d \mathbf{T}}{ds} = \frac{d\phi}{ds}
 
 \end{equation}
 
