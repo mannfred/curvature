@@ -1,13 +1,12 @@
 Citation,System,Method
-hamilton_1975,Comparative Behavior of the American Avocet and the Black-Necked Stilt(Recurvirostridae),Radius of curvature
-kawabata_2009,Quantitative analysis of corolla shapes and petal contours in single-flower cultivars of Lisianthus.,Something like geomorph??
-pour_2018,Curvature-based pattern recognition for cultivar classification of Anthurium (Araceae) flowers.,Calculated k (the rate of change in the direction of the tangent line at that point with respect to arc length) for n points along the flower.
-dellinger_2018,Floral trait changes correlated with the repeated shifts away from buzz?pollination in the Melastomataceae.,Qualitative
-joly_2017,Analysis of polliation syndromes in Antillean Gesneriaceae.,Geometric morphometrics. “PC2 represents variation in corolla curvature” (descriptive).
-berger_2017,Quantifying morphological modifications to floral form in gene knockdowns in Fedia graciliflora.,Landmark-based geometric morphometrics
 baldwin_1931,Measurements of birds,Inverse radius method
-campos_2015,Generating 3D printed flowers to test efficacy of moth pollination,“Curvature parameter”
-,,
-,,
+hamilton_1975,Comparative Behavior of the American Avocet and the Black-Necked Stilt(Recurvirostridae),Radius of curvature
+ruan_2008,The impact of pollen tube growth on stigma lobe curvature in Kosteletzkya virginica: the best of both worlds,qualitative
+kawabata_2009,Quantitative analysis of corolla shapes and petal contours in single-flower cultivars of Lisianthus.,Something like geomorph??
 dalayap_2011,"Petal, sepal, and labellum shapes in Mokara orchids",Outline morphometrics
 nii_2011,Assessment of the Association between the Three-dimensional Shape of the Corolla and Two-dimensional Shapes of Petals Using Fourier Descriptors and Principal Component Analysis in Eustoma grandiflorum,"Fourier Transform, but lacks units for curvature K"
+berger_2017,Quantifying morphological modifications to floral form in gene knockdowns in Fedia graciliflora.,Landmark-based geometric morphometrics
+dellinger_2018,Floral trait changes correlated with the repeated shifts away from buzz?pollination in the Melastomataceae.,Qualitative
+joly_2018,Analysis of polliation syndromes in Antillean Gesneriaceae.,Geometric morphometrics. “PC2 represents variation in corolla curvature” (descriptive).
+pour_2018,Curvature-based pattern recognition for cultivar classification of Anthurium (Araceae) flowers.,Calculated k (the rate of change in the direction of the tangent line at that point with respect to arc length) for n points along the flower.
+song_2018,Quantitative Classification of the Morphological Traits of Ray Florets in Large-flowered Chrysanthemum,angle of declension
