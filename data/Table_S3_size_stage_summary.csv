@@ -1,0 +1,12 @@
+Stage,Defintion,Species_epithet,mean_size_mm,loCI,hiCI,stdv,elapsed_days
+C,Petals do not exceed the length of the inner and outer sepals.,koreanum,3.257575758,2.9287152,3.586436316,0.166550924,8.31 +/- 0.40 days
+,,violaceum,1.351376147,1.13426429,1.568488003,0.109532217,8.27 +/- 0.40 days
+G,Petals exceed the length of the inner and outer sepals.,grandiflorum,4.360493827,3.779330703,4.941656951,0.292032464,7.01 +/- 0.45 days
+,,koreanum,8.075,7.774978976,8.375021024,0.151463995,14.3 +/- 0.20 days
+,,violaceum,4.20212766,3.64839767,4.755857649,0.275091262,12.0 +/- 0.20 days
+T,Opening and separation of the petals. At least one petal is free from touching adjacent petals. Outer sepals begin to abscise. Nectar is visibly collecting in spurs. ,grandiflorum,17.05090909,15.68925332,18.41256486,0.687022252,10.9 +/- 0.20 days 
+,,koreanum,18.15714286,16.88133141,19.43295431,0.642184426,17.1 +/- 0.20 days
+,,violaceum,20.65789474,18.31789575,22.99789372,1.168106739,14.1 +/- 0.20 days
+A,"Initiated by partial anther dehiscence, followed by complete dehiscence,  and finally flower abscisson",grandiflorum,24.62777778,24.38422439,24.87133117,0.123500826,14.7 +/- 0.20 days 
+,,koreanum,27.79415205,27.48587335,28.10243074,0.156168229,20.6 +/- 0.30 days
+,,violaceum,31.56,30.87268573,32.24731427,0.347254671,16.7 +/- 0.30 days
