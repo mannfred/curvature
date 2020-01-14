@@ -1,11 +1,8 @@
 X Table 1: review of literature
-Table 2: Sample sizes
-
-X Table 4: mean and 95CI of sizes for 3 spp.
-X Table 5: elapsed days per stage
 
 X Table S1: additional reviewed literature
-  Table S2: Stage definitions
+  Table S2: sample sizes
+X Table S3: Stage definitions, mean sizes, mean elapsed days
 
 
 -----
@@ -15,8 +12,8 @@ X Figure 2: Geometric morphometrics
 X Figure 3: illustration of curvature K=dT/ds
 X Figure 4: proposed workflow
 X Figure 5: Comparison of developmental stages. 
-X Figure 6: Logistic growth of Epimedium flowers
-X Figure 7: Sepal size vs curvature
+X Figure 6: Sepal size vs curvature
 
 X Figure S1: Angle of deflection = inverse radius
-  Figure S2: locations of landmarks and semilandmarks
+X Figure S2: locations of landmarks and semilandmarks
+X Figure S3: Logistic growth of Epimedium flowers
