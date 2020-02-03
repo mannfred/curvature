@@ -166,7 +166,7 @@ saveRDS(data5, file="epimedium_growth_data_pivot_redefined_stages.rds")
 #plot sizes at varying stages
 
 ggplot(
-  data=data5,
+  data=data5 %>% filter(Species_epithet=="koreanum" | Species_epithet=="violaceum"), #remove filter to include grandiflorum
   aes(x=new_stage, y=size)
        ) +
 geom_boxplot(
