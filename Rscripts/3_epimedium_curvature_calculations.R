@@ -226,8 +226,7 @@ root_find<-
 
 root_vec<-sapply(fct_lst, root_find)
 
-       
-       
+
 
 
 ############testing END######
@@ -236,7 +235,7 @@ root_vec<-sapply(fct_lst, root_find)
 #calculate curvature many times along many curves
 curvature_tbl <- 
   totalK_fun %>%
-  mapply(., baselines_lst, func_lst, polyfunc_lst) %>%
+  mapply(., baselines_lst[[1]], func_lst[[1]], polyfunc_lst[[1]]) %>%
   as.tibble() %>%
   rapply(., sum) %>% #integration of f dx 
   as.tibble() %>%
