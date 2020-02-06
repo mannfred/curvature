@@ -1,6 +1,6 @@
 ########################################
 #measure curvature from epimedium photos
-21.259368  2.013752
+
 
 library(here)
 library(Momit)
@@ -132,7 +132,7 @@ func_lst<- poly_lst %>%
 #run trace(fun2form, edit=TRUE) and change width.cutoff to 500L under deparse()
 
 #total curvature function
-totalK_fun<-function (x_range, fun, param_fun) 
+totalK_fun<-function (x_range, fun, subdiv) 
 {
   stopifnot(is.atomic(x_range)) # is.atomic checks that x.range cannot be a list or expression
   if (!is.numeric(x_range)) 
@@ -148,9 +148,24 @@ totalK_fun<-function (x_range, fun, param_fun)
   
   if (attr(dfun(x_range[1]), "gradient") == attr(dfun(x_range[2]), #make sure function is not a straight line
                                                  "gradient")) 
-    stop("'fun' should not be a linear function of x!") #corrected spelling from "linar"
+    stop("'fun' should not be a linear function of x!") 
   
-  iter<- seq(0, 1, by=0.0002) #5000 iterations
+  #convert fun to param_fun
+  coeffs_lst <- 
+    sapply(fun, function(v) v[1])
+  
+  as_param <- 
+    function(x) x %>%
+    as.numeric() %>%
+    as.mpoly() %>% #creates a polynomial object of class 'mpoly'
+    print() %>% 
+    c("x", .) %>% #parametrize polynomial as t=(x, ax^3+bx^2+cx+d)
+    mp() %>% #mpoly
+    as.function()
+  
+  param_fun<-as_param(coeffs_lst)
+  
+  iter<- seq(0, 1, by=1/subdiv) #create vector of subdivisions to calculate arclength parameter
   arcfct_lst<- list() #empty bin
   b<- arclength(param_fun, x_range[1], x_range[2])$length #arc length of t-parameterized function
   
@@ -164,67 +179,43 @@ totalK_fun<-function (x_range, fun, param_fun)
   
   root_find<- function(x) uniroot(x, x_range)$root
   
-  x <- sapply(arcfct_lst, root_find)  #splits the x range into 5000 even segments (is arc length parameterized!)
+  x <- sapply(arcfct_lst, root_find) #find roots for a list of 
   y <- fun(x) 
-  gr <- attr(dfun(x), "gradient") #the tangents (first derv) of the 5000 x components, dfun() is defined above. The gradient matrix has elements that are the first deriv of a function
+  gr <- attr(dfun(x), "gradient") #the tangents (first derv) of the x_n components, dfun() is defined above. The gradient matrix has elements that are the first deriv of a function
   he <- attr(dfun(x), "hessian")[, , "x"] # x is in the third dimension of this object (df?). The hessian matrix has elements that are the second deriv of a function
-  k <- abs(he)/(1 + gr^2)^(3/2) #there are 5000 curvature points stored in k. Will be summed later in the pipe. 
-}
+  k <- abs(he)/(1 + gr^2)^(3/2) #has n=subdiv measurements of k
+  k_total<-(sum(k) /subdiv) *(180/pi) #add all measurements of k, rescale depending on #of subdivisions, and convert from rad to degrees
+  }
+
+
 
 
 #add assign("dx_list", dX, envir = .GlobalEnv) to trace(arclength, edit=TRUE) to inspect objects created during arclength() calculations
+# b<- arclength(param_fun, x_range[1], x_range[2])$length
+
 
 ############testing START######
 
+#in totalK_fun: can be simplified if I can find out how to convert functions into parameterized functions
+
+x<-seq(0, 0.9999, by=0.0001) 
 
 
-#t-parameterized functions stored in polyfunc_lst
-#t = t1 stored in baselines_lst[[i]][1]
-#t = t2 stored in baselines_lst[[i]][2]
-#arclength = b stored in lengths_lst
+#circle 
 
-# arclength = a
-#list of arclengths from 0 to t1 for all curves
-t1_lengths_lst <-
-  mapply(arclength, 
-         polyfunc_lst,        #applies arclength() to all elements in polyfunc_lst
-         0,                   #starting from t=0
-         baselines_lst %>%
-           sapply(., "[[", 1) #ending at t1
-        
-  ) %>%
-  as_tibble() %>% #row 1 contains arclengths 
-  slice(., 1) %>% #keep only row 1
-  as.list()
+circlefun<-function(x) (1-(x^2))^0.5
+
+dfun2<- deriv3(fun2form(function(x) (1-(x^2))^0.5), "x", func=TRUE)
+param_fun<-function(t) c((1-(t^2))^0.5, t)
+fun<-function(x) (1-(x^2))^0.5
+
+gr2 <- attr(dfun2(x), "gradient") #computes 1st derivative bw x=0 to x=1
+
+he2 <- attr(dfun2(x), "hessian")[ , , "x"] #computes 2nd derivative bw x=0 to x=1
 
 
-
-
-
-#generate a list of arclength functions
-f<- polyfunc_lst[[1]]
-t1<- baselines_lst[[1]][1]
-b<- arclength(polyfunc_lst, )
-
-iter<- seq(0, 1, by=0.05)
-
-arcfct_lst<- list()
-
-for(i in seq_along(iter)){
-  fct_lst[[i]] <- 
-    local({
-    b_sub<-iter[i]*b
-    function(u) arclength(param_fun, x_range[1], u)$length - b_sub
-    }) 
-}
-
-
-#solve for roots
-
-root_find<-
-  function(x) uniroot(x, x_range)$root
-
-root_vec<-sapply(fct_lst, root_find)
+k2 <- abs(he2)/(1 + gr2^2)^(3/2)
+(sum(k2) * 0.0001) *(180/pi)
 
 
 
