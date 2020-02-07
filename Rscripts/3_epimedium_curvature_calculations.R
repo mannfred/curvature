@@ -21,17 +21,37 @@ dorsal_lst <-
         
 
 
-  
+#alternative to above
 #import data
-dorsal_data<-
-  here("data/epimedium_photos/koreanum/koreanum_dorsal_appended.TPS") %>%
-  import_tps() 
-  
-#format data
+# dorsal_data<-
+#   here("data/epimedium_photos/koreanum/koreanum_dorsal_appended.TPS") %>%
+#   import_tps() 
+
+#not functional yet..
+#format data and apply scaling
 dorsal_lst<-
   map2(dorsal_data$coo, dorsal_data$scale, function(x, y) x*y) %>%   #apply scaling
   
-#DO WE REALLY NEED THE LDK() FUNCTION? CHECK DOWNSTREAM...
+
+  #written by user: 李哲源 at https://stackoverflow.com/questions/40438195/function-for-polynomials-of-arbitrary-order-symbolic-method-preferred 
+  f <- function (pc, expr = TRUE) {
+    stringexpr <- paste("x", seq_along(pc) - 1, sep = " ^ ")
+    stringexpr <- paste(stringexpr, pc, sep = " * ")
+    stringexpr <- paste(stringexpr, collapse = " + ")
+    if (expr) return(parse(text = stringexpr))
+    else return(stringexpr)
+  }
+  
+  
+  f(coef) #gives a polynomial expression
+  
+  deriv3(f(coef), "x")
+  
+  
+  
+  
+  
+  
   
 #inspect raw LMs
 str(dorsal_lst)#LMs stored in $coo
@@ -79,7 +99,7 @@ aspoly.fun <-
   mp() %>% #mpoly
   as.function()
 
-polyfunc_lst <- 
+paramfun_lst <- 
   lapply(coeffs_lst, aspoly.fun) # a list of 31 parameterized polynomial functions
 
 
@@ -150,10 +170,13 @@ totalK_fun<-function (x_range, fun, subdiv)
                                                  "gradient")) 
     stop("'fun' should not be a linear function of x!") 
   
-  #convert fun to param_fun
+  
+  
+  #gather coeffs to create expressions for deriv3() and functions for arclength()
   coeffs_lst <- 
     sapply(fun, function(v) v[1])
   
+  #convert fun to param_fun
   as_param <- 
     function(x) x %>%
     as.numeric() %>%
