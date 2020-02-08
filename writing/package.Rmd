@@ -24,3 +24,5 @@ If you frequently find yourself using just one function from another package, yo
 
 sanity test: Using the canonical definition of curvature (the inverse radius), the curvature of a unit circle is 1 at all points (1/r = 1/1 = 1). We created a function for a partial (half??) cirlce for x={0,0.9999}: circlefun<-function(x) (1-(x^2))^0.5. Because the radius is 1, the segment 
 
+
+

@@ -28,53 +28,77 @@ dorsal_lst <-
 #   import_tps() 
 
 #not functional yet..
-#format data and apply scaling
-dorsal_lst<-
-  map2(dorsal_data$coo, dorsal_data$scale, function(x, y) x*y) %>%   #apply scaling
+# #format data and apply scaling
+# dorsal_lst<-
+#   map2(dorsal_data$coo, dorsal_data$scale, function(x, y) x*y) %>%   #apply scaling
   
 
-  #written by user: 李哲源 at https://stackoverflow.com/questions/40438195/function-for-polynomials-of-arbitrary-order-symbolic-method-preferred 
-  f <- function (pc, expr = TRUE) {
-    stringexpr <- paste("x", seq_along(pc) - 1, sep = " ^ ")
-    stringexpr <- paste(stringexpr, pc, sep = " * ")
-    stringexpr <- paste(stringexpr, collapse = " + ")
-    if (expr) return(parse(text = stringexpr))
-    else return(stringexpr)
-  }
-  
-  
-  f(coef) #gives a polynomial expression
-  
-  deriv3(f(coef), "x")
-  
-  
-  
-  
-  
-  
-  
 #inspect raw LMs
-str(dorsal_lst)#LMs stored in $coo
-dorsal_lst[1] %>% 
-  paper %>% 
-  draw_curve #draws all curves on one plot (not yet procrustes superimposed)
-rapply(dorsal_lst, coo_plot) #recursively plots all curves
-coo_plot(dorsal_lst[1]) #for i={1:31} to plot individually
+# str(dorsal_lst)#LMs stored in $coo
+# dorsal_lst[1] %>% 
+#   paper %>% 
+#   draw_curve #draws all curves on one plot (not yet procrustes superimposed)
+# rapply(dorsal_lst, coo_plot) #recursively plots all curves
+# coo_plot(dorsal_lst[1]) #for i={1:31} to plot individually
 
-#calculate polynomials
+#calculate polynomials from Momocs::npoly
 dorsalcurv_lst <- 
   npoly(dorsal_lst$coo, degree=2) #Momocs::npoly object with coeffs, baselines, etc
                                   #"Call:" = function+parameters  used to create the model
-      
-                            
-#draw polynomials estimates over raw LMs
-dorsalcurv_lst[[1]] %>% #for i={1:31} -- LMs must be previously plotted w coo_plot() 
-npoly_i() %>%
-coo_draw()
+  
 
-#save plot
-dev.copy(figure,"Figure_1.png",width=8,height=6,units="in",res=100)
-dev.off()
+# coeffs_lst <- 
+#   sapply(dorsalcurv_lst, function(v) v[1]) 
+    
+#written by user: 李哲源 at https://stackoverflow.com/questions/40438195/function-for-polynomials-of-arbitrary-order-symbolic-method-preferred 
+express <- function (npoly, expr = TRUE) {
+  coeffs <- npoly[[1]] #extract coefficients from npoly list
+  stringexpr <- paste("x", seq_along(coeffs) - 1, sep = " ^ ")
+  stringexpr <- paste(stringexpr, coeffs, sep = " * ")
+  stringexpr <- paste(stringexpr, collapse = " + ")
+  if (expr) return(parse(text = stringexpr))
+  else return(stringexpr)
+}
+
+#exp_lst<-lapply(dorsalcurv_lst, express) corresponding lapply() function for express()
+#how to create a fuction programatically
+#https://stackoverflow.com/questions/12982528/how-to-create-an-r-function-programmatically
+#https://stackoverflow.com/questions/9345373/as-alist-character
+#should look at https://github.com/dkahle/mpoly/tree/master/R 
+
+
+param <- function(npoly, expr = TRUE) {
+  coeffs <- npoly[[1]] #extract coefficients from npoly list
+  stringchar <- paste("x", seq_along(coeffs) - 1, sep = " ^ ")
+  stringchar <- paste(stringchar, coeffs, sep = " * ")
+  stringchar <- paste(stringchar, collapse = " + ")
+  paramchar <- paste("x", stringchar, sep = " , " )
+  bodyexp <- eval(parse(text = paste("alist(", paramchar, ")")))
+  
+  f<- function(x) NULL
+  body(f) <- paste(bodyexp[1], bodyexp[2], sep = ",")
+  return(f) 
+}
+  
+
+  
+
+
+
+
+#  deriv_lst<-lapply(exp_lst, deriv3, "x")
+
+
+
+
+#draw polynomials estimates over raw LMs
+# dorsalcurv_lst[[1]] %>% #for i={1:31} -- LMs must be previously plotted w coo_plot() 
+# npoly_i() %>%
+# coo_draw()
+# 
+# #save plot
+# dev.copy(figure,"Figure_1.png",width=8,height=6,units="in",res=100)
+# dev.off()
 
 
 
@@ -151,8 +175,10 @@ func_lst<- poly_lst %>%
 
 #run trace(fun2form, edit=TRUE) and change width.cutoff to 500L under deparse()
 
+#see: https://github.com/mannfred/curvature/blob/8226cd29b88fa83b2c9ce52f16058c73c4921865/Rscripts/3_epimedium_curvature_calculations.R
+#for un-screwy version
 #total curvature function
-totalK_fun<-function (x_range, fun, subdiv) 
+totalK_fun<-function (x_range, poly_list, subdiv) 
 {
   stopifnot(is.atomic(x_range)) # is.atomic checks that x.range cannot be a list or expression
   if (!is.numeric(x_range)) 
@@ -161,54 +187,49 @@ totalK_fun<-function (x_range, fun, subdiv)
     stop("'x_range' must be a vector of length two!")
   if (diff(x_range) < 0) #calculates the difference between x1 and x2 to ensure it's >0
     stop("please reorder 'x_range'.")
-  if (!inherits(fun, "function")) 
-    stop("'fun' must be a 'function' of x!")
+  # if (!inherits(fun, "function")) 
+  #   stop("'fun' must be a 'function' of x!")
   
-  dfun <- deriv3(fun2form(fun), "x", func = TRUE)
+  # dfun <- deriv3(fun2form(fun), "x", func = TRUE) #func=TRUE returns a function
   
-  if (attr(dfun(x_range[1]), "gradient") == attr(dfun(x_range[2]), #make sure function is not a straight line
-                                                 "gradient")) 
+  exp_list <- lapply(poly_list, f) #a list of polynomial expressions to be read by deriv3()
+  dfun <- deriv3(exp_list, "x", func=TRUE) %>% unname()
+  
+  if (attr(dfun(x_range[1]), "gradient") == attr(dfun(x_range[2]), "gradient"))  #make sure function is not a straight line
     stop("'fun' should not be a linear function of x!") 
   
-  
-  
-  #gather coeffs to create expressions for deriv3() and functions for arclength()
-  coeffs_lst <- 
-    sapply(fun, function(v) v[1])
-  
-  #convert fun to param_fun
-  as_param <- 
-    function(x) x %>%
-    as.numeric() %>%
-    as.mpoly() %>% #creates a polynomial object of class 'mpoly'
-    print() %>% 
-    c("x", .) %>% #parametrize polynomial as t=(x, ax^3+bx^2+cx+d)
-    mp() %>% #mpoly
-    as.function()
-  
-  param_fun<-as_param(coeffs_lst)
-  
   iter<- seq(0, 1, by=1/subdiv) #create vector of subdivisions to calculate arclength parameter
-  arcfct_lst<- list() #empty bin
+  arcfun_lst<- list() #empty bin
   b<- arclength(param_fun, x_range[1], x_range[2])$length #arc length of t-parameterized function
   
   for(i in seq_along(iter)){ 
-    arcfct_lst[[i]] <- 
+    arcfun_lst[[i]] <- 
       local({
         b_sub<-iter[i]*b
         function(u) arclength(param_fun, x_range[1], u)$length - b_sub
       }) 
   }
   
-  root_find<- function(x) uniroot(x, x_range)$root
+  root_find<- function(x) uniroot(x, x_range)$root #root-finding function
   
-  x <- sapply(arcfct_lst, root_find) #find roots for a list of 
-  y <- fun(x) 
+  x <- sapply(arcfun_lst, root_find) #find roots for a list of 
+  
+  poly2_fun<- function (p) #function for converting expressions to functions
+  {
+    f<- function(x) NULL
+    body(f) <- parse(text=p)
+    f
+  } 
+  
+  func_lst<- exp_list %>%
+    lapply(., poly2_fun) #create a list of polynomial functions readable by totalK()
+  
+  y <- func_lst(x) 
   gr <- attr(dfun(x), "gradient") #the tangents (first derv) of the x_n components, dfun() is defined above. The gradient matrix has elements that are the first deriv of a function
   he <- attr(dfun(x), "hessian")[, , "x"] # x is in the third dimension of this object (df?). The hessian matrix has elements that are the second deriv of a function
   k <- abs(he)/(1 + gr^2)^(3/2) #has n=subdiv measurements of k
   k_total<-(sum(k) /subdiv) *(180/pi) #add all measurements of k, rescale depending on #of subdivisions, and convert from rad to degrees
-  }
+}
 
 
 
@@ -238,7 +259,7 @@ he2 <- attr(dfun2(x), "hessian")[ , , "x"] #computes 2nd derivative bw x=0 to x=
 
 
 k2 <- abs(he2)/(1 + gr2^2)^(3/2)
-(sum(k2) * 0.0001) *(180/pi)
+(sum(k2) * 0.0001) #*(180/pi)
 
 
 
