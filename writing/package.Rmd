@@ -3,12 +3,9 @@ title: "kyokusen"
 author:
 date: ""
 output: 
-  word_document:
-    fig_caption: yes
-    reference_docx: curvature_review_reference.docx
-  # html_document:
-  #   number_sections: no
-  #   theme: flatly
+  html_document:
+  number_sections: no
+  theme: flatly
   # pdf_document:
   #   latex_engine: xelatex
 bibliography: curvature_review.bib
@@ -19,10 +16,104 @@ urlcolor: blue
 citecolor: blue
 ---
 
+#ethos
+
 https://stackoverflow.com/questions/23232791/is-it-a-good-practice-to-call-functions-in-a-package-via 
 If you frequently find yourself using just one function from another package, you can copy the code and add it to your own package. For example, I have a package for personal use that borrows %nin% from the Hmisc package because I think it's a great function, but I don't often use anything else from Hmisc. With roxygen2, it's easy to add @author and @references to properly attribute the code for a borrowed function. Also make sure the package licenses are compatible when doing this.
 
-sanity test: Using the canonical definition of curvature (the inverse radius), the curvature of a unit circle is 1 at all points (1/r = 1/1 = 1). We created a function for a partial (half??) cirlce for x={0,0.9999}: circlefun<-function(x) (1-(x^2))^0.5. Because the radius is 1, the segment 
 
 
+#sanity test: unit circle 
 
+Using the canonical definition of curvature (the inverse radius), the curvature of a unit circle is 1 at all points (1/r = 1/1 = 1). We created a function for a partial (half??) cirlce for x={0,0.9999}: circlefun<-function(x) (1-(x^2))^0.5. Because the radius is 1, the segment 
+
+```
+x<-seq(0, 0.9999, by=0.0001) 
+
+circlefun<-function(x) (1-(x^2))^0.5 #unit circle: 1= x^2 + y^2 
+
+dfun2<- deriv3(fun2form(function(x) (1-(x^2))^0.5), "x", func=TRUE)
+param_fun<-function(t) c((1-(t^2))^0.5, t)
+fun<-function(x) (1-(x^2))^0.5
+
+gr2 <- attr(dfun2(x), "gradient") #computes 1st derivative bw x=0 to x=1
+
+he2 <- attr(dfun2(x), "hessian")[ , , "x"] #computes 2nd derivative bw x=0 to x=1
+
+
+k2 <- abs(he2)/(1 + gr2^2)^(3/2)
+(sum(k2) * 0.0001) #*(180/pi)
+```
+
+
+#param()
+
+how to create a fuction programatically
+https://stackoverflow.com/questions/12982528/how-to-create-an-r-function-programmatically
+https://stackoverflow.com/questions/9345373/as-alist-character
+
+```
+poly1<-dorsalcurv_lst[[1]]
+
+param <- function(npoly, expr = TRUE) {
+  coeffs <- npoly[[1]] #extract coefficients from npoly list
+  stringchar <- paste("x", seq_along(coeffs) - 1, sep = " ^ ")
+  stringchar <- paste(stringchar, coeffs, sep = " * ")
+  stringchar <- paste(stringchar, collapse = " + ")
+  paramchar <- paste("x", stringchar, sep = " , " )
+  bodychar<-paste0("c(", paramchar, ")") #add "c()"
+  
+  bodyexp <- eval(parse(text = paste("alist(", bodychar, ")")))
+  
+  f<- function(x) NULL
+  body(f) <- bodyexp[[1]]
+  f
+} 
+
+arclength(f, 0, 1) #works!
+  
+```
+
+#express()
+
+credit to user: 李哲源 at https://stackoverflow.com/questions/40438195/function-for-polynomials-of-arbitrary-order-symbolic-method-preferred 
+
+```
+poly1<-dorsalcurv_lst[[1]]
+
+
+express <- function (npoly, expr = TRUE) {
+  coeffs <- npoly[[1]] #extract coefficients from npoly list
+  stringexpr <- paste("x", seq_along(coeffs) - 1, sep = " ^ ")
+  stringexpr <- paste(stringexpr, coeffs, sep = " * ")
+  stringexpr <- paste(stringexpr, collapse = " + ")
+  if (expr) return(parse(text = stringexpr))
+  else return(stringexpr)
+}
+
+express(poly1) %>% deriv3(., "x") #works!
+
+exp_lst<-lapply(dorsalcurv_lst, express) #corresponding lapply() function for express()
+
+```
+
+#func()
+
+
+```
+func <- function (npoly, expr = TRUE) {
+  coeffs <- npoly[[1]] #extract coefficients from npoly list
+  stringexpr <- paste("x", seq_along(coeffs) - 1, sep = " ^ ")
+  stringexpr <- paste(stringexpr, coeffs, sep = " * ")
+  stringexpr <- paste(stringexpr, collapse = " + ")
+  
+  bodyexp <- eval(parse(text = paste("alist(", stringexpr, ")"))) #function body
+  args <- alist(x=) #variable names
+  
+  f <- as.function(c(args, bodyexp), env=parent.frame())
+  f
+}
+
+f(1) #works!!
+
+```
