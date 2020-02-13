@@ -21,29 +21,30 @@ citecolor: blue
 https://stackoverflow.com/questions/23232791/is-it-a-good-practice-to-call-functions-in-a-package-via 
 If you frequently find yourself using just one function from another package, you can copy the code and add it to your own package. For example, I have a package for personal use that borrows %nin% from the Hmisc package because I think it's a great function, but I don't often use anything else from Hmisc. With roxygen2, it's easy to add @author and @references to properly attribute the code for a borrowed function. Also make sure the package licenses are compatible when doing this.
 
+#express()
 
-
-#sanity test: unit circle 
-
-Using the canonical definition of curvature (the inverse radius), the curvature of a unit circle is 1 at all points (1/r = 1/1 = 1). We created a function for a partial (half??) cirlce for x={0,0.9999}: circlefun<-function(x) (1-(x^2))^0.5. Because the radius is 1, the segment 
+credit to user: 李哲源 at https://stackoverflow.com/questions/40438195/function-for-polynomials-of-arbitrary-order-symbolic-method-preferred 
 
 ```
-x<-seq(0, 0.9999, by=0.0001) 
-
-circlefun<-function(x) (1-(x^2))^0.5 #unit circle: 1= x^2 + y^2 
-
-dfun2<- deriv3(fun2form(function(x) (1-(x^2))^0.5), "x", func=TRUE)
-param_fun<-function(t) c((1-(t^2))^0.5, t)
-fun<-function(x) (1-(x^2))^0.5
-
-gr2 <- attr(dfun2(x), "gradient") #computes 1st derivative bw x=0 to x=1
-
-he2 <- attr(dfun2(x), "hessian")[ , , "x"] #computes 2nd derivative bw x=0 to x=1
+poly1<-dorsalcurv_lst[[1]]
 
 
-k2 <- abs(he2)/(1 + gr2^2)^(3/2)
-(sum(k2) * 0.0001) #*(180/pi)
+express <- function (npoly, expr = TRUE) {
+  coeffs <- npoly[[1]] #extract coefficients from npoly list
+  stringexpr <- paste("x", seq_along(coeffs) - 1, sep = " ^ ")
+  stringexpr <- paste(stringexpr, coeffs, sep = " * ")
+  stringexpr <- paste(stringexpr, collapse = " + ")
+  if (expr) return(parse(text = stringexpr))
+  else return(stringexpr)
+}
+
+express(poly1) %>% deriv3(., "x") #works!
+
+exp_lst<-lapply(dorsalcurv_lst, express) #corresponding lapply() function for express()
+
 ```
+
+
 
 
 #param()
@@ -74,28 +75,7 @@ arclength(f, 0, 1) #works!
   
 ```
 
-#express()
 
-credit to user: 李哲源 at https://stackoverflow.com/questions/40438195/function-for-polynomials-of-arbitrary-order-symbolic-method-preferred 
-
-```
-poly1<-dorsalcurv_lst[[1]]
-
-
-express <- function (npoly, expr = TRUE) {
-  coeffs <- npoly[[1]] #extract coefficients from npoly list
-  stringexpr <- paste("x", seq_along(coeffs) - 1, sep = " ^ ")
-  stringexpr <- paste(stringexpr, coeffs, sep = " * ")
-  stringexpr <- paste(stringexpr, collapse = " + ")
-  if (expr) return(parse(text = stringexpr))
-  else return(stringexpr)
-}
-
-express(poly1) %>% deriv3(., "x") #works!
-
-exp_lst<-lapply(dorsalcurv_lst, express) #corresponding lapply() function for express()
-
-```
 
 #func()
 
@@ -118,6 +98,28 @@ f(1) #works!!
 
 ```
 
+
+#sanity test: using the gradient and hessian to compute k on the unit circle 
+
+Using the canonical definition of curvature (the inverse radius), the curvature of a unit circle is 1 at all points (1/r = 1/1 = 1). We created a function for a partial (half??) cirlce for x={0,0.9999}: circlefun<-function(x) (1-(x^2))^0.5. Because the radius is 1, the segment 
+
+```
+x<-seq(0, 0.9999, by=0.0001) 
+
+circlefun<-function(x) (1-(x^2))^0.5 #unit circle: 1= x^2 + y^2 
+
+dfun2<- deriv3(fun2form(function(x) (1-(x^2))^0.5), "x", func=TRUE)
+param_fun<-function(t) c((1-(t^2))^0.5, t)
+fun<-function(x) (1-(x^2))^0.5
+
+gr2 <- attr(dfun2(x), "gradient") #computes 1st derivative bw x=0 to x=1
+
+he2 <- attr(dfun2(x), "hessian")[ , , "x"] #computes 2nd derivative bw x=0 to x=1
+
+
+k2 <- abs(he2)/(1 + gr2^2)^(3/2)
+(sum(k2) * 0.0001) #*(180/pi)
+```
 #curvature()
 
 run trace(fun2form, edit=TRUE) and change width.cutoff to 500L under deparse()
