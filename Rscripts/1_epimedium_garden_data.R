@@ -3,8 +3,8 @@
 
 
 
-############################################
-#power analysis for epimedium experiment####
+
+# power analysis for epimedium experiment
 
 pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative = 'greater')
 
@@ -28,7 +28,7 @@ here = here::here #mask lubridate::here
 
 #pivot original data frame so that "stage" info can be manually inputted 
 
-data<-
+data <-
   read.csv(
       here("data/epimedium_growth_data.csv"), 
       header=TRUE) %>%
@@ -36,11 +36,11 @@ data<-
   as_tibble() %>%
   gather(key="date", value="size", -Species_Individual_Panicle_Flower) #pivot
 
-levels<- 
+levels <- 
   unique(data$Species_Individual_Panicle_Flower) %>%
   str_sort(., numeric = TRUE) #create a levels vector with the identifiers in the right order (stringr)
 
-data_sort<-
+data_sort <-
   data %>%
   mutate(Species_Individual_Panicle_Flower = factor(Species_Individual_Panicle_Flower, levels=levels)) %>% #groups by SIPF
   arrange(Species_Individual_Panicle_Flower) %>% #arranges observations by individual
@@ -54,8 +54,8 @@ data_sort<-
 
 
 
-###############################################
-#visualize and test stage-size relationship####
+
+#visualize and test stage-size relationship
 
 #data wrangling
 data2<-
