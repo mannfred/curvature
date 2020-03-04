@@ -1,32 +1,26 @@
 library(here)
 library(tidyverse)
 
+
+
 #import data ####
 
-#size data
+# size data
 size_data<-
   read.csv(
-  here("data/epimedium_curv_size_data.csv"), 
-  header=TRUE)
+  here("data/epimedium_curv_size_data.csv"), header=TRUE) %>% 
+  slice(20:77)
+  
 
-#curvature data
-
-curv_kore <-
-  read.csv(
-    here("data/epimedium_curvature_koreanum.csv"),
-    header=TRUE) %>%
-  select(4, 5) #select columns with species IDs and adjusted curvature data
-
-curv_viol <-
-  read.csv(
-    here("data/epimedium_curvature_violaceum.csv"),
-    header=TRUE) %>%
-  select(4, 5)
-
-#merge curvature data into one tibble
-
+# curvature data
 curv_data <-
-  full_join(curv_viol, curv_kore) 
+  read.csv(
+  here("data/epimedium_adj_curvature.csv"), header=TRUE) %>% 
+  select(2:4)
+
+# merge curvature data into one tibble
+curv_data <-
+  full_join(curv_data, size_data, ) 
   
 
 # merge size data with curvature data ####
