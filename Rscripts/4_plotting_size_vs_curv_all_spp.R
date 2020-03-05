@@ -9,48 +9,63 @@ library(tidyverse)
 size_data<-
   read.csv(
   here("data/epimedium_curv_size_data.csv"), header=TRUE) %>% 
-  slice(20:77)
+  slice(20:77) %>% 
+  rename(name = species_individual_panicle_flower)
   
 
 # curvature data
 curv_data <-
   read.csv(
   here("data/epimedium_adj_curvature.csv"), header=TRUE) %>% 
-  select(2:4)
+  select(2:5)
 
 # merge curvature data into one tibble
-curv_data <-
-  full_join(curv_data, size_data, ) 
+curv_size_data <-
+  left_join(curv_data, size_data, by ='name') %>% 
+  as_tibble() %>% 
+  mutate(species = str_extract(name, "[A-Z]+")) # extacts uppercase letters from strings
   
-
-# merge size data with curvature data ####
-
-size_curv_data <-
-  left_join(size_data, curv_data, by="species_individual_panicle_flower") %>%
-  rename(species_ID = species_individual_panicle_flower) %>%
-  mutate(
-    species_epithet = str_extract(
-      species_ID, 
-      "[A-Z]+") #extacts uppercase letters from strings
-  )
-
-# plot
-# For E. koreanum and E. violaceum only ####
-
-size_curv_data<-
-  left_join(size_data, curv_data, by="species_individual_panicle_flower") %>%
-  rename(species_ID = species_individual_panicle_flower) %>%
-  mutate(
-    species_epithet = str_extract(
-      species_ID, 
-      "[A-Z]+") #extacts uppercase letters from strings
-  ) %>% 
-  filter(species_epithet == "K" | species_epithet == "V")
-
-
+  
+# plot sepal size vs curv
 ggplot(
-  data=size_curv_data, 
-  aes(x=sepal_size_mm, y=adjusted_curvature)
-) +
+  data=curv_size_data, 
+  aes(x=sepal_size_mm, y=adjusted_curvature)) +
+geom_point(
+  aes(colour=factor(species)), size=3) +
+labs(x = "Sepal length (mm)", 
+     y = "Total mean curvature (degrees/mm)",
+     colour = "species") +
+scale_colour_manual(name= "Species", 
+                    breaks = c("K", "V"), 
+                    labels = c(expression(italic("E. koreanum")), 
+                               expression(italic("E. violaceum"))),
+                    values = c("#009E73", "#CC79A7")) +
+theme_bw() + 
+theme(panel.border = element_blank(), 
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(), 
+      axis.line = element_line(colour = "black"), 
+      legend.position=c(.85, .65))
+               
+
+# plot sepal size vs arc length
+ggplot(
+  data=curv_size_data, 
+  aes(x=sepal_size_mm, y=arclength)) +
   geom_point(
-    aes(colour=factor(species_epithet)), size=3)
+    aes(colour=factor(species)), size=3) +
+  labs(x = "Sepal length (mm)", 
+       y = "Arc length (mm)",
+       colour = "species") +
+  scale_colour_manual(name= "Species", 
+                      breaks = c("K", "V"), 
+                      labels = c(expression(italic("E. koreanum")), 
+                                 expression(italic("E. violaceum"))),
+                      values = c("#009E73", "#CC79A7")) +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"), 
+        legend.position=c(.85, .25))
+

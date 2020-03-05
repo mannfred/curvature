@@ -78,20 +78,10 @@ alltogether_tbl <-
   lengths_list %>% 
   unlist() %>% 
   enframe() %>% 
-  {bind_cols(dplyr::select(., value), # bind arclength column and curvature columns 
-             dplyr::select(curvature_tbl, value))
-             
-  } %>% 
-  rename(arclength = value, 
-         total_curvature = value1) %>% 
-  mutate(adjusted_curvature = total_curvature/arclength) #new column is adjusted curvature
+  left_join(., curvature_tbl, by = 'name') %>%  # join arclength columns and curvature columns 
+  rename(arclength = value.x, total_curvature = value.y) %>% 
+  mutate(adjusted_curvature = total_curvature/arclength) # new column is adjusted curvature
 
 
 write.csv(alltogether_tbl, here('data/epimedium_adj_curvature.csv')) 
-
-
-
-
-
-
 
