@@ -53,7 +53,7 @@ gran_stages_days <-
   ungroup()
 
 kore_stages_days <-
-  readRDS("stages_days_sort_koreanum.rds") %>%
+  readRDS(here("data/RDS_files/stages_days_sort_koreanum.rds")) %>%
   na_if("-") %>%
   drop_na() %>% #remove rows with "-"
   group_by(ID) %>% #create groups by flower
@@ -62,7 +62,7 @@ kore_stages_days <-
   ungroup()
 
 viol_stages_days <-
-  readRDS("stages_days_sort_violaceum.rds") %>%
+  readRDS(here("data/RDS_files/stages_days_sort_violaceum.rds")) %>%
   na_if("-") %>%
   drop_na() %>% #remove rows with "-"
   group_by(ID) %>% #create groups by flower
@@ -71,9 +71,11 @@ viol_stages_days <-
   ungroup()
 
 #import size data
-data5 <- readRDS("epimedium_growth_data_pivot_redefined_stages.rds")
+data5 <- readRDS(here("data/RDS_files/epimedium_growth_data_pivot_redefined_stages.rds"))
 
-size_data <- data5 %>%
+size_data <- 
+  data5 %>%
+  filter(str_detect(Species_Individual_Panicle_Flower, "[kv]")) %>% #excludes grandiflorum
   select(c(1, size)) %>% #choose columns with species IDs and size data
   group_by(Species_Individual_Panicle_Flower) %>%
   mutate(row_ID = row_number()) %>% #create unique identifiers by row number
@@ -81,24 +83,35 @@ size_data <- data5 %>%
   ungroup()
 
 
-#for all three spp.
-joiner<-list(size_data, gran_stages_days, kore_stages_days, viol_stages_days) %>%
+#join E. koreanum and E. violaceum
+joiner <- 
+  list(size_data, kore_stages_days, viol_stages_days) %>%
   reduce(full_join, by = "unique_ID") %>%
-  mutate(days_elapsed = coalesce(elapsed_days.x, elapsed_days.y, elapsed_days)) %>% #create merged days column
-  mutate(flower_stage = coalesce(stage.x, stage.y, stage)) %>% #create merged stage column
-  select(-c(3:8)) %>% #remove old columns
-  mutate(
-    species_epithet = str_extract(
-      unique_ID, 
-      "[a-z]+") #extacts lowercase letters from strings
-  ) %>%
+  mutate(days_elapsed = coalesce(elapsed_days.x, elapsed_days.y)) %>% #create merged days column
+  mutate(flower_stage = coalesce(stage.x, stage.y)) %>% #create merged stage column
+  select(-c(3:6)) %>% #remove old columns
+  mutate(species_epithet = str_extract(unique_ID, "[a-z]+")) %>%  #extacts lowercase letters from strings
   group_by(species_epithet)
 
 #plot
 ggplot(
   data=joiner, 
-  aes(x=days_elapsed, y=size)
-) +
-  geom_point(
-    aes(colour=factor(species_epithet)))
+  aes(x=days_elapsed, y=size)) +
+geom_point(
+  aes(colour=factor(species_epithet)), size=3) +
+labs(x = "Elapsed time (days)", 
+     y = "Distance between sepals (mm)") +
+scale_colour_manual(name= "Species", 
+                    breaks = c("koreanum", "violaceum"), 
+                    labels = c(expression(italic("E. koreanum")), 
+                               expression(italic("E. violaceum"))),
+                    values = c("#009E73", "#CC79A7")) +
+theme_bw() + 
+theme(panel.border = element_blank(), 
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(), 
+      axis.line = element_line(colour = "black"), 
+      legend.position=c(.25, .65),
+      legend.text = element_text(size=14),
+      legend.title=element_text(size=14))
 
