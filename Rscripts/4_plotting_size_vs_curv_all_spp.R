@@ -29,7 +29,7 @@ curv_size_data <-
 # plot sepal size vs curv
 ggplot(
   data=curv_size_data, 
-  aes(x=sepal_size_mm, y=adjusted_curvature)) +
+  aes(x=stage, y=arclength)) +
 geom_point(
   aes(colour=factor(species)), size=3) +
 labs(x = "Sepal length (mm)", 
@@ -69,3 +69,15 @@ ggplot(
         axis.line = element_line(colour = "black"), 
         legend.position=c(.85, .25))
 
+
+
+# comapre arc lengths at maturity (T stage and beyond)
+mature_data <-
+  curv_size_data %>% 
+  filter(sepal_size_mm >= 23.0) %>% #22.9 mm is the upper CI for "T" stage
+  group_by(species)
+
+ggplot(mature_data, aes(species, arclength)) +
+  geom_boxplot()
+
+t.test(arclength ~ species, data = mature_data)
