@@ -115,8 +115,8 @@ lm_size_species<-
                 }
 #creating tibble with comparison of mean sizes between stages (between species)
 data4<-
-  data2 %>%
-  group_by(stage) %>% #grouping by stage to make between-species comparisons
+  data5 %>%
+  group_by(new_stage) %>% #grouping by stage to make between-species comparisons
   nest() %>%
   mutate(lm_fit = 
            map(data, lm_size_species)

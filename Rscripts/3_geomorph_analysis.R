@@ -45,6 +45,9 @@ group_ids <-
     replicate(27, "E. violaceum")) %>% 
   factor()
 
+colour_ids <-
+  c(replicate(31, "#3e8dba"), #31 E. koreanum samples
+    replicate(27, "#663593")) #27 E. violaceum samples
 
 #Procrustes Alignment
 proc_data <- 
@@ -53,8 +56,9 @@ proc_data <-
 
 #plot tangent space
 pca_data <- 
-  plotTangentSpace(proc_data$coords, groups=colour_ids, label=TRUE)
+  plotTangentSpace(proc_data$coords, groups=group_ids, label=TRUE, legend=TRUE, col=colour_ids)
 
+legend("topright", levels(group_ids), pch = 21, pt.bg = 1)
 
 #build geomorph dataframe
 gdf <- 
@@ -65,6 +69,18 @@ gdf <-
     new_stage = factor(curv_data$new_stage),
     Csize = proc_data$Csize)
 
+
+
+#Does shape differ between taxa at a given developmental stage?
+fit3 <- procD.lm(coords ~ new_stage*groups, data = gdf, iter =199, RRPP=FALSE)
+
+coef(fit3, test=TRUE)
+
+anova(fit3, effect.type = "Rsq")
+
+plot(fit3, type = "regression", 
+     predictor = gdf$Csize, reg.type = "RegScore", 
+     pch = 19, col = "green")
 
 #is shape determined by developmental stage and taxon?
 fit1 <- lm.rrpp(coords ~ new_stage*groups, data = gdf, iter = 199)
