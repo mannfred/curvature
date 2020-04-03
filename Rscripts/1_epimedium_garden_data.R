@@ -109,6 +109,9 @@ size_stage_model <-
 
 emmeans(size_stage_model, list(pairwise ~ stage + Species_epithet), adjust = "tukey")
 #some stages are not distinct (within species)
+#interpretation of row 1 of emmeans() output:
+#the mean size of all E. koreanum at stage "E" is 2.32 mm.
+
 
 
 
@@ -155,33 +158,55 @@ tukey_results<-
 
 
 #plot model
-#https://stats.stackexchange.com/questions/373194/differences-between-emmeans-and-ggplot2
-#https://cran.r-project.org/web/packages/emmeans/vignettes/basics.html#plots
-emmip(model1, emmean~new_stage|Species_epithet)
+
+emmip(model1, Species_epithet~new_stage, type="response") +
+  geom_point(
+    aes(x = new_stage, y = size, colour = Species_epithet), 
+    data = data5, 
+    pch = 20, 
+    alpha=0.35, 
+    size=3, 
+    position=position_jitterdodge(dodge.width=0.3)) +
+  labs(y = "Sepal size (mm)",
+       x = "Developmental stage") +
+  scale_x_discrete(limits=c("C", "G", "T", "A")) +
+  theme_classic() +
+  theme(legend.position = c(0.85, 0.20)) +
+  stat_summary(
+    fun.y = mean, 
+    geom = "errorbar", 
+    aes(ymax = ..y.., ymin = ..y.., group = factor(Species_epithet)),
+    width = 0.5, 
+    linetype = "solid", 
+    position = position_dodge(),
+    size=1.5,
+    alpha=0.65)
   
+ 
+#for boxplot add..
+# geom_boxplot(
+#   aes(x=new_stage, y=size, colour=Species_epithet), data=data5)
+# theme_classic() 
 
 
 
-####################################
-#plot data with newly defined stages
-#plot sizes at varying stages
+#################################################
+#plot data with newly defined stages using ggplot
 
-
-ggplot(
-  data=data5 %>% filter(Species_epithet=="koreanum" | Species_epithet=="violaceum"), #remove filter to include grandiflorum
-  aes(x=new_stage, y=size)) +
-geom_boxplot(
-  aes(fill = factor(Species_epithet), #colour by species
-      factor(new_stage, levels=c("C", "G", "T", "A")))) + #reorder
-stat_summary(
-  fun.y = mean, 
-  geom = "errorbar", 
-  aes(ymax = ..y.., ymin = ..y.., group = factor(Species_epithet)),
-  width = 0.75, 
-  linetype = "dashed", 
-  position = position_dodge()) +
-theme_classic()  #removes gray backdrop
-
+# ggplot(
+#     data=data5 %>% filter(Species_epithet=="koreanum" | Species_epithet=="violaceum"), #remove filter to include grandiflorum
+#     aes(x=new_stage, y=size)) +
+#     geom_boxplot(
+#       aes(fill = factor(Species_epithet), #colour by species
+#           factor(new_stage, levels=c("C", "G", "T", "A")))) + #reorder
+#     stat_summary(
+#       fun.y = mean, 
+#       geom = "errorbar", 
+#       aes(ymax = ..y.., ymin = ..y.., group = factor(Species_epithet)),
+#       width = 0.75, 
+#       linetype = "dashed", 
+#       position = position_dodge()) +
+#     theme_classic()  #removes gray backdrop
 
 
 

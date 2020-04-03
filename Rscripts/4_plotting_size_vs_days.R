@@ -115,3 +115,60 @@ theme(panel.border = element_blank(),
       legend.text = element_text(size=14),
       legend.title=element_text(size=14))
 
+
+
+
+
+##############################
+# fit models for stage ~ days
+
+#isolate numeric identifiers
+sppids <-
+  joiner %>% 
+  mutate(identity = str_replace(unique_ID,  "[a-z]+", "")) %>% #removes alphabet and leaves identifiers 
+  mutate(identity = str_replace(identity, substr(identity, 1, 1), ""))  #remove leading "_" from ID strings
+
+#add identifiers to a list
+ID_matrix <- str_split_fixed(sppids$identity, "_", n=3) #matrix of IDs in SIPC format
+
+#add identifiers back to tibble 
+joiner <-
+  sppids %>%
+  ungroup() %>% 
+  mutate(indiv_ID = ID_matrix[,1]) #add indiv_ID
+
+#mixed effects model
+model2 <- 
+  lmerTest::lmer(days_elapsed ~ flower_stage + species_epithet + (1|indiv_ID), data = joiner)
+
+qqnorm(resid(model2))
+qqline(resid(model2))
+
+tukey_results2<-
+  emmeans(model2, list(pairwise ~ species_epithet + flower_stage), adjust = "tukey")
+
+
+#plot model
+
+emmip(model2, species_epithet~flower_stage, type="response") +
+  geom_point(
+    aes(x = flower_stage, y = days_elapsed, colour = species_epithet), 
+    data = joiner, 
+    pch = 20, 
+    alpha=0.35, 
+    size=3, 
+    position=position_jitterdodge(dodge.width=0.3)) +
+  labs(y = "Days elapsed",
+       x = "Developmental stage") +
+  scale_x_discrete(limits=c("C", "G", "T", "A")) +
+  theme_classic() +
+  theme(legend.position = c(0.85, 0.20)) +
+  stat_summary(
+    fun.y = mean, 
+    geom = "errorbar", 
+    aes(ymax = ..y.., ymin = ..y.., group = factor(species_epithet)),
+    width = 0.5, 
+    linetype = "solid", 
+    position = position_dodge(),
+    size=1.5,
+    alpha=0.65)
