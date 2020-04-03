@@ -142,13 +142,23 @@ data5<-
 #test for size differences between "new" stages (between species)
 
 
-size_stage_model <- 
+model1 <- 
   lmerTest::lmer(size ~ Species_epithet + new_stage + (1|indiv_ID), data = data5)
 
-emmeans(size_stage_model, list(pairwise ~ Species_epithet + new_stage), adjust = "tukey")
+qqnorm(resid(model1))
+qqline(resid(model1))
+
+tukey_results<-
+  emmeans(model1, list(pairwise ~ Species_epithet + new_stage), adjust = "tukey")
+ 
 #stages do not differ in size between species
 
 
+#plot model
+#https://stats.stackexchange.com/questions/373194/differences-between-emmeans-and-ggplot2
+#https://cran.r-project.org/web/packages/emmeans/vignettes/basics.html#plots
+emmip(model1, emmean~new_stage|Species_epithet)
+  
 
 
 
@@ -156,18 +166,24 @@ emmeans(size_stage_model, list(pairwise ~ Species_epithet + new_stage), adjust =
 #plot data with newly defined stages
 #plot sizes at varying stages
 
+
 ggplot(
   data=data5 %>% filter(Species_epithet=="koreanum" | Species_epithet=="violaceum"), #remove filter to include grandiflorum
-  aes(x=new_stage, y=size)
-       ) +
+  aes(x=new_stage, y=size)) +
 geom_boxplot(
   aes(fill = factor(Species_epithet), #colour by species
-      factor(new_stage, levels=c("C", "G", "T", "A")) #reorder
-      )
-             ) +
-theme(axis.text.x = element_text(angle=90)) +
-theme_classic() + #removes gray backdrop
-theme(legend.position="bottom")  
+      factor(new_stage, levels=c("C", "G", "T", "A")))) + #reorder
+stat_summary(
+  fun.y = mean, 
+  geom = "errorbar", 
+  aes(ymax = ..y.., ymin = ..y.., group = factor(Species_epithet)),
+  width = 0.75, 
+  linetype = "dashed", 
+  position = position_dodge()) +
+theme_classic()  #removes gray backdrop
+
+
+
 
 
 

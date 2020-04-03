@@ -1,10 +1,11 @@
 library(here)
-library(tidyverse)
 library(msa) 
+library(tidyverse)
+
 
 #see "2_seq_alignment_grandiflorum.R for complete code annotations and explanations
 
-koreanum_stringset<-
+koreanum_stringset <-
   data5 %>% 
   filter(Species_epithet == 'koreanum') %>%
   group_by(Species_Individual_Panicle_Flower) %>%
