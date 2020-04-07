@@ -23,7 +23,7 @@ curv_data <-
     stage == "ND" | stage == "F" | stage == "N" | stage == "O" ~ "T",
     stage == "P" | stage == "D" | stage == "A" ~ "A"))
 
-#boxplot
+#boxplot: stage vs size
 ggplot(
   data=curv_data %>% 
     filter(species=="koreanum" | species=="violaceum"), #remove filter to include grandiflorum
@@ -45,9 +45,10 @@ group_ids <-
     replicate(27, "E. violaceum")) %>% 
   factor()
 
+#colours from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/ 
 colour_ids <-
-  c(replicate(31, "#3e8dba"), #31 E. koreanum samples
-    replicate(27, "#663593")) #27 E. violaceum samples
+  c(replicate(31, "#E69F00"), #31 E. koreanum samples
+    replicate(27, "#56B4E9")) #27 E. violaceum samples
 
 #Procrustes Alignment
 proc_data <- 
@@ -56,34 +57,41 @@ proc_data <-
 
 #plot tangent space
 pca_data <- 
-  plotTangentSpace(proc_data$coords, groups=group_ids, label=TRUE, legend=TRUE, col=colour_ids)
+  plotTangentSpace(
+    proc_data$coords, 
+    groups=group_ids, 
+    label=TRUE, 
+    legend=TRUE, 
+    col=colour_ids)
 
-legend("topright", levels(group_ids), pch = 21, pt.bg = 1)
 
 #build geomorph dataframe
+
 gdf <- 
   geomorph.data.frame(
     coords = two.d.array(proc_data$coords), 
     groups = group_ids,
     colors = colour_ids,
     new_stage = factor(curv_data$new_stage),
-    Csize = proc_data$Csize)
+    Csize = proc_data$Csize,
+    #give stage classes a numerical value 
+    #(so that traj analysis doesn't order them alphabetically)
+    numerical_stage = case_when(curv_data$new_stage == 'C' ~ 1, 
+                                curv_data$new_stage == 'G' ~ 2,
+                                curv_data$new_stage == 'T' ~ 3,
+                                curv_data$new_stage == 'A' ~ 4))
+
+#to play nice with lm
+gdf$numerical_stage <- factor(gdf$numerical_stage) 
 
 
 
-#Does shape differ between taxa at a given developmental stage?
-fit3 <- procD.lm(coords ~ new_stage*groups, data = gdf, iter =199, RRPP=FALSE)
 
-coef(fit3, test=TRUE)
 
-anova(fit3, effect.type = "Rsq")
 
-plot(fit3, type = "regression", 
-     predictor = gdf$Csize, reg.type = "RegScore", 
-     pch = 19, col = "green")
-
+######################################################
 #is shape determined by developmental stage and taxon?
-fit1 <- lm.rrpp(coords ~ new_stage*groups, data = gdf, iter = 199)
+fit1 <- lm.rrpp(coords ~ numerical_stage*groups, data = gdf, iter = 199)
 
 
 #trajectory analysis
@@ -91,23 +99,85 @@ TA1 <-
   trajectory.analysis(
     fit1, 
     groups = gdf$groups, 
-    traj.pts = gdf$new_stage, 
+    traj.pts = gdf$numerical_stage, 
     print.progress = FALSE)
 
 
 #plot groups*stage morphospace
+
+traj_col <- 
+  gdf$numerical_stage %>% 
+  enframe() %>% 
+  mutate(colour = 
+           case_when(value == 1 ~ "#009E73", #green
+                     value == 2 ~ "#CC79A7", #pink
+                     value == 3 ~ "#56B4E9", #blue
+                     value == 4 ~ "#E69F00",)) #orange
+
+
+
+#plotting trajectory analysis AND warp grids
+#divide up the plotting window into a 3×3 grid, 
+#the numbers correspond to the order and location of each item being plotted
+mat <- matrix(c(4,5,0,1,1,2,1,1,3), 3) 
+
+# set the size of the rows and columns
+layout(mat, widths=c(1,1,1), heights=c(1,1,0.6)) 
+
+# sets the margins for traj plot
+par(mar=c(4, 4, 1, 1))
+
 TP1 <- 
-  plot(TA1, pch = as.numeric(gdf$groups) + 20, 
-       bg = as.numeric(gdf$new_stage),
-       cex = 1.5, col = "gray")
+  plot(TA1, pch = as.numeric(gdf$groups) +20, 
+       bg = traj_col$colour,
+       cex = 2,
+       col='white')
 
 #add trajectory lines per species
-add.trajectories(TP1, traj.pch = c(21,22), start.bg = 1, end.bg = 2)
+add.trajectories(
+  TP1, 
+  traj.pch = c(1,0), 
+  traj.lty=c(1,3)
+  )
 
 #add legend
-legend("topright", levels(gdf$groups), pch =  c(21, 22), pt.bg = 1)
+legend("topleft",
+       levels(gdf$groups), 
+       pch =  c(1,0), 
+       pt.bg = 1)
+
+legend("topright",
+       levels(gdf$numerical_stage), 
+       pch = 18, 
+       title = "Stages",
+       col = c("#009E73", "#CC79A7", "#56B4E9", "#E69F00"))
+
+#add warp grids
+ref <- mshape(proc_data$coords)
+
+par(mar = c(0,0,0,0))
+plotRefToTarget(ref, pca_data$pc.shapes$PC1min) #PC1 min
+plotRefToTarget(ref, pca_data$pc.shapes$PC1max) #PC1 max
+plotRefToTarget(ref, pca_data$pc.shapes$PC2min) #PC2 min
+plotRefToTarget(ref, pca_data$pc.shapes$PC1max) #PC2 max
 
 
+
+
+###############################################################
+#Does shape differ between taxa at a given developmental stage?
+fit3 <- procD.lm(coords ~ new_stage*groups, data = gdf, iter =199, RRPP=TRUE)
+
+epi_groups <- interaction(gdf$groups, gdf$new_stage)
+
+pw1<- pairwise(fit3, groups=epi_groups) 
+
+summary(pw1, confidence=0.95, test.type="dist")
+
+
+
+
+###########
 # allometry
 fit2 <- procD.lm(coords ~ Csize*groups, data = gdf, iter = 199)
 
@@ -120,4 +190,6 @@ plotAllometry(
   cex=1.5,
   pch=16)
 
-legend("topright", levels(gdf$groups), col=c(1,2), pch=16, pt.bg = 1)
+legend("topright", 
+       levels(gdf$groups), 
+       col=c(1,2), pch=16, pt.bg = 1)

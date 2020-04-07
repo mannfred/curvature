@@ -95,7 +95,11 @@ data2ids <-
   data2ids %>%
   mutate(flower_ID = ID_matrix[,3]) %>% #create column for flower ID
   mutate(panicle_ID = ID_matrix[,2]) %>% #create column for panicle ID
-  mutate(indiv_ID = ID_matrix[,1]) 
+  mutate(indiv_ID = ID_matrix[,1]) %>% 
+  mutate(species_ID = case_when(Species_epithet == 'koreanum'~ 1, 
+                                Species_epithet == 'violaceum' ~2)) %>% 
+  mutate(spp_ind_ID = paste(species_ID, indiv_ID, sep=''))
+                  
   
 
 
@@ -105,12 +109,12 @@ data2ids <-
 #test for differences between stages (within species)
 
 size_stage_model <- 
-  lmerTest::lmer(size ~ stage + Species_epithet + (1|indiv_ID) , data = data2ids)
+  lmerTest::lmer(size ~ stage + Species_epithet + (1|spp_ind_ID) , data = data2ids)
 
 emmeans(size_stage_model, list(pairwise ~ stage + Species_epithet), adjust = "tukey")
 #some stages are not distinct (within species)
 #interpretation of row 1 of emmeans() output:
-#the mean size of all E. koreanum at stage "E" is 2.32 mm.
+#the mean size of all E. koreanum at stage "E" is 2.26 mm.
 
 
 
@@ -146,7 +150,7 @@ data5<-
 
 
 model1 <- 
-  lmerTest::lmer(size ~ Species_epithet + new_stage + (1|indiv_ID), data = data5)
+  lmerTest::lmer(size ~ Species_epithet + new_stage + (1|spp_ind_ID), data = data5)
 
 qqnorm(resid(model1))
 qqline(resid(model1))
@@ -157,7 +161,7 @@ tukey_results<-
 #stages do not differ in size between species
 
 
-#plot model
+#plot model: developmental stage vs size (mm)
 
 emmip(model1, Species_epithet~new_stage, type="response") +
   geom_point(

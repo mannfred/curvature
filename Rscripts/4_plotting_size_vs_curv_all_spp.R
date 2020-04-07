@@ -38,18 +38,18 @@ ID_matrix <- str_split_fixed(csids$identity, "_", n=3) #matrix of IDs in SIPC fo
 #add identifiers back to tibble 
 curv_size_data <-
   csids %>%
-  mutate(indiv_ID = ID_matrix[,2]) #add individual identity
+  mutate(spp_ind_ID = paste(ID_matrix[,2], species, sep="")) #add individual identity
 
 
 
 # plot sepal size vs curvature
 ggplot(
   data=curv_size_data, 
-  aes(x=sepal_size_mm, y=log(adjusted_curvature))) +
+  aes(x=sepal_size_mm, y=adjusted_curvature)) +
   geom_point(
     aes(colour=factor(species)), size=3) +
   labs(x = "Sepal length (mm)", 
-       y = "log(total mean curvature) (degrees/mm)",
+       y = "total mean curvature (degrees/mm)",
        colour = "species") +
   scale_colour_manual(name= "Species", 
                       breaks = c("K", "V"), 
@@ -70,13 +70,15 @@ ggplot(
 
 
 model3 <- 
-  lmerTest::lmer(log(adjusted_curvature) ~ Species_epithet + new_stage + (1|indiv_ID), data = data5)
+  lmerTest::lmer(log(adjusted_curvature) ~ species + sepal_size_mm + (1|spp_ind_ID), data = curv_size_data)
 
-qqnorm(resid(model1))
-qqline(resid(model1))
+qqnorm(resid(model3))
+qqline(resid(model3))
 
-tukey_results<-
-  emmeans(model1, list(pairwise ~ Species_epithet + new_stage), adjust = "tukey")
+
+
+
+
 
 
 

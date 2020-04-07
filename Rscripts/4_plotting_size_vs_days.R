@@ -7,7 +7,7 @@ library(tidyverse)
 
 #alignment data
 stages_days_subset <- #only import E. grandiflorum data
-  readRDS("stages_days_sort_grandiflorum.rds") %>%
+  readRDS("data\stages_days_sort_grandiflorum.rds") %>%
   na_if("-") %>% 
   drop_na() %>% #remove rows with "-" 
   group_by(ID) %>% #create groups by flower
@@ -37,6 +37,8 @@ ggplot(
 ) +
   geom_point(
     aes(x=elapsed_days, y=size))
+
+
 
 
 ##########################################
@@ -135,11 +137,11 @@ ID_matrix <- str_split_fixed(sppids$identity, "_", n=3) #matrix of IDs in SIPC f
 joiner <-
   sppids %>%
   ungroup() %>% 
-  mutate(indiv_ID = ID_matrix[,1]) #add indiv_ID
+  mutate(spp_ind_ID = paste(ID_matrix[,1], species_epithet, sep='')) #add indiv_ID
 
 #mixed effects model
 model2 <- 
-  lmerTest::lmer(days_elapsed ~ flower_stage + species_epithet + (1|indiv_ID), data = joiner)
+  lmerTest::lmer(days_elapsed ~ flower_stage + species_epithet + (1|spp_ind_ID), data = joiner)
 
 qqnorm(resid(model2))
 qqline(resid(model2))
