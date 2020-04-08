@@ -85,7 +85,7 @@ gdf <-
 gdf$numerical_stage <- factor(gdf$numerical_stage) 
 
 
-
+saveRDS(gdf, file="geomorph_data_frame.rds")
 
 
 

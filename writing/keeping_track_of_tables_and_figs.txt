@@ -7,13 +7,14 @@ X Table S3: Stage definitions, mean sizes, mean elapsed days
 
 -----
 
-X Figure 1: Overview of most commonly used curvature metrics
-X Figure 2: Geometric morphometrics
-X Figure 3: illustration of curvature K=dT/ds
-X Figure 4: proposed workflow
-X Figure 5: Comparison of developmental stages. 
-X Figure 6: Sepal size vs curvature
+Figure 1: Overview of most commonly used curvature metrics
+Figure 2: illustration of curvature K=dT/ds
+Figure 3: proposed workflow
+Figure 4: trajectory analysis 
+Figure 5: Sepal size vs curvature
 
-X Figure S1: Angle of deflection = inverse radius
-X Figure S2: locations of landmarks and semilandmarks
-X Figure S3: Logistic growth of Epimedium flowers
+Figure S1: Angle of deflection = inverse radius
+Figure S2: overview of Geometric morphometrics
+Figure S3: locations of landmarks and semilandmarks
+Figure S4: stages vs size
+Figure S5: stages vs elapsed days 

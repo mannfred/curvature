@@ -1,3 +1,4 @@
+library(emmeans)
 library(here)
 library(tidyverse)
 
@@ -17,14 +18,19 @@ size_data<-
 curv_data <-
   read.csv(
   here("data/epimedium_adj_curvature.csv"), header=TRUE) %>% 
-  select(2:5)
+  select(2:5) #drop column "X"
+ 
 
 # merge curvature data into one tibble
 curv_size_data <-
   left_join(curv_data, size_data, by ='name') %>% 
   as_tibble() %>% 
-  mutate(species = str_extract(name, "[A-Z]+")) # extacts uppercase letters from strings
-  
+  mutate(species = str_extract(name, "[A-Z]+")) %>%  # extacts uppercase letters from strings
+  mutate(new_stage = case_when(
+    stage == "E" ~ "C",
+    stage == "G" ~ "G",
+    stage == "ND" | stage == "F" | stage == "N" | stage == "O" ~ "T",
+    stage == "P" | stage == "D" | stage == "A" ~ "A"))
 
 #isolate numeric identifiers
 csids <-
@@ -65,23 +71,50 @@ ggplot(
   
 
 
-##################################
-#Fit model for log(K) ~ sepal size
+#############################
+#Fit model for K ~ sepal size
 
 
 model3 <- 
-  lmerTest::lmer(log(adjusted_curvature) ~ species + sepal_size_mm + (1|spp_ind_ID), data = curv_size_data)
+  lmerTest::lmer(adjusted_curvature ~ new_stage*species + (1|spp_ind_ID), data = curv_size_data)
 
 qqnorm(resid(model3))
 qqline(resid(model3))
 
 
+emmeans(model3, list(pairwise ~ new_stage*species), adjust = "tukey")
 
 
 
 
 
+##################################
+#Fit model for K ~ centroid size
 
+#import geomorph data frame w centroid info
+gdf <- readRDS(file=here("data/RDS_files/geomorph_data_frame.rds"))
+
+#add to main tibble
+curv_size_data <-
+  curv_size_data %>% 
+  mutate(Csize = gdf$Csize)
+
+#
+model4 <- 
+  lmerTest::lmer(adjusted_curvature ~ Csize*species + (1|spp_ind_ID), data = curv_size_data)
+
+qqnorm(resid(model4))
+qqline(resid(model4))
+
+
+emmeans(model4, list(pairwise ~ Csize*species), adjust = "tukey")
+
+#very similar trend to sepal size vs K
+#therefore, sepal size is an appropriate proxy for centroid size
+
+
+
+##############################
 # plot sepal size vs arclength
 ggplot(
   data=curv_size_data, 
