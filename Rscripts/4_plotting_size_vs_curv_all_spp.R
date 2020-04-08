@@ -72,7 +72,7 @@ ggplot(
 
 
 #############################
-#Fit model for K ~ sepal size
+#Fit model for K ~ stage
 
 
 model3 <- 
