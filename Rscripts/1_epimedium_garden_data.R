@@ -109,9 +109,9 @@ data2ids <-
 #test for differences between stages (within species)
 
 size_stage_model <- 
-  lmerTest::lmer(size ~ stage + Species_epithet + (1|spp_ind_ID) , data = data2ids)
+  lmerTest::lmer(size ~ stage*Species_epithet + (1|spp_ind_ID) , data = data2ids)
 
-emmeans(size_stage_model, list(pairwise ~ stage + Species_epithet), adjust = "tukey")
+emmeans(size_stage_model, list(pairwise ~ stage*Species_epithet), adjust = "tukey")
 #some stages are not distinct (within species)
 #interpretation of row 1 of emmeans() output:
 #the mean size of all E. koreanum at stage "E" is 2.26 mm.
@@ -150,13 +150,13 @@ data5<-
 
 
 model1 <- 
-  lmerTest::lmer(size ~ Species_epithet + new_stage + (1|spp_ind_ID), data = data5)
+  lmerTest::lmer(size ~ Species_epithet*new_stage + (1|spp_ind_ID), data = data5)
 
 qqnorm(resid(model1))
 qqline(resid(model1))
 
 tukey_results<-
-  emmeans(model1, list(pairwise ~ Species_epithet + new_stage), adjust = "tukey")
+  emmeans(model1, list(pairwise ~ Species_epithet*new_stage), adjust = "tukey")
  
 #stages do not differ in size between species
 
@@ -184,7 +184,12 @@ emmip(model1, Species_epithet~new_stage, type="response") +
     linetype = "solid", 
     position = position_dodge(),
     size=1.5,
-    alpha=0.65)
+    alpha=0.65) +
+  scale_colour_manual(name= "Species", 
+                      breaks = c("koreanum", "violaceum"), 
+                      labels = c(expression(italic("E. koreanum")), 
+                                 expression(italic("E. violaceum"))),
+                      values = c("#009E73", "#CC79A7")) 
   
  
 #for boxplot add..

@@ -1,7 +1,7 @@
 library(emmeans)
 library(here)
 library(tidyverse)
-
+here=here::here
 
 
 #import data ####
@@ -82,7 +82,8 @@ qqnorm(resid(model3))
 qqline(resid(model3))
 
 
-emmeans(model3, list(pairwise ~ new_stage*species), adjust = "tukey")
+tukey_results3 <-
+  emmeans(model3, list(pairwise ~ new_stage*species), adjust = "tukey")
 
 
 

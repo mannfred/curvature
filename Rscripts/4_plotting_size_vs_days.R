@@ -1,6 +1,6 @@
 library(here)
 library(tidyverse)
-
+here=here::here
 #for E. grandiflorum only (all 3 spp. done simultaneously below)####
 
 #combine alignment matrix with size data 
@@ -141,13 +141,13 @@ joiner <-
 
 #mixed effects model
 model2 <- 
-  lmerTest::lmer(days_elapsed ~ flower_stage + species_epithet + (1|spp_ind_ID), data = joiner)
+  lmerTest::lmer(days_elapsed ~ flower_stage*species_epithet + (1|spp_ind_ID), data = joiner)
 
 qqnorm(resid(model2))
 qqline(resid(model2))
 
 tukey_results2<-
-  emmeans(model2, list(pairwise ~ species_epithet + flower_stage), adjust = "tukey")
+  emmeans(model2, list(pairwise ~ species_epithet*flower_stage), adjust = "tukey")
 
 
 #plot model
@@ -173,4 +173,9 @@ emmip(model2, species_epithet~flower_stage, type="response") +
     linetype = "solid", 
     position = position_dodge(),
     size=1.5,
-    alpha=0.65)
+    alpha=0.65) +
+  scale_colour_manual(name= "Species", 
+                      breaks = c("koreanum", "violaceum"), 
+                      labels = c(expression(italic("E. koreanum")), 
+                                 expression(italic("E. violaceum"))),
+                      values = c("#009E73", "#CC79A7")) 

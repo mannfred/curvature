@@ -1,7 +1,7 @@
 library(tidyverse)
 library(here)
 library(geomorph)
-
+here=here::here
 
 #read together
 epi_data <- 
@@ -170,9 +170,9 @@ fit3 <- procD.lm(coords ~ new_stage*groups, data = gdf, iter =199, RRPP=TRUE)
 
 epi_groups <- interaction(gdf$groups, gdf$new_stage)
 
-pw1<- pairwise(fit3, groups=epi_groups) 
+pw1 <- pairwise(fit3, groups=epi_groups) 
 
-summary(pw1, confidence=0.95, test.type="dist")
+sum <- summary(pw1, confidence=0.95, test.type="dist")
 
 
 
