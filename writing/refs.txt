@@ -1,0 +1,116 @@
+Adams, D.C., and Collyer, M. (2009). A general framework for the analysis of phenotypic    trajectories in evolutionary studies. Evolution 63, 1143–1154.
+Adams, D.C., and Otárola-Castillo, E. (2013). Geomorph: An R package for the collection and analysis of geometric morphometric shape data. Methods in Ecology and Evolution 4, 393–399.
+Alexandre, H., Vrignaud, J., Mangin, B., and Joly, S. (2015). Genetic architecture of pollination syndrome transition between hummingbird-specialist and generalist species in the genus Rhytidophyllum (Gesneriaceae). PeerJ 3, e1028.
+Armbruster, W.S., and Muchhala, N. (2009). Associations between floral specialization and species diversity: Cause, effect, or correlation? Evolutionary Ecology 23, 159–179.
+Baldwin, S.P., Oberholser, H.C., and Worley, L.G. (1931). Measurements of birds (Cleveland Museum of Natural History).
+Bardini, G., and Gianella, G.M. (2016). A historical walk along the idea of curvature, from Newton to Gauss passing from Euler. International Mathematical Forum 11, 259–278.
+Bastien, R., Douady, S., and Moulia, B. (2014). A unifying modeling of plant shoot gravitropism with an explicit account of the effects of growth. Frontiers in Plant Science 5, 136–145.
+Bell, J. (1956). Tangent, chord theorem. The Mathematical Gazette 40, 211–212.
+Berns, C.M., and Adams, D.C. (2010). Bill shape and sexual shape dimorphism between two species of temperate hummingbirds: Black-Chinned hummingbird (Archilochus alexandri) and Ruby-Throated hummingbird (Archilochus colubris). The Auk 127, 626–635.
+Berns, C.M., and Adams, D.C. (2013). Becoming different but staying alike: Patterns of sexual size and shape dimorphism in bills of hummingbirds. Evolutionary Biology 40, 246–260.
+Birn-Jeffery, A.V., Miller, C.E., Naish, D., Rayfield, E.J., and Hone, D.W. (2012). Pedal claw curvature in birds, lizards and Mesozoic dinosaurs–complicated categories and compensating for mass-specific and phylogenetic control. PloS One 7, e50555.
+Blüthgen, N., Menzel, F., and Blüthgen, N. (2006). Measuring specialization in species interaction networks. BMC Ecology 6, 9–21.
+Boehm, M.M.A. (2018). Biting the hand that feeds you: Wedge-billed hummingbird is a nectar robber of a sicklebill-adapted andean bellflower. Acta Amazonica 48, 146–150.
+Bonhomme, V., Picq, S., Gaucherel, C., and Claude, J. (2014). Momocs: Outline analysis using R. Journal of Statistical Software 56, 1–24.
+Bookstein, F.L. (1991). Morphometric tools for landmark data: geometry and biology (Cambridge University Press).
+Borcard, D., Gillet, F., and Legendre, P. (2018). Numerical Ecology with R (New York, USA: Springer).
+Borchers, H.W. (2019). Pracma: Practical numerical math functions. R package version 2.2.5.
+Borgella Jr, R., Snow, A.A., and Gavin, T.A. (2001). Species richness and pollen loads of hummingbirds using forest fragments in southern Costa Rica. Biotropica 33, 90–109.
+Bright, J.A., Marugán-Lobón, J., Cobb, S.N., and Rayfield, E.J. (2016). The shapes of bird beaks are highly controlled by nondietary factors. Proceedings of the National Academy of Sciences 113, 5352–5357.
+Campos, E.O., Bradshaw, H.D., and Daniel, T.L. (2015). Shape matters: Corolla curvature improves nectar discovery in the hawkmoth Manduca sexta. Functional Ecology 29, 462–468.
+Cardinal, S., and Danforth, B.N. (2013). Bees diversified in the age of eudicots. Proceedings of the Royal Society B: Biological Sciences 280, 20122686.
+Carothers, J.H. (1982). Effects of trophic morphology and behavior on foraging rates of three Hawaiian honeycreepers. Oecologia 55, 157–159.
+Casey, J. (1996). Exploring Curvature (Braunschweig, Germany: Friedr. Vieweg & Sohn Verlagsgesellschaft mbH).
+Castle, E.S. (1962). Phototropic curvature in Phycomyces. The Journal of General Physiology 45, 743–756.
+Claude, J. (2008). Morphometrics with R (New York, USA: Springer). 
+Collins, B.G. (2008). Nectar intake and foraging efficiency: Responses of honeyeaters and hummingbirds to variations in floral environments. The Auk 125, 574–587.
+Collyer, M.L., and Adams, D.C. (2018). RRPP: An R package for fitting linear models to high-dimensional data using residual randomization. Methods in Ecology and Evolution 9, 1772–1779.
+Collyer, M., Sekora, D., and Adams, D.C. (2015). A method for analysis of phenotypic change for phenotypes described by high-dimensional data. Heredity 115, 357–365.
+Coolidge, J.L. (1952). The unsatisfactory story of curvature. The American Mathematical Monthly 59, 375–379.
+Cosgrove, D.J. (1990). Rapid, bilateral changes in growth rate and curvature during gravitropism of cucumber hypocotyls: Implications for mechanism of growth control. Plant, Cell & Environment 13, 227–234.
+Cotton, P.A. (1998). Temporal partitioning of a floral resource by territorial hummingbirds. Ibis 140, 647–653.
+Dakin, R., Segre, P.S., Straw, A.D., and Altshuler, D.L. (2018). Morphology, muscle capacity, skill, and maneuvering ability in hummingbirds. Science 359, 653–657.
+Dehling, D.M., Töpfer, T., Schaefer, H.M., Jordano, P., Böhning-Gaese, K., and Schleuning, M. (2014). Functional relationships beyond species richness patterns: Trait matching in plant–bird mutualisms across scales. Global Ecology and Biogeography 23, 1085–1093.
+Dellinger, A.S., Chartier, M., Fernández-Fernández, D., Penneys, D.S., Alvear, M., Almeda, F., Michelangeli, F.A., Staedler, Y., Armbruster, W.S., and Schönenberger, J. (2019). Beyond buzz-pollination–departures from an adaptive plateau lead to new pollination syndromes. New Phytologist 221, 1136–1149.
+Emlen, D.J., Marangelo, J., Ball, B., and Cunningham, C.W. (2005). Diversity in the weapons of sexual selection: horn evolution in the beetle genus Onthophagus (Coleoptera: Scarabaeidae). Evolution 59, 1060-1084.
+Feinsinger, P., and Colwell, R.K. (1978). Community organization among neotropical nectar-feeding birds. American Zoologist 18, 779–795.
+Frassen, J.M., Firn, R.D., and Digby, J. (1982). The role of the apex in the phototropic curvature of Avena coleoptiles: Positive curvature under conditions of continuous illumination. Planta 155, 281–286.
+Gill, F.B., and Wolf, L.L. (1978). Comparative foraging efficiencies of some montane sunbirds in Kenya. The Condor 80, 391–400.
+Goriely, A., and Neukirch, S. (2006). Mechanics of climbing and attachment in twining plants. Physical Review Letters 97, 184302.
+Gómez, J., Perfectti, F., Bosch, J., and Camacho, J. (2009). A geographic selection mosaic in a generalized plant–pollinator–herbivore system. Ecological Monographs 79, 245–263.
+Graham, C.H., Parra, J.L., Rahbek, C., and McGuire, J.A. (2009). Phylogenetic structure in tropical hummingbird communities. Proceedings of the National Academy of Sciences 106, 19673–19678.
+Grant, V. (1949). Pollination systems as isolating mechanisms in angiosperms. Evolution 3, 82–97.
+Grant, V., and Grant, K.A. (1983). Hawkmoth pollination of Mirabilis longiflora (Nyctaginaceae). Proceedings of the National Academy of Sciences 80, 1298–1299.
+Hadley, A.S., Frey, S.J., Robinson, W.D., and Betts, M.G. (2018). Forest fragmentation and loss reduce richness, availability, and specialization in tropical hummingbird communities. Biotropica 50, 74–83.
+Hainsworth, F.R. (1973). On the tongue of a hummingbird: Its role in the rate and energetics of feeding. Comparative Biochemistry and Physiology Part A: Physiology 46, 65–78.
+Hodges, S.A., and Arnold, M.L. (1995). Spurring plant diversification: Are floral nectar spurs a key innovation? Proceedings of the Royal Society of London. Series B: Biological Sciences 262, 343–348.
+Hughes, M., Möller, M., Edwards, T.J., Bellstedt, D.U., and De Villiers, M. (2007). The impact of pollination syndrome and habitat on gene flow: A comparative study of two Streptocarpus (Gesneriaceae) species. American Journal of Botany 94, 1688–1695.
+Joly, S., Lambert, F., Alexandre, H., Clavel, J., Léveillé-Bourret, É., and Clark, J.L. (2018). Greater pollination generalization is not associated with reduced constraints on corolla shape in Antillean plants. Evolution 72, 244–260.
+Kay, K.M., and Sargent, R.D. (2009). The role of animal pollination in plant speciation: Integrating ecology, geography, and genetics. Annual Review of Ecology, Evolution, and Systematics 40, 637–656.
+Kuhl, F.P., and Giardina, C.R. (1982). Elliptic Fourier features of a closed contour. Computer Graphics and Image Processing 18, 236–258.
+Lagomarsino, L.P., and Muchhala, N. (2019). A gradient of pollination specialization in three species of Bolivian Centropogon. American Journal of Botany 106, 633–642.
+Lagomarsino, L.P., Forrestel, E.J., Muchhala, N., and Davis, C.C. (2017). Repeated evolution of vertebrate pollination syndromes in a recently diverged Andean plant clade. Evolution 71, 1970–1985.
+Lenth, R., Singmann, H., Love, J., and others (2018). Emmeans: Estimated marginal means, aka least-squares means. R Package Version 1.
+Luo, Y.-L., and Li, Q.-J. (2010). Effects of light and low temperature on the reciprocal style curvature of flexistylous Alpinia species (Zingiberaceae). Acta Physiologiae Plantarum 32, 1229–1234.
+MacLeod, N. (1999). Generalizing and extending the eigenshape method of shape space visualization and analysis. Paleobiology 25, 107–138.
+MacLeod, N. (2002). Geometric morphometrics and geological shape-classification systems. Earth-Science Reviews 59, 27–47.
+MacLeod, N. (2012). The centre cannot hold II: Elliptic fourier analysis. Palaeontological Association Newsletter 79, 29–42.
+MacLeod, N., and Rose, K.D. (1993). Inferring locomotor behavior in paleogene mammals via eigenshape analysis. American Journal of Science 293, 300–355.
+Maglianesi, M.A., Blüthgen, N., Böhning-Gaese, K., and Schleuning, M. (2014). Morphological traits determine specialization and resource use in plant–hummingbird networks in the Neotropics. Ecology 95, 3325–3334.
+Maglianesi, M.A., Blüthgen, N., Böhning-Gaese, K., and Schleuning, M. (2015a). Functional structure and specialization in three tropical plant–hummingbird interaction networks across an elevational gradient in Costa Rica. Ecography 38, 1119–1128.
+Maglianesi, M.A., Böhning-Gaese, K., and Schleuning, M. (2015b). Different foraging preferences of hummingbirds on artificial and natural flowers reveal mechanisms structuring plant–pollinator interactions. Journal of Animal Ecology 84, 655–664.
+Manning, J.C., and Goldblatt, P. (1997). The Moegistorhynchus longirostris (diptera: Nemestrinidae) pollination guild: Long-tubed flowers and a specialized long-proboscid fly pollination system in southern Africa. Plant Systematics and Evolution 206, 51–69.
+Martén-Rodrı́guez, S., Almarales-Castro, A., and Fenster, C.B. (2009). Evaluation of pollination syndromes in Antillean Gesneriaceae: Evidence for bat, hummingbird and generalized flowers. Journal of Ecology 97, 348–359.
+Maruyama, P.K., Sonne, J., Vizentin-Bugoni, J., Martı́n González, A.M., Zanata, T.B., Abrahamczyk, S., Alarcón, R., Araujo, A.C., Araújo, F.P., Baquero, A.C., et al. (2018). Functional diversity mediates macroecological variation in plant–hummingbird interaction networks. Global Ecology and Biogeography 27, 1186–1199.
+Mclntyre, G., and Browne, K. (1996). Effect of darkening the cotyledons on the growth and curvature of the sunflower hypocotyl: Evidence of hydraulic signalling. Journal of Experimental Botany 47, 1561–1566.
+Miller, E.T., Wagner, S.K., Harmon, L.J., and Ricklefs, R.E. (2017). Radiating despite a lack of character: Ecological divergence among closely related, morphologically similar honeyeaters (Aves: Meliphagidae) co-occurring in arid Australian environments. The American Naturalist 189, E14–E30.
+Milnor, J. (1954). On total curvatures of closed space curves. Mathematica Scandinavica 1, 289–296.
+Minnaar, C., Jager, M. de, and Anderson, B. (2019). Intraspecific divergence in floral-tube length promotes asymmetric pollen movement and reproductive isolation. New Phytologist 1160–1170.
+Mountainspring, S. (1987). Ecology, behavior, and conservation of the Maui Parrotbill. The Condor 89, 24–39.
+Muller, A. (1995). Morphological specializations in Central European bees for the uptake of pollen from flowers with anthers hidden in narrow corolla tubes (Hymenoptera: Apoidea). Entomologia Generalis 20, 43–57.
+Navalón, G., Marugán-Lobón, J., Bright, J.A., Cooney, C.R., and Rayfield, E.J. (2020). The consequences of craniofacial integration for the adaptive radiations of Darwin’s finches and Hawaiian honeycreepers. Nature Ecology & Evolution 4, 270–278.
+Niet, T. van der, and Johnson, S.D. (2012). Phylogenetic evidence for pollinator-driven diversification of angiosperms. Trends in Ecology & Evolution 27, 353–361.
+Nilsson, L.A. (1988). The evolution of flowers with deep corolla tubes. Nature 334, 147–149.
+Ollerton, J. (2017). Pollinator diversity: Distribution, ecological function, and conservation. Annual Review of Ecology, Evolution, and Systematics 48, 353–376.
+Olsen, A.M. (2017). Feeding ecology is the primary driver of beak shape diversification in waterfowl. Functional Ecology 31, 1985–1995.
+Partida-Lara, R., Enriquez, P.L., Vazquez Perez, J.R., and Pineda Diez de Bonilla, E. (2018). Spatio-temporal structure of the taxonomic and functional diversity of hummingbirds at the biosphere reserve El Triunfo, Chiapas, Mexico. Ornitologia Neotropical 29, 37–50.
+Paton, D., and Collins, B. (1989). Bills and tongues of nectar-feeding birds: A review of morphology, function and performance, with intercontinental comparisons. Australian Journal of Ecology 14, 473–506.
+Peng, F., Campos, E.O., Sullivan, J.G., Berry, N., Song, B.B., Daniel, T.L., and Bradshaw Jr, H. (2019). Morphospace exploration reveals divergent fitness optima between plants and pollinators. PloS One 14, e0213029.
+Pour, A.S., Chegini, G., Zarafshan, P., and Massah, J. (2018). Curvature-based pattern recognition for cultivar classification of Anthurium flowers. Postharvest Biology and Technology 139, 67–74.
+R Core Team (2017). R: A language and environment for statistical computing (Vienna, Austria: R Foundation for Statistical Computing).
+Rico-Guevara, A., and Araya-Salas, M. (2014). Bills as daggers? A test for sexually dimorphic weapons in a lekking hummingbird. Behavioral Ecology 26, 21–29.
+Ritter, R. (1992). Lateral bending during lizard locomotion. Journal of Experimental Biology 173, 1–10.
+Robertson, C. (1889). Flowers and Insects. II. Botanical Gazette 14, 172–178.
+Rocha, D., Monte Bello, C., Sobol, S., Samach, A., and Dornelas, M. (2015). Auxin and physical constraint exerted by the perianth promote androgynophore bending in Passiflora mucronata L. (Passifloraceae). Plant Biology 17, 639–646.
+Rohlf, F.J. (1990). Fitting Curves to Outlines. In Proceedings of the Michigan Morphometrics Workshop, F.J. Rolhf, and F.L. Bookstein, eds. (Ann Arbor, MI: University of Michigan Museum of Zoology), pp. 177–188.
+Rohlf, F.J. (2015). The tps series of software. Hystrix 26.
+Rohlf, F., and Slice, D. (1990). Extensions of the Procrustes method for optimal superposition of landmarks. Systematic Zoology 39, 40–59.
+Rutter, J.W. (2000). Geometry of Curves (Boca Raton, FL: CRC Press, Taylor; Francis Group).
+Schmitt, D., Rose, M.D., Turnquist, J.E., and Lemelin, P. (2005). Role of the prehensile tail during ateline locomotion: Experimental and osteological evidence. American Journal of Physical Anthropology 126, 435–446.
+Scott-Elliot, G. (1890). Ornithophilous flowers in South Africa. Annals of Botany 4, 265–280.
+Silk, W.K. (1989). On the curving and twining of stems. Environmental and Experimental Botany 29, 95–109.
+Smith, T.B., Freed, L.A., Lepson, J.K., and Carothers, J.H. (1995). Evolutionary consequences of extinctions in populations of a Hawaiian honeycreeper. Conservation Biology 9, 107–113.
+Snow, B.K., and Snow, D. (1972). Feeding niches of hummingbirds in a Trinidad valley. The Journal of Animal Ecology 471–485.
+Sonne, J., Zanata, T.B., Martı́n González, A.M., Cumbicus Torres, N.L., Fjeldså, J., Colwell, R.K., Tinoco, B.A., Rahbek, C., and Dalsgaard, B. (2019). The distributions of morphologically specialized hummingbirds coincide with floral trait matching across an Andean elevational gradient. Biotropica 51, 205–218.
+Sonne, J., Vizentin-Bugoni, J., Maruyama, P.K., Araujo, A.C., Chávez-González, E., Coelho, A.G., Cotton, P.A., Marı́n-Gómez, O.H., Lara, C., Lasprilla, L.R., et al. (2020). Ecological mechanisms explaining interactions within plant–hummingbird networks: Morphological matching increases towards lower latitudes. Proceedings of the Royal Society B 287, 20192873.
+Stearn, W.T. (2002). The genus Epimedium and other herbacious Berberidaceae including the genus Podophyllum (Portland, OR: Timber Press, Inc.).
+Stiles, F.G. (1975). Ecology, flowering phenology, and hummingbird pollination of some Costa Rican Heliconia species. Ecology 56, 285–301.
+Stiles, F.G. (1995). Behavioral, ecological and morphological correlates of foraging for arthropods by the hummingbirds of a tropical wet forest. Condor 853–878.
+Stiles, F.G. (2004). Phylogenetic constraints upon morphological and ecological adaptation in hummingbirds (Trochilidae): Why are there no hermits in the paramo. Ornitologia Neotropical 15, 191–198.
+Stiles, F.G. (2008). Ecomorphology and phylogeny of hummingbirds: Divergence and convergence in adaptations to high elevations. Ornitologia Neotropical 19, 511–519.
+Temeles, E.J. (1996). A new dimension to hummingbird-flower relationships. Oecologia 105, 517–523.
+Temeles, E.J., and Kress, W.J. (2003). Adaptation in a plant-hummingbird association. Science 300, 630–633.
+Temeles, E.J., Pan, I.L., Brennan, J.L., and Horwitt, J.N. (2000). Evidence for ecological causation of sexual dimorphism in a hummingbird. Science 289, 441–443.
+Temeles, E.J., Goldman, R.S., and Kudla, A.U. (2005). Foraging and territory economics of sexually dimorphic Purple-Throated Caribs (Eulampis jugularis) on three Heliconia morphs. The Auk 122, 187–204.
+Temeles, E.J., Koulouris, C.R., Sander, S.E., and Kress, W.J. (2009). Effect of flower shape and size on foraging performance and trade-offs in a tropical hummingbird. Ecology 90, 1147–1161.
+Temeles, E.J., Miller, J.S., and Rifkin, J.L. (2010). Evolution of sexual dimorphism in bill size and shape of hermit hummingbirds (Phaethornithinae): A role for ecological causation. Philosophical Transactions of the Royal Society B: Biological Sciences 365, 1053–1063.
+Terral, J.-F., Alonso, N., Capdevila, R.B. i, Chatti, N., Fabre, L., Fiorentino, G., Marinval, P., Jordá, G.P., Pradat, B., and Rovira, N. (2004). Historical biogeography of olive domestication (Olea europaea L.) as revealed by geometrical morphometry applied to biological and archaeological material. Journal of Biogeography 31, 63–77.
+Travers, S.E., Temeles, E.J., and Pan, I. (2003). The relationship between nectar spur curvature in jewelweed (Impatiens capensis) and pollen removal by hummingbird pollinators. Canadian Journal of Botany 81, 164–170.
+Tripp, E.A., and McDade, L.A. (2013). Time-calibrated phylogenies of hummingbirds and hummingbird-pollinated plants reject a hypothesis of diffuse co-evolution. Aliso: A Journal of Systematic and Evolutionary Botany 31, 89–103.
+Vamosi, J.C., Magallón, S., Mayrose, I., Otto, S.P., and Sauquet, H. (2018). Macroevolutionary patterns of flowering plant speciation and extinction. Annual Review of Plant Biology 69, 685–706.
+Wang, Q., Li, Y., Pu, X., Zhu, L., Tang, Z., and Liu, Q. (2013). Pollinators and nectar robbers cause directional selection for large spur circle in Impatiens oxyanthera (Balsaminaceae). Plant Systematics and Evolution 299, 1263–1274.
+Webster, M., and Sheets, H.D. (2010). A practical introduction to landmark-based geometric morphometrics. The Paleontological Society Papers 16, 163–188.
+Weinstein, B.G., and Graham, C.H. (2017). Persistent bill and corolla matching despite shifting temporal resources in tropical hummingbird-plant interactions. Ecology Letters 20, 326–335.
+Young, H.J. (2008). Selection on spur shape in Impatiens capensis. Oecologia 156, 535–543.
+Zahn, C.T., and Roskies, R.Z. (1972). Fourier descriptors for plane closed curves. IEEE Transactions on Computers 100, 269–281.
+Zwillinger, D. (2018). CRC Standard Mathematical Tables and Formulae, (Boca Raton, FL: Chapman; Hall, CRC Press), pp. 424–425.

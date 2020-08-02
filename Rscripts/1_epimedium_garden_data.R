@@ -1,4 +1,3 @@
-############################################################
 # this R script includes initial analyses of stage-size data 
 #collected from Epimedium spp., April 2019, UBC Botanical Garden
 
@@ -14,7 +13,7 @@ here = here::here #mask lubridate::here
 
 
 
-#########################################
+# ---------------------------------------
 # power analysis for epimedium experiment
 
 pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative = 'greater')
@@ -27,12 +26,13 @@ pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative =
 
 
 
-############################################
+# ------------------------------------------
 # Epimedium growth data collected April 2019
 # pivoting and plotting garden data 
 
 
-#pivot original data frame so that "stage" info can be manually inputted 
+# pivot original data frame so that "stage" 
+# info can be manually inputted 
 data <-
   read.csv(
       here("data/epimedium_growth_data.csv"), 
@@ -42,9 +42,11 @@ data <-
   gather(key="date", value="size", -Species_Individual_Panicle_Flower) #pivot
 
 
+# create a levels vector with the 
+# identifiers in the right order (stringr)
 levels <- 
   unique(data$Species_Individual_Panicle_Flower) %>%
-  str_sort(., numeric = TRUE) #create a levels vector with the identifiers in the right order (stringr)
+  str_sort(., numeric = TRUE) 
 
 
 data_sort <-
@@ -60,10 +62,10 @@ data_sort <-
 
 
 
-###########################################
-#visualize and test stage-size relationship
+# -----------------------------------------
+# visualize and test stage-size relationship
 
-#tidying data
+# tidying data
 data2<-
   read.csv(
       here("data/epimedium_growth_data_pivot.csv"), 
@@ -80,17 +82,17 @@ data2<-
   ungroup() 
                               
 
-#isolate numeric identifiers
+# isolate numeric identifiers
 data2ids <-
   data2 %>% 
   filter(Species_epithet == "koreanum" | Species_epithet == "violaceum") %>% 
   mutate(identity = str_replace(Species_Individual_Panicle_Flower,  "[a-z]+", "")) %>% #removes alphabet and leaves identifiers 
   mutate(identity = str_replace(identity, substr(identity, 1, 1), ""))  #remove leading "_" from ID strings
 
-#add identifiers to a list
+# add identifiers to a list
 ID_matrix <- str_split_fixed(data2ids$identity, "_", n=3) #matrix of IDs in SIPC format
 
-#add identifiers back to tibble 
+# add identifiers back to tibble 
 data2ids <-
   data2ids %>%
   mutate(flower_ID = ID_matrix[,3]) %>% #create column for flower ID
@@ -105,9 +107,11 @@ data2ids <-
 
 
 
-####################################################
-#test for differences between stages (within species)
+# --------------------------------------------------- 
+# test for differences between stages (within species)
 
+# spp_ind_ID is a random effect 
+# accounting for taxon AND individual 
 size_stage_model <- 
   lmerTest::lmer(size ~ stage*Species_epithet + (1|spp_ind_ID) , data = data2ids)
 
@@ -216,16 +220,3 @@ emmip(model1, Species_epithet~new_stage, type="response") +
 #       linetype = "dashed", 
 #       position = position_dodge()) +
 #     theme_classic()  #removes gray backdrop
-
-
-
-
-
-
-
-
-
-
-
-
-
