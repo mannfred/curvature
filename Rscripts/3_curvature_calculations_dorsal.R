@@ -60,16 +60,16 @@ plot(2:10, r[2:10], type='b', pch=20, col='red', main='R2 / degree')
 
 # try out some polynomials
 poly_list <- 
-  map(dorsal_x$coo, Momocs::opoly, degree = 4)
+  map(dorsal_x$coo, Momocs::npoly, degree = 3)
 
 
 # plot landmarks
-coo_plot(dorsal_x$coo[32])
+coo_plot(dorsal_x$coo[33])
 
 # inspect polynomial fit
 # inspect 9, 13, 14, 21, 22, 23..
-poly_list[[32]] %>% 
-  opoly_i() %>% #calculates shape from polynomial model
+poly_list[[33]] %>% 
+  npoly_i() %>% #calculates shape from polynomial model
   coo_draw(border='red')
 
 
@@ -81,14 +81,21 @@ for (i in 1:length(poly_list)) {
 }
 
 # visualize R2 distribution
-# lowest R2 is 0.97 for degrees = 4
 plot(1:57, 
      as.numeric(r2), 
      text(x=1:57, 
           y=as.numeric(r2), 
           labels=dimnames(epi_lmk_data)[[3]]))
 
+# 20 specimens with r2 < 0.99
+lowr2 <- which(as.numeric(r2) < 0.99)
 
+# replace lowr2 polys with polynomials of degree 9
+for (i in seq_along(lowr2)){
+  poly_list[lowr2[i]] <- 
+    map(dorsal_x$coo[lowr2[i]], Momocs::npoly, degree = 9)
+}
+  
 # ---------------------
 # calculate curvature
 
@@ -100,13 +107,11 @@ baselines_list <-
 
 
 # calculate total curvature 
-# units are in degrees per unit length
+# units are radians
 curvature_tbl <- 
   curvr::total_curvature %>% 
-  mapply(., baselines_list, poly_list, 500) %>% 
-  enframe()
-
-# saveRDS(curvature_tbl, file = here("data/RDS_files/curvature_tbl_dorsal.rds"))
+  mapply(., poly_list, baselines_list) %>% 
+  enframe() 
 
 
 # ---------------------------
@@ -136,22 +141,22 @@ lengths_list <-
 
 
 # or estimate arclength as perimeter
-perim_list <- coo_perim(Ldk(dorsal))
+perim_list <- coo_perim(Ldk(dorsal_x))
   
 
-# divide curvature by arclength 
+# clean up the table
 alltogether_tbl <- 
-  lengths_list %>% 
+  perim_list %>% 
   unlist() %>% 
   enframe() %>% 
-  left_join(., curvature_tbl, by = 'name') %>%  # join arclength columns and curvature columns 
-  rename(arclength = value.x, total_curvature = value.y) %>% 
-  mutate(adjusted_curvature = total_curvature/arclength) %>%  # new column is adjusted curvature
+  left_join(., curvature_tbl, by = 'name') %>%   
   mutate(name = dimnames(epi_lmk_data)[[3]]) %>% 
-  mutate(perimeter = as.numeric(perim_list))
+  rename(perimeter = value.x) %>% 
+  rename(total_K = value.y) %>% 
+  mutate(total_K = abs(total_K) * (180/pi))
 
-write.csv(alltogether_tbl, here('data/epimedium_adj_curvature_dorsal.csv')) 
-
+# over-rides previous .rds file with same name
+write_rds(alltogether_tbl, path = here("data/RDS_files/curvature_tbl_dorsal.rds"))
 
 
 

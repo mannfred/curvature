@@ -81,9 +81,7 @@ plot(pca_data$pc.scores[,1:2],
 #import dorsal curvature data
 
 curv_data <- 
-  read.csv(here('data/epimedium_adj_curvature_dorsal.csv')) %>% 
-  tibble() %>% 
-  select(c(2,4,6)) 
+  read_rds(here('data/RDS_files/curvature_tbl_dorsal.rds'))
  
 
 #TRUE = all sample IDs match between shape matrix and
@@ -235,7 +233,7 @@ curv_data <-
 PC1 <- pca_data$pc.scores[,1]
 PC2 <- pca_data$pc.scores[,2]
 PC3 <- pca_data$pc.scores[,3]
-dors_curv <- curv_data$total_curvature
+dors_curv <- curv_data$total_K
 indiv <- curv_data$spp_ind_ID
 group_ids <-
   c(replicate(30, "E. koreanum"),
@@ -263,10 +261,10 @@ write.csv(TableS7, file=here("data/new_Table_S7.csv"))
 # ----------------------------
 # plot total curvature vs PC2
 
-mydata <- tibble(dors_curv, PC1)
+mydata <- tibble(dors_curv, PC2)
 
 ggplot(data = mydata) +
-  geom_point(aes(x = dors_curv, y = PC1, colour=colour_ids), size=4) +
+  geom_point(aes(x = dors_curv, y = PC2, colour=colour_ids), size=4) +
   labs(
     y = "PC1 of Shape Variation (61.4%)",
     x = "total curvature (degrees)") +

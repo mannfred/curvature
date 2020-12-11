@@ -9,7 +9,7 @@ here=here::here
 # size data
 # K_1_2_1 is missing because
 # there is no curvature data
-size_data<-
+size_data <-
   read.csv(
   here("data/epimedium_curv_size_data_nogran.csv"), header=TRUE) %>% 
   tibble() %>% 
@@ -17,11 +17,8 @@ size_data<-
   
 
 # dorsal curvature data
-curv_data <-
-  read.csv(
-  here("data/epimedium_adj_curvature_dorsal.csv"), header=TRUE) %>% 
-  tibble() %>% 
-  select(2:4) 
+curv_data <- read_rds(path = here('data/RDS_files/curvature_tbl_dorsal.rds'))
+  
 
 # check IDs
 identical(size_data$name, curv_data$name)
@@ -35,7 +32,6 @@ identical(size_data$name, curv_data$name)
 # merge curvature and size data into one tibble
 curv_size_data <-
   left_join(curv_data, size_data, by ='name') %>% 
-  as_tibble() %>% 
   mutate(species = str_extract(name, "[A-Z]+")) %>%  # extacts uppercase letters from strings
   mutate(new_stage = case_when(
     stage == "E" ~ "C",
@@ -53,6 +49,7 @@ csids <-
 ID_matrix <- str_split_fixed(csids$identity, "_", n=3) #matrix of IDs in SIPC format
 
 # add individual identity
+# and convert rad to deg
 curv_size_data <-
   csids %>%
   mutate(spp_ind_ID = paste(ID_matrix[,2], species, sep=""))
@@ -70,7 +67,7 @@ colour_ids <-
 # plot size vs curvature
 ggplot(
   data=curv_size_data, 
-  aes(x=arclength, y=total_curvature)) +
+  aes(x=perimeter, y=total_K)) +
   geom_point(
     aes(colour=factor(species)), size=3) +
   labs(x = "sepal size (mm)", 
@@ -91,17 +88,16 @@ ggplot(
 
 
 # plot stage vs curvature
-
 ggplot() +
   theme(panel.border = element_blank(),    # generally minimal theme
         panel.background = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black"), 
-        legend.position=c(.2, .2)) +
+        legend.position=c(.2, .9)) +
   geom_boxplot(
     data=curv_size_data, 
-    aes(y=total_curvature,
+    aes(y=total_K,
         x=factor(new_stage, levels=c("C", "G", "T", "A")),
         fill=species)) +
     labs(x = "developmental stage", 
@@ -117,20 +113,17 @@ ggplot() +
 # ---------------------------
 # Fit model for K ~ stage
 
-# random effect (individual) has variance (nearly) zero
+# random effect (individual) has varies by ~8 std devs
 # see ?isSingular for details
 model3 <- 
-  lmerTest::lmer(total_curvature ~ new_stage*species + (1|spp_ind_ID), data = curv_size_data)
+  lmerTest::lmer(total_K ~ new_stage*species + (1|spp_ind_ID), data = curv_size_data)
 
 qqnorm(resid(model3))
 qqline(resid(model3))
 
-# refit model without random effect (gives very similar results)
-model4 <- lm(total_curvature ~ new_stage*species, data = curv_size_data)
-
 # pairwise comparisons of means
 tukey_results4 <-
-  emmeans(model4, pairwise ~ new_stage*species, adjust = "tukey")
+  emmeans(model3, pairwise ~ new_stage*species, adjust = "tukey")
 
 # save as data frame
 tableS6 <- 
@@ -139,8 +132,4 @@ tableS6 <-
 
  write.csv(tableS6, file=(here("data/new_Table_S6.csv")))
 
-# significant differences in curvature occur between A,K-G,V and A,K-G,K
-# contrast   estimate        SE        df    t.ratio      p.value
-# A,K - G,K -51.569812 11.192188 46.642733 -4.6076615 0.0007762599
-# A,K - G,V -54.674546 14.510831 20.741669 -3.7678438 0.0209875129
 
