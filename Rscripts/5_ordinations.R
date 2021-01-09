@@ -81,7 +81,7 @@ plot(pca_data$pc.scores[,1:2],
 #import dorsal curvature data
 
 curv_data <- 
-  read_rds(here('data/RDS_files/curvature_tbl_dorsal.rds'))
+  read_rds(here('data/RDS_files/curvature_tbl_dorsal.rds')) 
  
 
 #TRUE = all sample IDs match between shape matrix and
@@ -223,10 +223,22 @@ csids <-
 # add identifiers to a list
 ID_matrix <- str_split_fixed(csids$identity, "_", n=3) #matrix of IDs in SIPC format
 
+# create group vector
+group_ids <-
+  c(replicate(30, "koreanum"),
+    replicate(27, "violaceum")) %>% 
+  factor()
+
+# put species epithets back in
+curv_data <-
+  curv_data %>% 
+  mutate(taxon = group_ids)
+
 # add individual identity
 curv_data <-
   csids %>%
   mutate(spp_ind_ID = paste(curv_data$taxon, ID_matrix[,2], sep=""))
+
 
 
 # set model variables
@@ -235,14 +247,11 @@ PC2 <- pca_data$pc.scores[,2]
 PC3 <- pca_data$pc.scores[,3]
 dors_curv <- curv_data$total_K
 indiv <- curv_data$spp_ind_ID
-group_ids <-
-  c(replicate(30, "E. koreanum"),
-    replicate(27, "E. violaceum")) %>% 
-  factor()
+
 
 
 # fit model
-dors_model <- lmerTest::lmer(PC1 ~ dors_curv*group_ids + (1|indiv))
+dors_model <- lm(PC2 ~ dors_curv*group_ids)
 summary(dors_model) #variance of random effect is 0.009 std dev
 
 qqnorm(resid(dors_model))
@@ -266,7 +275,7 @@ mydata <- tibble(dors_curv, PC2)
 ggplot(data = mydata) +
   geom_point(aes(x = dors_curv, y = PC2, colour=colour_ids), size=4) +
   labs(
-    y = "PC1 of Shape Variation (61.4%)",
+    y = "PC2 of Shape Variation (25.6%)",
     x = "total curvature (degrees)") +
   scale_colour_manual(
     name = "Species", 

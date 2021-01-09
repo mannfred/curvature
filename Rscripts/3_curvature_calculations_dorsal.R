@@ -62,16 +62,17 @@ plot(2:10, r[2:10], type='b', pch=20, col='red', main='R2 / degree')
 poly_list <- 
   map(dorsal_x$coo, Momocs::npoly, degree = 3)
 
-
+# plot & draw the entire set of polynomials
+for (i in 1:length(dorsal_x)) {
 # plot landmarks
-coo_plot(dorsal_x$coo[33])
+coo_plot(dorsal_x$coo[i])
 
 # inspect polynomial fit
 # inspect 9, 13, 14, 21, 22, 23..
-poly_list[[33]] %>% 
+poly_list[[i]] %>% 
   npoly_i() %>% #calculates shape from polynomial model
   coo_draw(border='red')
-
+}
 
 # extract all R2 fits
 r2 <- list()
