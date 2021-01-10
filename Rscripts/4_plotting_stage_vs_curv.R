@@ -17,7 +17,7 @@ size_data <-
   
 
 # dorsal curvature data
-curv_data <- read_rds(path = here('data/RDS_files/curvature_tbl_dorsal.rds'))
+curv_data <- read_rds(path = here('data/RDS_files/curvature_tbl_ventral.rds'))
   
 
 # check IDs
@@ -67,7 +67,7 @@ colour_ids <-
 # plot size vs curvature
 ggplot(
   data=curv_size_data, 
-  aes(x=perimeter, y=total_K)) +
+  aes(x=sepal_size_mm, y=total_K)) +
   geom_point(
     aes(colour=factor(species)), size=3) +
   labs(x = "sepal size (mm)", 

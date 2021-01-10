@@ -60,15 +60,18 @@ poly_list <-
   map(ventral_x$coo, Momocs::npoly, degree = 4)
 
 
+# plot & draw the entire set of polynomials
+for (i in 1:length(ventral_x)) {
+  # plot landmarks
+  coo_plot(ventral_x$coo[i])
+  
+  # inspect polynomial fit
+  
+  poly_list[[i]] %>% 
+    npoly_i() %>% #calculates shape from polynomial model
+    coo_draw(border='red')
+}
 
-# plot landmarks
-coo_plot(ventral_x$coo[32])
-
-# inspect polynomial fit
-# inspect 4, 13, 14, 21, 22, 23..
-poly_list[[32]] %>% 
-  npoly_i() %>% #calculates shape from polynomial model
-  coo_draw(border='red')
 
 
 # extract all R2 fits
@@ -97,8 +100,8 @@ baselines_list <-
 # units are in degrees per unit length
 curvature_tbl <- 
   curvr::total_curvature %>% 
-  mapply(., baselines_list, poly_list, 500) %>% 
-  enframe()
+  mapply(., poly_list, baselines_list) %>% 
+  enframe() 
 
 saveRDS(curvature_tbl, file = here("data/RDS_files/curvature_tbl_ventral.rds"))
 
@@ -139,10 +142,11 @@ alltogether_tbl <-
   perim_list %>% 
   unlist() %>% 
   enframe() %>% 
-  left_join(., curvature_tbl, by = 'name') %>%  # join arclength columns and curvature columns 
-  rename(arclength = value.x, total_curvature = value.y) %>% 
-  mutate(adjusted_curvature = total_curvature/arclength) %>%  # new column is adjusted curvature
-  mutate(name = dimnames(epi_lmk_data)[[3]])
+  left_join(., curvature_tbl, by = 'name') %>%   
+  mutate(name = dimnames(epi_lmk_data)[[3]]) %>% 
+  rename(perimeter = value.x) %>% 
+  rename(total_K = value.y) %>% 
+  mutate(total_K = abs(total_K) * (180/pi))
 
-write.csv(alltogether_tbl, here('data/epimedium_adj_curvature_ventral.csv')) 
+write_rds(alltogether_tbl, here('data/RDS_files/curvature_tbl_ventral.rds')) 
 

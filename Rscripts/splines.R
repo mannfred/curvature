@@ -37,7 +37,7 @@ dorsal_x <- coo_alignxax(dorsal)
 
 
 # ----------------------------
-# fit splines to landmarks
+# plot fitted splines onto landmarks
 
 coords <- matrix()
 s1 <- vector()
@@ -54,69 +54,25 @@ lines(s1)
 }
 
 
-# --------------------------------
-# calculate curvature from splines
-# https://teazrq.github.io/stat432/rlab/spline.html
-# https://stackoverflow.com/questions/35094843/get-polynomial-coefficients-from-interpolation-splines-in-r
-# https://stackoverflow.com/questions/51549690/r-how-to-get-piecewise-coefficients-of-an-interpolation-spline-for-analytical-i
-
-# test data
+# -----------------------------
+# compute curvature of fitted splines
 x1 <- seq(1, 10, 0.2)
 y1 <- x1^2 
 mat <- data.frame(x = x1, y =y1)
 
-lmfit <- lm(y1 ~ splines2::naturalSpline(x1, df=4), data = mat)
-plot(mat, pch=19, col='darkorange')
-lines(mat$x, lmfit$fitted.values, lty=1, col='deepskyblue', lwd=4)
+s0 <- splinefun(x=x1, y=y1)
 
-insMat <- naturalSpline(x1, df=4,)
+# first deriv func
+s1 <- splinefun(x=x1, y=s0(x=x1, deriv=1))
 
-
-# ---------
-x1 <- seq(1, 10, 0.2)
-y1 <- x1^2 
-f <- splinefun(x1, y1, "natural") 
-integrate(f, 1, 10)
+# second deriv func
+s2 <- splinefun(x=x1, y=s0(x=x1, deriv=2))
 
 
-f2 <- function(x) x^2
-integrate(f2, 1, 10)
-
-
-# ---------
-x1 <- seq(1, 10, 0.2)
-y1 <- x1^2 
-mat <- data.frame(x = x1, y =y1)
-
-f0 <- smooth.spline(mat)
-f1predict <- predict(f0, deriv=1)
-
-model1 <- lm(f1predict$y ~ f1predict$x)
-
-model2func <-
-  function(model) {
-    
-  intercept <- coef(model)[[1]]
-  coeff <- coef(model)[[2]]
-  
-  bodyexp <- parse(text = paste(intercept, "+", coeff, "*x"))
- 
-  f1 <- function(x) NULL
-  body(f1) <- bodyexp
-  
-  f2 <- Deriv::Deriv(f1)
-  
-  # deriv_list <- list(f1, f2)
-  # return(deriv_list)
-  
-  kfun <- function(x) {
-    f1 <- f1
-    f2 <- f2
-    ((f2(x))/((1 + (f1(x)^2))^1.5)) * (sqrt(1 + (f1(x))^2))
-  }
-
-  Ktot <- integrate(kfun, lower=1, upper=10)$value
-  return(Ktot)
+k_fun <- function(x) {
+  f1 <- s1
+  f2 <- s2
+  ((f2(x))/((1 + (f1(x)^2))^1.5)) * (sqrt(1 + (f1(x))^2))
 }
 
-
+integrate(k_fun, 1, 10)
