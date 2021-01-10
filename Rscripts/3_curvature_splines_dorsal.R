@@ -42,32 +42,16 @@ baselines_list <-
   dorsal_x$coo %>% 
   lapply(., function(b) c(unlist(b[,1])[1], unlist(b[,1])[15]))
 
-# fit smoothing splines
-spline_list <-
-  dorsal_x$coo %>% 
-  lapply(smooth.spline)
-
-# compute first deriv of splines
-deriv_list <-
-  spline_list %>% 
-  lapply(predict, deriv = 1)
-
-# fit linear models to first derivs
-model_list <- list()
-
-for (i in 1:length(deriv_list)) {
-  model_list[[i]] <- 
-    lm(deriv_list[[i]][[2]] ~ deriv_list[[i]][[1]])
-}
+# for nested coo objects
+dorsal_xsimple <- unlist(dorsal_x, recursive=F) 
 
 
-# compute curvature 
+# fit splines and compute curvature
 curvature_tbl <-
-  mapply(spline_curvature, model_list, baselines_list) %>% 
+ mapply(spline_curvature, dorsal_xsimple, baselines_list) %>% 
   enframe() %>% 
-  mutate(total_K = value*-180/pi) %>% 
-  select(3)
-  
+  mutate(total_K = abs(value)*(180/pi)) 
+
 
 # estimate arclength as perimeter
 perim_list <- coo_perim(Ldk(dorsal_x))
@@ -83,3 +67,20 @@ alltogether_tbl <-
 
 # write rds
 write_rds(alltogether_tbl, path = here("data/RDS_files/spline_curvature_tbl_dorsal.rds"))
+
+
+
+# plotting splines
+coords <- matrix()
+s1 <- vector()
+
+for (i in 1:length(dorsal_x)){
+  # test coords
+  coords <- dorsal_x$coo[[i]]
+  
+  s1 <- smooth.spline(coords)
+  
+  # plot
+  plot(coords)
+  lines(s1)
+}

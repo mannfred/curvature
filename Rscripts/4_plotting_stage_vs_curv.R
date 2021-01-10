@@ -17,7 +17,7 @@ size_data <-
   
 
 # dorsal curvature data
-curv_data <- read_rds(path = here('data/RDS_files/curvature_tbl_ventral.rds'))
+curv_data <- read_rds(path = here('data/RDS_files/spline_curvature_tbl_dorsal.rds'))
   
 
 # check IDs
@@ -66,7 +66,7 @@ colour_ids <-
 
 # plot size vs curvature
 ggplot(
-  data=curv_size_data, 
+  data=curv_size_data[-4,], 
   aes(x=sepal_size_mm, y=total_K)) +
   geom_point(
     aes(colour=factor(species)), size=3) +
@@ -96,7 +96,7 @@ ggplot() +
         axis.line = element_line(colour = "black"), 
         legend.position=c(.2, .9)) +
   geom_boxplot(
-    data=curv_size_data, 
+    data=curv_size_data[-4,], 
     aes(y=total_K,
         x=factor(new_stage, levels=c("C", "G", "T", "A")),
         fill=species)) +

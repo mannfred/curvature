@@ -60,18 +60,21 @@ x1 <- seq(1, 10, 0.2)
 y1 <- x1^2 
 mat <- data.frame(x = x1, y =y1)
 
-s0 <- splinefun(x=x1, y=y1)
+s0 <- smooth.spline(mat)
 
-# first deriv func
-s1 <- splinefun(x=x1, y=s0(x=x1, deriv=1))
+# first deriv values
+s1 <- predict(s0, deriv=1)
+
+# fit spline func to first deriv values
+s1func <- splinefun(x=x1, y=s1$y)
 
 # second deriv func
-s2 <- splinefun(x=x1, y=s0(x=x1, deriv=2))
+s2func <- splinefun(x=x1,  y = s1func(x1, deriv = 1)) 
 
 
 k_fun <- function(x) {
-  f1 <- s1
-  f2 <- s2
+  f1 <- s1func
+  f2 <- s2func
   ((f2(x))/((1 + (f1(x)^2))^1.5)) * (sqrt(1 + (f1(x))^2))
 }
 
