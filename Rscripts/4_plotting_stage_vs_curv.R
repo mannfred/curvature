@@ -113,7 +113,7 @@ ggplot() +
 # ---------------------------
 # Fit model for K ~ stage
 
-# random effect (individual) varies by ~8 std devs
+# random effect (individual) varies by ~0 std dev
 # see ?isSingular for details
 model3 <- 
   lmerTest::lmer(total_K ~ new_stage*species + (1|spp_ind_ID), data = curv_size_data)
