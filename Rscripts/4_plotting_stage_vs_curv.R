@@ -125,9 +125,18 @@ qqline(resid(model3))
 tukey_results4 <-
   emmeans(model3, pairwise ~ new_stage*species, adjust = "tukey")
 
+
+
+# fit model without random effect
+model4 <-
+  lm(total_K ~ new_stage*species, data = curv_size_data) %>% 
+  aov() %>% 
+  TukeyHSD()
+
+
 # save as data frame
 tableS6 <- 
-  tukey_results4$contrasts %>% 
+  model4$`new_stage:species` %>% 
   as.data.frame()
 
  write.csv(tableS6, file=(here("data/new_Table_S6.csv")))

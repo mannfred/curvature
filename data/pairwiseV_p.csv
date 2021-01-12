@@ -1,0 +1,6 @@
+,totalK,angle_of_deflection,arc_chord_ratio,chord_versine_ratio,X1.radius
+totalK,NA,1.96E-06,4.61E-08,2.94E-10,0.00300575
+angle_of_deflection,1.96E-06,NA,2.10E-08,5.48E-07,0.000227415
+arc_chord_ratio,4.61E-08,2.10E-08,NA,6.63E-09,0.000308282
+chord_versine_ratio,2.94E-10,5.48E-07,6.63E-09,NA,0.000790248
+1/radius,0.00300575,0.000227415,0.000308282,0.000790248,NA

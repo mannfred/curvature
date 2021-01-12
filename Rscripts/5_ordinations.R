@@ -81,7 +81,8 @@ plot(pca_data$pc.scores[,1:2],
 #import dorsal curvature data
 
 curv_data <- 
-  read_rds(here('data/RDS_files/curvature_tbl_dorsal.rds')) 
+  read_rds(path = here('data/RDS_files/spline_curvature_tbl_dorsal.rds'))
+
  
 
 #TRUE = all sample IDs match between shape matrix and
@@ -248,19 +249,16 @@ PC3 <- pca_data$pc.scores[,3]
 dors_curv <- curv_data$total_K
 indiv <- curv_data$spp_ind_ID
 
+# model with random effect for indiv
+model5 <- 
+  lmerTest::lmer(PC1 ~ dors_curv*group_ids + (1|indiv))
 
-
-# fit model
-dors_model <- lm(PC2 ~ dors_curv*group_ids)
-summary(dors_model) #variance of random effect is 0.009 std dev
-
-qqnorm(resid(dors_model))
-qqline(resid(dors_model))
-
+qqnorm(resid(model5))
+qqline(resid(model5))
 
 
 # effect of curvature is significant, 
-TableS7<- summary(dors_model)$coefficients
+TableS7<- summary(model5)$coefficients
 
 write.csv(TableS7, file=here("data/new_Table_S7.csv"))
 
