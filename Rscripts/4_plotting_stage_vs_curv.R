@@ -11,13 +11,13 @@ here=here::here
 # there is no curvature data
 size_data <-
   read.csv(
-  here("data/epimedium_curv_size_data_nogran.csv"), header=TRUE) %>% 
+  here("data/raw_data/epimedium_curv_size_data_nogran.csv"), header=TRUE) %>% 
   tibble() %>% 
   rename(name = species_individual_panicle_flower)
   
 
 # dorsal curvature data
-curv_data <- read_rds(path = here('data/RDS_files/spline_curvature_tbl_dorsal.rds'))
+curv_data <- read_rds(path = here('data/derived_data/RDS_files/spline_curvature_tbl_dorsal.rds'))
   
 
 # check IDs
@@ -118,27 +118,16 @@ ggplot() +
 model3 <- 
   lmerTest::lmer(total_K ~ new_stage*species + (1|spp_ind_ID), data = curv_size_data)
 
-qqnorm(resid(model3))
-qqline(resid(model3))
-
-# pairwise comparisons of means
-tukey_results4 <-
-  emmeans(model3, pairwise ~ new_stage*species, adjust = "tukey")
-
-
 
 # fit model without random effect
 model4 <-
   lm(total_K ~ new_stage*species, data = curv_size_data) %>% 
-  aov() %>% 
-  TukeyHSD()
 
+# estimate pairwise differences in curvature  
+emm_model4 <- emmeans(model4, c("new_stage", "species"))
+tableS6 <- pairs(emm_model4) %>% as.data.frame()
 
-# save as data frame
-tableS6 <- 
-  model4$`new_stage:species` %>% 
-  as.data.frame()
+# write.csv(tableS6, file=(here("data/new_Table_S6.csv")))
 
- write.csv(tableS6, file=(here("data/new_Table_S6.csv")))
 
 

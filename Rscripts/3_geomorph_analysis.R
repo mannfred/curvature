@@ -17,15 +17,15 @@ here=here::here
 # import shape data 
 epi_lmk_data <- 
   readmulti.tps(
-  c(here("data/epimedium_photos/koreanum/koreanum_appended_geomorph.TPS"),
-    here("data/epimedium_photos/violaceum/violaceum_appended_geomorph.TPS")),
+  c(here("data/raw_data/epimedium_photos/koreanum/koreanum_appended_geomorph.TPS"),
+    here("data/raw_data/epimedium_photos/violaceum/violaceum_appended_geomorph.TPS")),
   specID="imageID")[,,-31] #remove K_1_2_1 (no curvature data)
 
 
 # import size class data
 # rename and bin developmental stages
 sizeclass_data <- 
-  read.csv(here("data/epimedium_curv_size_data_nogran.csv")) %>% 
+  read.csv(here("data/raw_data/epimedium_curv_size_data_nogran.csv")) %>% 
   rename(sample = species_individual_panicle_flower) %>% 
   mutate(new_stage = case_when(
     stage == "E" ~ "C",
@@ -57,7 +57,7 @@ geom_boxplot(
 proc_data <- 
   gpagen(epi_lmk_data) 
 
-# saveRDS(proc_data, file=here("data/RDS_files/proc_data.rds"))
+# saveRDS(proc_data, file=here("data/derived_data/RDS_files/proc_data.rds"))
 
 # illustrates that there is shape variation
 plot(proc_data) 
@@ -89,7 +89,7 @@ pca_data <-
     legend=TRUE, 
     col=colour_ids)
 
-# saveRDS(pca_data, file=here("data/RDS_files/pca_data.rds"))
+# saveRDS(pca_data, file=here("data/derived_data/RDS_files/pca_data.rds"))
 
 
 
@@ -121,7 +121,7 @@ gdf <-
 gdf$numerical_stage <- factor(gdf$numerical_stage) 
 
 # save for later use
-# saveRDS(gdf, file="geomorph_data_frame.rds")
+# saveRDS(gdf, file=here("data/derived_data/geomorph_data_frame.rds")
 
 
 
@@ -177,7 +177,6 @@ summary(TA1, attribute = "MD")
 
 # ------------------------------
 # plot trajectories 
-
 
 
 #line colours

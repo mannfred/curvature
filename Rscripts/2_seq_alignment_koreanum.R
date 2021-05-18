@@ -1,9 +1,23 @@
+# with stages now defined, censored and fragmented development data
+# needs to be aligned to determine the "average" developmental sequence of events
+
+# alignment seeks to perform the act
+# of taking multiple divergent biological sequences of the same "type" and
+# fitting them to a form that reflect some shared quality. Wright 2019
+
+
+
+
+# ----------------------------------------------
+# sequence alignment 
+
 library(here)
 library(msa) 
 library(tidyverse)
 
-
-#see "2_seq_alignment_grandiflorum.R for complete code annotations and explanations
+# import stage data created in "1_epimedium_garden_data.R"
+data5 <- 
+  readRDS(file=here("data/derived_data/RDS_files/epimedium_growth_data_pivot_redefined_stages.rds")) 
 
 koreanum_stringset <-
   data5 %>% 
@@ -26,9 +40,9 @@ names(koreanum_stringset) = paste(
     unique(.),
   sep=""
                                   )
-
+# identity substiution matrix from NCBI  ftp://ftp.ncbi.nih.gov/blast/matrices/
 matchmatrix<-
-  read.table(here("data/match_matrix.txt")) %>% 
+  read.table(here("data/raw_data/match_matrix.txt")) %>% 
   as.matrix 
 
 colnames(matchmatrix)[24]<-"*" #gets turned into ".X" during read.table for some reason..
@@ -73,7 +87,13 @@ stages_days_sort<-
   mutate(elapsed_days = elapsed_days %>% as.numeric()) %>%
   print() 
 
-saveRDS(stages_days_sort, file="stages_days_sort_koreanum.rds")
+# saveRDS(stages_days_sort, file=here("data/derived_data/RDS_files/stages_days_sort_koreanum.rds"))
+
+
+
+
+# ----------------------------------
+# visualize
 
 #stage-elapsed_days boxplot 
 ggplot(
@@ -90,7 +110,11 @@ ggplot(
 
 
 
-#calculate mean + variance for stages ####
+
+# -------------------------------------
+# stats
+
+#calculate mean + variance for stages 
 #on average, how many days have elapsed for each stage?
 
 stages_days_sort <- readRDS("stages_days_sort_koreanum.rds")

@@ -3,8 +3,9 @@ library(tidyverse)
 library(msa) 
 
 
-#see "2_seq_alignment_grandiflorum.R" for complete code annotations and explanations
-
+# ---------------------------------
+# sequence alignment
+# object "data5" needs to be imported via "2_seq_alignment_koreanum.R"
 
 violaceum_stringset<-
   data5 %>% 
@@ -29,7 +30,7 @@ names(violaceum_stringset) = paste(
 )
 
 matchmatrix<-
-  read.table(here("data/match_matrix.txt")) %>% 
+  read.table(here("data/raw_data/match_matrix.txt")) %>% 
   as.matrix 
 
 colnames(matchmatrix)[24]<-"*" #gets turned into ".X" during read.table for some reason..
@@ -74,7 +75,13 @@ stages_days_sort<-
   mutate(elapsed_days = elapsed_days %>% as.numeric()) %>%
   print() 
 
-saveRDS(stages_days_sort, file="stages_days_sort_violaceum.rds")
+# saveRDS(stages_days_sort, file=here("data/derived_data/RDS_files/stages_days_sort_violaceum.rds"))
+
+
+
+
+# ---------------------------------------
+# visualize
 
 #stage-elapsed_days boxplot 
 ggplot(
@@ -94,6 +101,12 @@ ggplot(
 
 stages_days_sort <- readRDS("stages_days_sort_violaceum.rds")
 
+
+
+
+
+# ----------------------------------
+# stats
 
 #mean elapsed days per stage
 

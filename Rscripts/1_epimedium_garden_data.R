@@ -1,5 +1,5 @@
 # this R script includes initial analyses of stage-size data 
-#collected from Epimedium spp., April 2019, UBC Botanical Garden
+# collected from Epimedium spp., April 2019, UBC Botanical Garden
 
 library(emmeans)
 library(here)
@@ -13,19 +13,6 @@ here = here::here #mask lubridate::here
 
 
 
-# ---------------------------------------
-# power analysis for epimedium experiment
-
-pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative = 'greater')
-
-#Two-sample t test power calculation 
-
-#n = 105.253, d = 0.3, sig.level = 0.05, power = 0.7, alternative = greater
-#n is number of samples needed per species
-
-
-
-
 # ------------------------------------------
 # Epimedium growth data collected April 2019
 # pivoting and plotting garden data 
@@ -35,7 +22,7 @@ pwr.t.test(d=0.30, sig.level = 0.05, power=0.7, type="two.sample", alternative =
 # info can be manually inputted 
 data <-
   read.csv(
-      here("data/epimedium_growth_data.csv"), 
+      here("data/raw_data/epimedium_growth_data.csv"), 
       header=TRUE) %>%
   select(Species_Individual_Panicle_Flower, 2:25) %>% #add ", 2:25" parameter to select data upto column 25 (col25=May 2, 2019)
   as_tibble() %>%
@@ -55,7 +42,7 @@ data_sort <-
   arrange(Species_Individual_Panicle_Flower) %>% #arranges observations by individual
   print(n=50) #%>%
   #write.csv(
-  #   here("data/epimedium_growth_data_pivot.csv"), 
+  #   here("data/derived_data/epimedium_growth_data_pivot.csv"), 
   #   row.names=F) #stage info now manually entered into this file
 
 
@@ -95,12 +82,12 @@ ID_matrix <- str_split_fixed(data2ids$identity, "_", n=3) #matrix of IDs in SIPC
 # add identifiers back to tibble 
 data2ids <-
   data2ids %>%
-  mutate(flower_ID = ID_matrix[,3]) %>% #create column for flower ID
-  mutate(panicle_ID = ID_matrix[,2]) %>% #create column for panicle ID
-  mutate(indiv_ID = ID_matrix[,1]) %>% 
-  mutate(species_ID = case_when(Species_epithet == 'koreanum'~ 1, 
-                                Species_epithet == 'violaceum' ~2)) %>% 
-  mutate(spp_ind_ID = paste(species_ID, indiv_ID, sep=''))
+  mutate(flower_ID = ID_matrix[,3],  #create column for flower ID
+         panicle_ID = ID_matrix[,2],  #create column for panicle ID
+         indiv_ID = ID_matrix[,1],
+         species_ID = case_when(Species_epithet == 'koreanum'~ 1, 
+                                Species_epithet == 'violaceum' ~2),
+         spp_ind_ID = paste(species_ID, indiv_ID, sep=''))
                   
   
 
@@ -126,7 +113,7 @@ emmeans(size_stage_model, list(pairwise ~ stage*Species_epithet), adjust = "tuke
 
 
 
-############################################################
+#-----------------------------------------------------------
 #create new stage definitions (i.e. collapse non-sig stages) 
 
 data5<-
@@ -141,15 +128,15 @@ data5<-
                      stage == "P" | stage == "D" | stage == "A" ~ "A",
                      stage == "O" ~ "T" ))
 
-#save this frequently used tibble as an .rds file
-#saveRDS(data5, file="epimedium_growth_data_pivot_redefined_stages.rds") 
+# save this frequently used tibble as an .rds file
+# saveRDS(data5, file=here("data/derived_data/RDS_files/epimedium_growth_data_pivot_redefined_stages.rds")) 
 
 
 
 
 
 
-###########################################################
+#----------------------------------------------------------------
 #test for size differences between "new" stages (between species)
 
 
@@ -195,28 +182,3 @@ emmip(model1, Species_epithet~new_stage, type="response") +
                                  expression(italic("E. violaceum"))),
                       values = c("#009E73", "#CC79A7")) 
   
- 
-#for boxplot add..
-# geom_boxplot(
-#   aes(x=new_stage, y=size, colour=Species_epithet), data=data5)
-# theme_classic() 
-
-
-
-#################################################
-#plot data with newly defined stages using ggplot
-
-# ggplot(
-#     data=data5 %>% filter(Species_epithet=="koreanum" | Species_epithet=="violaceum"), #remove filter to include grandiflorum
-#     aes(x=new_stage, y=size)) +
-#     geom_boxplot(
-#       aes(fill = factor(Species_epithet), #colour by species
-#           factor(new_stage, levels=c("C", "G", "T", "A")))) + #reorder
-#     stat_summary(
-#       fun.y = mean, 
-#       geom = "errorbar", 
-#       aes(ymax = ..y.., ymin = ..y.., group = factor(Species_epithet)),
-#       width = 0.75, 
-#       linetype = "dashed", 
-#       position = position_dodge()) +
-#     theme_classic()  #removes gray backdrop

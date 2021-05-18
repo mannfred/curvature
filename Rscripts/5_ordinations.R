@@ -1,4 +1,5 @@
 library(tidyverse)
+library(effectsize)
 library(here)
 library(geomorph)
 library(lme4)
@@ -6,12 +7,12 @@ library(lmerTest)
 library(vegan)
 here=here::here
 
-# -----------------------------
-# import landmark and PCA data
+# ----------------------------------------
+# import procrustes alignment and PCA data
 
-proc_data <- readRDS(file=(here("data/RDS_files/proc_data.rds")))
+proc_data <- readRDS(file=(here("data/derived_data/RDS_files/proc_data.rds")))
 
-pca_data <- readRDS(file=here("data/RDS_files/pca_data.rds"))
+pca_data <- readRDS(file=here("data/derived_data/RDS_files/pca_data.rds"))
 
 
 # ---------------------------------------
@@ -81,7 +82,7 @@ plot(pca_data$pc.scores[,1:2],
 #import dorsal curvature data
 
 curv_data <- 
-  read_rds(path = here('data/RDS_files/spline_curvature_tbl_dorsal.rds'))
+  read_rds(path = here('data/derived_data/RDS_files/spline_curvature_tbl_dorsal.rds'))
 
  
 
@@ -91,7 +92,7 @@ identical(as.character(curv_data$name), unlist(dimnames(shape_vars)[1]))
 
 #redundancy analysis
 const_ord <- 
-  rda(shape_vars ~ curv_data$total_curvature)
+  rda(shape_vars ~ curv_data$total_K)
 
 const_ord_summary <- 
   summary(const_ord)$cont$importance %>% 
@@ -249,18 +250,26 @@ PC3 <- pca_data$pc.scores[,3]
 dors_curv <- curv_data$total_K
 indiv <- curv_data$spp_ind_ID
 
-# model with random effect for indiv
-model5 <- 
+# models with random effect for indiv
+model1 <- 
   lmerTest::lmer(PC1 ~ dors_curv*group_ids + (1|indiv))
 
-qqnorm(resid(model5))
-qqline(resid(model5))
+anova(model1) #F=8.8303, NumDF = 1, DenDF = 52.604
+effectsize::F_to_eta2(8.8303, 1, 52.604) #eta2 = 0.14
 
 
-# effect of curvature is significant, 
-TableS7<- summary(model5)$coefficients
 
-write.csv(TableS7, file=here("data/new_Table_S7.csv"))
+model2 <-
+  lmerTest::lmer(PC2 ~ dors_curv*group_ids + (1|indiv))
+
+anova(model2) #F=116.5210, NumDF=1, DenDF=52.291
+effectsize::F_to_eta2(116.5210, 1, 52.291) #eta2=0.69
+
+
+# export
+TableS7<- summary(model1)$coefficients
+
+# write.csv(TableS7, file=here("data/new_Table_S7.csv"))
 
 
 
@@ -270,8 +279,9 @@ write.csv(TableS7, file=here("data/new_Table_S7.csv"))
 
 mydata <- tibble(dors_curv, PC2)
 
-ggplot(data = mydata) +
-  geom_point(aes(x = dors_curv, y = PC2, colour=colour_ids), size=4) +
+ggplot(data = mydata, aes(x = dors_curv, y = PC2, colour=colour_ids)) +
+  geom_point(size=4) +
+  geom_smooth(method = 'lm', se = FALSE, size=1.5) +
   labs(
     y = "PC2 of Shape Variation (25.6%)",
     x = "total curvature (degrees)") +
@@ -284,4 +294,4 @@ ggplot(data = mydata) +
   theme(axis.text.x = element_text(size=14),
         axis.text.y = element_text(size=14),
         axis.title = element_text(size=14)) 
-)
+
