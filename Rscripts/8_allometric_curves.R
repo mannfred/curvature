@@ -40,8 +40,8 @@ effectsize::t_to_eta2(-2.016, 54.00531)
 
 
 
-# --------------------------------------
-# is chord length correlated with curvature in for random curves?
+# -----------------------------------------------------------------------
+# is chord length correlated with curvature in for allometrically scaled curves?
 
 
 # create 1000 in silico curves
@@ -63,7 +63,7 @@ for (i in 1:1000) {
 }
 
 # inspect curves
-plot(coords[[100]])
+plot(coords[[102]])
 
 
 # extract baselines
@@ -82,18 +82,25 @@ curvature_tbl <-
 # estimate arclength as perimeter
 perim_list <- Momocs::coo_perim(Ldk(coords))
 
+
 # estimate chord length
 chordlength <- Momocs::coo_length(Ldk(coords))
 
+
+# estimate centroid size
+csize <- coo_centsize(Ldk(coords))
 
 alldata <- 
   perim_list %>% 
   unlist() %>% 
   enframe() %>% 
-  mutate(totalK = curvature_tbl$total_K) %>% 
+  mutate(totalK = curvature_tbl$total_K,
+         chord = chordlength,
+         size = csize) %>% 
   rename(perimeter = value) %>% 
-  mutate(chord = chordlength)
+  mutate(acratio = perimeter/chord)
 
+plot(alldata$perimeter, alldata$chord)
 plot(alldata$perimeter, alldata$totalK)
 plot(alldata$chord, alldata$totalK)
 
@@ -102,3 +109,12 @@ lm(perimeter~totalK, data=alldata) %>% summary
 
 # p=0.836, t=-0.207, df=998, R^2adj=-0.0009589
 lm(chord~totalK, data=alldata) %>% summary
+
+
+
+
+# is arc:chord ratio a measure of size?
+plot(alldata$acratio, alldata$size)
+lm(size ~ acratio, data=alldata) %>% summary #YES. ACR is a measure of size
+
+

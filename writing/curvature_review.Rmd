@@ -12,7 +12,7 @@ output:
    # pdf_document:
    #  latex_engine: xelatex
 bibliography: curvature_review.bib
-csl: cell.csl
+csl: amnat.csl
 link-citations: true #'yes' for html, 'true' for pdfs
 linkcolor: blue
 urlcolor: blue
@@ -36,15 +36,15 @@ $^3$Biodiversity Research Centre, University of British Columbia, 2212 Main Mall
 
 **Submission Type**: Synthesis and Perspective
 
-**Abstract**: 198 Words 
+**Abstract**: 198 words 
 
-**Main Body**: 5799 Words (6091)
+**Main Body**: 6115 words
 
 **Figures**: 5 (colour). Additional figures in Supplementary Materials
 
-**Tables**: 1
+**Tables**: 1. Additional tables in Supplementary Materials
 
-**Keywords**: hummingbird, pollination, curvature, morphometerics, floral diversity
+**Keywords**: curvature, floral diversity, hummingbird, measure, morphometerics, pollination
 
 
 
@@ -52,7 +52,7 @@ $^3$Biodiversity Research Centre, University of British Columbia, 2212 Main Mall
 
 #### Acknowledgements
 
-The section 'Concepts from differential geometry' was generously reviewed and improved by A. MacPherson and S. Otto; any remaining errors are our own. Its implementation in `curvr` was helped greatly by J.S. Légaré. S. David, J. Muñoz, and M. Scholer provided useful feedback on early versions of the manuscript. We thank D. Edgley and M. Guzman for discussions on analysing multivariate shape data.  The staff at the UBC Botanical Garden gave their expertise and kindly allowed access to the _Epimedium_ plants in their collections. K. Thompson discerningly suggested the title. This work was funded by a 4YF from The University of British Columbia (to MB), and the Natural Sciences and Engineering Research Council of Canada (NSERC) grants GC-2017-Q4-00199 (to MB), F18-05154 (to JJ), and RGPIN-2019-04041 (to QC).
+The section 'Concepts from differential geometry' was generously reviewed and improved by A. MacPherson and S. Otto. Its implementation in `curvr` was helped greatly by J.S. Légaré. S. David, J. Muñoz, and M. Scholer provided useful feedback on early versions of the manuscript. We thank D. Edgley and M. Guzman for discussions on analysing multivariate shape data.  The staff at the UBC Botanical Garden gave their expertise and kindly allowed access to the _Epimedium_ plants in their collections. K. Thompson discerningly suggested the title. This work was funded by a 4YF from The University of British Columbia (to MB), and the Natural Sciences and Engineering Research Council of Canada (NSERC) grants GC-2017-Q4-00199 (to MB), F18-05154 (to JJ), and RGPIN-2019-04041 (to QC).
 
 &nbsp;
 &nbsp;
@@ -69,7 +69,7 @@ This study was conceived and designed jointly by all of the authors. M.M.A.B. co
 #### Data and Code Availability
 
 All data and scripts used in this study have been deposited
-in the Dryad Digital Repository (XXX). 
+in the Dryad Digital Repository (https://doi.org/10.5061/dryad.8gtht76pm). 
 
 
 \newpage
@@ -98,9 +98,9 @@ At the center of plant-pollinator diversification is a remarkable variety of flo
 
 &emsp;&emsp; While curvature mediates specialization in plant-hummingbird systems, in other nectivorous bird groups curvature appears to evolve in the absence of selection for resource partitioning. In plant-passerine systems, curvature is more prevalent in pollinators than in flowers. Straight flowers do not necessarily exclude pollination by curve-billed birds; for example, the straight, tubular flowers of African _Aloe_ L. (Asphodelaceae) are pollinated by curve-billed sunbirds [@paton_1989], and the small campanulate flowers of _Vaccinium_ L. (Ericaceae) are pollinated by the Hawaiian honeycreeper _Drepanis coccinea_ [Fringillidae, @carothers_1982]. For these passerine clades, a dietary shift to nectivory may drive the evolution of bill curvature because (ancestral) insect-pollinated plants require perching at angles not directly facing the flower opening [@paton_1989]. Furthermore, probing concealed nectar from a fixed perch is an inherently arc-like motion (analogous to reaching into a tall cup to extract, say, an ice cube). Recent experimental work found that Amethyst sunbirds (*Chalcomitra amethystina*) extract nectar more efficiently when flowers are curved towards a perch, indicating that bill curvature may evolve from the inherent arc-like motion of probing tubular flowers [@johnson_2020]. 
 
-&emsp;&emsp; A comparison of honeyeaters (Meliphagidae; predominately Australasian), sunbirds (Africa, Australasia), Hawaiian honeycreepers, and hummingbirds (Nearctic, Neotropic) suggests that downward bill curvature is widespread in the passerine families but in hummingbirds, the majority of species with decurved bills occur in subfamily Phaethornithinae [@paton_1989]. While hummingbirds possess unique musculature and wing shape for hovering and manoeuvring adeptly while feeding [@dakin_2018], passerines typically perch to probe for nectar. For plant-passerine systems, primarily insectivorous birds may have evolved curved bills to feed at awkward angles from plants with straight, tubular flowers, and only in some cases does reciprocal adaptation produce curved flowers, e.g. sunbird-pollinated _Streptocarpus dunnii_ Mast. [Gesneriaceae, @hughes_2007]. The evolution of reciprocal curvature in such plants may be driven by selection to either exclude inefficient pollinators such as bees, which otherwise would compete for nectar and pollen, or to increase the precision of pollen placement. It is worth noting that in landbirds, the evolution of bill shape is coupled with skull shape [@bright_2016; @navalon_2020]. Therefore, for some nectivorous passerines the evolution of bill shape is influenced not only by flower morphology, but also the biomechanical factors that restrict skull shape [@navalon_2020]. Thus, unlike plant-hummingbird systems (in which curvature mediates pollinator partitioning), selection for downward curvature in plant-passerine systems appears to operate on nectivorous birds moreso than the plants they pollinate. 
+&emsp;&emsp; A comparison of honeyeaters (Meliphagidae; predominately Australasian), sunbirds (Africa, Australasia), Hawaiian honeycreepers, and hummingbirds (Nearctic, Neotropic) suggests that downward bill curvature is widespread in the passerine families but in hummingbirds, the majority of species with decurved bills occur in subfamily Phaethornithinae [@paton_1989]. While hummingbirds possess unique musculature and wing shape for hovering and maneuvering adeptly while feeding [@dakin_2018], passerines typically perch to probe for nectar. For plant-passerine systems, primarily insectivorous birds may have evolved curved bills to feed at awkward angles from plants with straight, tubular flowers, and only in some cases does reciprocal adaptation produce curved flowers, e.g. sunbird-pollinated _Streptocarpus dunnii_ Mast. [Gesneriaceae, @hughes_2007]. The evolution of reciprocal curvature in such plants may be driven by selection to either exclude inefficient pollinators such as bees, which otherwise would compete for nectar and pollen, or to increase the precision of pollen placement. It is worth noting that in landbirds, the evolution of bill shape is coupled with skull shape [@bright_2016; @navalon_2020]. Therefore, for some nectivorous passerines the evolution of bill shape is influenced not only by flower morphology, but also the biomechanical factors that restrict skull shape [@navalon_2020]. Thus, unlike plant-hummingbird systems (in which curvature mediates pollinator partitioning), selection for downward curvature in plant-passerine systems appears to operate on nectivorous birds moreso than the plants they pollinate. 
 
-&emsp;&emsp; Floral diversity contributes to floral isolation and diversification in the angiosperms [@kay_2009; @armbruster_2009; @vamosi_2018]. Similarly, dietary specialization within pollinator clades has contributed to the diversification of mouthpart morphology [@weinstein_2017; @maruyama_2018].  In both cases, curvature is a widespread feature of morphological diversity. Therefore, to synthesize our knowledge of curved plant-pollinator systems, curvature is a concept that needs an exact definition and method of measurement. In the following section we summarize the approaches used in measuring curvature within the field of pollination ecology, and evaluate the strengths and shortcomings of each. Building on this assessment, we offer a  conceptualization of curvature that improves the precision of measurement of this trait. Although this review is motivated by the problem of measuring curvature in plant-pollinator systems, the solution is general to any biological form modelled as a line curve: we then apply this method to floral curvature in an example demonstration. 
+&emsp;&emsp; Floral diversity contributes to floral isolation and diversification in the angiosperms [@kay_2009; @armbruster_2009; @vamosi_2018]. Similarly, dietary specialization within pollinator clades has contributed to the diversification of mouthpart morphology [@weinstein_2017; @maruyama_2018].  In both cases, curvature is a widespread feature of morphological diversity. Therefore, to synthesize our knowledge of curved plant-pollinator systems, curvature is a concept that needs an exact definition and method of measurement. In the following section we summarize the approaches used in measuring curvature within the field of pollination ecology and evaluate the strengths and shortcomings of each. Building on this assessment, we offer a  conceptualization of curvature that improves the precision of measurement of this trait. Although this review is motivated by the problem of measuring curvature in plant-pollinator systems, the solution is general to any biological form modelled as a line curve: we then apply this method to floral curvature in an example demonstration. 
 
 
 \newpage
@@ -125,9 +125,11 @@ We searched the scientific literature for studies of floral or pollinator mouthp
 
 5. the _inverse radius_ method which approximates the arc of the flower/bill as a segment of a circle. Curvature is defined as the inverse radius of the fitted circle;
 
-6. _geometric morphometrics_, which defines and quantifies shape as a configuration of homologous points (landmarks) existing on a coordinate plane (Figure S2). 
+6. _geometric morphometrics_, which defines and quantifies shape as a configuration of homologous points (landmarks) existing on a coordinate plane (Figure S1). 
 
-&emsp;&emsp; The strength of methods 2&ndash;5 are their portability and accessibility. These measurements can be taken in the field without sensitive digital equipment (i.e. in inclement weather) or determined easily from standardized photographs. The methods are intuitive and in the simplest case, require only a ruler, string, and protractor. Temeles [-@temeles_2009] pointed out that, for curves well fitted by a circle, the _inverse radius_ method is interchangeable with the _angle of deflection_ method because the radius can be calculated from the length and angle of a chord [@bell_1956]. Similarly, for circles, arc length and versine can be computed from the radius and angle of deflection [@zwillinger_2018, pp. 424-425]. Given the required additional geometric information, for curves well fitted by a circular arc, methods 2&ndash;5 will provide equivalent rank orders. 
+![Figure 1. Overview of most commonly used curvature metrics within pollination ecology. 1. arc:chord ratio. 2. mandibular index 3. inverse radius. 4. angle of deflection](Figures/Figure_1.tif)
+
+&emsp;&emsp; The strength of methods 2&ndash;5 are their portability and accessibility. These measurements can be taken in the field without sensitive digital equipment (i.e. in inclement weather) or determined easily from standardized photographs. The methods are intuitive and in the simplest case, require only a ruler, string, and protractor. Temeles [-@temeles_2009] pointed out that, for curves well fitted by a circle, the _inverse radius_ method is interchangeable with the _angle of deflection_ method because the radius can be calculated from the length and angle of a chord [Figure S2, @bell_1956]. Similarly, for circles, arc length and versine can be computed from the radius and angle of deflection [@zwillinger_2018, pp. 424-425]. Given the required additional geometric information, for curves well fitted by a circular arc, methods 2&ndash;5 will provide equivalent rank orders. 
 
 &emsp;&emsp; In fitting a curve with a circle we assume that curvature is constant across the specimen. However, when curvature deviates from constant, methods 2&ndash;5 are less suitable [discussed in @berns_2010]. The _angle of deflection_ and _mandibular index_ are computed from only two or three landmarks, respectively. Any changes in curvature between landmarks are not considered&mdash;this is problematic when curvature varies across the specimen (e.g. a hook at the end of a bird bill). The _inverse radius_ method assumes the curve to have constant curvature. The _arc:chord_ method, because it considers arc length, implicitly contains information about curvature across the entire specimen&mdash;for a curved line in a plane, arc length and total curvature are proportional (see: following section). However, the curvature of a local feature cannot be extracted given only the length of the arc and chord. Overall, while these methods succeed in estimating the total curvature of an entire curve, they are not designed to account for fluctuating curvature caused by locally curved features.
 
@@ -135,9 +137,9 @@ We searched the scientific literature for studies of floral or pollinator mouthp
 
 &emsp;&emsp; Starting with Berns and Adams -@berns_2010 geometric morphometrics (GM) emerges in the literature addressing curvature in pollination systems. Here, GM is used to test the covariance of _shape_ [sensu @bookstein_1991] and ecological variables, e.g., how flower shape might covary with local pollinator communities [@gomez_2009]. This approach has steadily gained in popularity due to its mathematical rigour, reproducibility, and the appealing visual representations of shape variation [@olsen_2017]. Additionally, because GM has a traceable mathematical lineage [@bookstein_1991], its vernacular is well-defined and used consistently between practitioners. Here, we highlight some of the most important features of GM to introduce relevant concepts, and recommend the concise and authoritative introduction by Webster and Sheets [-@webster_2010] for more details. 
 
-&emsp;&emsp; In _traditional_ morphometrics univariate measurements (such as length, width, angle) are the primary data used to quantify shape. Methods 2-5 (above) fit into this category. Typically these measurements are anchored by landmarks&mdash;toplogically or biologically homologous points that can be located on all specimens [detailed in @bookstein_1991; @macleod_1999]. In _geometric_ morphometrics landmarks are assigned across the specimen, with the goal of representing its shape as completely as possible. A typical protocol for a 2-D object begins by placing the specimens on an $xy$-grid and assigning $xy$-coordinates to landmarks (Figure S2). In a comparative study, the samples are overlaid so that their shape information is isolated from their orientation, location, and size. This is done using a least-squares type protocol, most commonly the Generalized Procrustes Analysis [@rohlf_1990_b]. In _outline-based_ GM, the $xy$ coordinates of landmarks are fitted by form or shape functions [sensu @macleod_2012_a] and decomposed by elliptic [@kuhl_1982] or 'ZR' [@zahn_1972] Fourier analysis, respectively. Harmonic shape variables from a Fourier analysis are then used to calculate the principal components of shape variation [@macleod_2012_a]. In _landmark-based_ GM, the set of landmarks summarising the shape of an organism is treated as a 'landmark configuration'. Configurations exist in a shape space defined by the number of landmarks and spatial dimensions implemented. These configurations are then projected onto a simpler Euclidean space, analogous to the reduction of a spherical Earth onto a two-dimensional map [@webster_2010]. From here, familiar statistical procedures (e.g. PCA) can be performed to quantify variation in landmark configurations (shape) between samples. 
+&emsp;&emsp; In _traditional_ morphometrics univariate measurements (such as length, width, angle) are the primary data used to quantify shape. Methods 2-5 (above) fit into this category. Typically these measurements are anchored by landmarks&mdash;toplogically or biologically homologous points that can be located on all specimens [detailed in @bookstein_1991; @macleod_1999]. In _geometric_ morphometrics landmarks are assigned across the specimen, with the goal of representing its shape as completely as possible. A typical protocol for a 2-D object begins by placing the specimens on an $xy$-grid and assigning $xy$-coordinates to landmarks (Figure S1). In a comparative study, the samples are overlaid so that their shape information is isolated from their orientation, location, and size. This is done using a least-squares type protocol, most commonly the Generalized Procrustes Analysis [@rohlf_1990_b]. In _outline-based_ GM, the $xy$ coordinates of landmarks are fitted by form or shape functions [sensu @macleod_2012_a] and decomposed by elliptic [@kuhl_1982] or 'ZR' [@zahn_1972] Fourier analysis, respectively. Harmonic shape variables from a Fourier analysis are then used to calculate the principal components of shape variation [@macleod_2012_a]. In _landmark-based_ GM, the set of landmarks summarising the shape of an organism is treated as a 'landmark configuration'. Configurations exist in a shape space defined by the number of landmarks and spatial dimensions implemented. These configurations are then projected onto a simpler Euclidean space, analogous to the reduction of a spherical Earth onto a two-dimensional map [@webster_2010]. From here, familiar statistical procedures (e.g. PCA) can be performed to quantify variation in landmark configurations (shape) between samples. 
 
-&emsp;&emsp; A typical presentation of a shape-PCA attaches end-member specimens [@macleod_2002] or end-member deformation grids [@bookstein_1991] at both ends of a given principal axis. This enables a qualitative description of the primary trait(s) varying along said axis.  For example, visual inspection of deformation grids along PC2 of Figure 5 could be interpreted as shape variation driven by differences in floral curvature. However, the limitation of _landmark-based_ GM in the quantification of curvature is that this method is concerned with analyzing the entirety, not segments, of a specimen's shape. _Outline-based_ GM, though well-suited to analysing open curve segments [@macleod_1999], lacks a method for specifically extracting information about curvature. Therefore, while GM has enabled the quantification of _shape_, we are currently limited to describing _curvature_ by visual inspection of the principal axes of shape space.
+&emsp;&emsp; A typical presentation of a shape-PCA attaches end-member specimens [@macleod_2002] or end-member deformation grids [@bookstein_1991] at both ends of a given principal axis. This enables a qualitative description of the primary trait(s) varying along said axis.  For example, visual inspection of deformation grids along PC2 of Figure 4 could be interpreted as shape variation driven by differences in floral curvature. However, the limitation of _landmark-based_ GM in the quantification of curvature is that this method is concerned with analyzing the entirety, not segments, of a specimen's shape. _Outline-based_ GM, though well-suited to analysing open curve segments [@macleod_1999], lacks a method for specifically extracting information about curvature. Therefore, while GM has enabled the quantification of _shape_, we are currently limited to describing _curvature_ by visual inspection of the principal axes of shape space.
 
 \newpage
 
@@ -145,7 +147,9 @@ We searched the scientific literature for studies of floral or pollinator mouthp
 
 Reviewing the literature leads us to ask, “what is curvature?”. In related fields, for instance in plant physiology, there have been uses of a point-wise definition of curvature resembling that used in differential geometry [@castle_1962]. However, as in pollination ecology, references to the mathematical literature are missing. Therefore, we propose turning to the field of geometry in order to develop the concept of curvature starting from first principles. There, we again find several definitions resulting from a history of independent derivations [reviewed in @coolidge_1952; @bardini_2016]. Nonetheless these definitions share a conceptual theme; curvature is a local property that can be measured point-wise on a line. This concept is fundamentally different from those typically used in pollination ecology, where curvature is a single property of an entire shape. Here we follow the conventions of @casey_1996 and @rutter_2000 and present a definition of curvature that is tractable for analyzing biological shapes. 
 
-&emsp;&emsp; Intuitively, when a line deviates from being straight we say it is curved, the extent to which it is not straight is its curvature. More technically, a line deviates from being straight when its slope (i.e. the graph of the first derivative) changes magnitude&mdash;this is represented here by the rotating unit tangent vectors $\mathbf{T}_0$, $\mathbf{T}_2$, $\mathbf{T}_7$, $\mathbf{T}_n$ in Figure 2. Therefore, curvature can be thought of as the rate of change in the tangent as we move across the curve. Hence, the tangents of a straight line will have the same slope everywhere, and the line will have a curvature of zero, whereas when the slopes of the tangents of a curve (Figure 2) fluctuate, the line will have non-zero curvature. 
+&emsp;&emsp; Intuitively, when a line deviates from being straight we say it is curved, the extent to which it is not straight is its curvature. More technically, a line deviates from being straight when its slope (i.e. the graph of the first derivative) changes magnitude&mdash;this is represented here by the rotating unit tangent vectors $\mathbf{T}_0$, $\mathbf{T}_2$, $\mathbf{T}_7$, $\mathbf{T}_n$ in Figure 2. Therefore, curvature can be thought of as the rate of change in the tangent as we move across the curve. Hence, the tangents of a straight line will have the same slope everywhere, and the line will have a curvature of zero, whereas when the slopes of the tangents of a curve fluctuate, the line will have non-zero curvature. 
+
+![Figure 2. A curve parameterized by arc length, $s$. $T_0$, $T_2$, and $T_7$ are the tangents ( $\frac{d \mathbf{r}}{ds}$ ) at $s=0$, $s=2$, and $s=7$, respectively. For convenience the tangents are displayed as indications only, not exact representations. $\phi_2$ and $\phi_{n-ds}$ represent the angles formed between the tangent $T_2$ and the $x$ axis, and $T_{n-ds}$ and the $x$ axis, respectively. Total curvature is the sum of the changes in rotation ($\Delta\phi$) along the curve.](Figures/Figure_2.tif) 
 
 &emsp;&emsp; As biological curves often loop back on themselves (e.g. spirals) they are best described by parametric functions. By using a ‘hidden’ variable that determines the values of $x$ and $y$ independently, parametric functions allow a curve to have multiple $y$ values for a single $x$. Here, we use the parameter variable arc length, $s$, along the curve, to give us the $x$ and $y$ position. Specifically, we can express a position vector $\mathbf{r} = [x,y]$ as a function solely of arc length, $s$.  Using vector notation we have:
 
@@ -187,7 +191,7 @@ At the beginning of this section we defined curvature, $\kappa$, as the rate at 
 
 $$\kappa =\frac{d\phi}{ds}$$
 
-This definition provides an intuitive unit of measurement for reporting curvature: degrees of rotation per unit arc length (Figure 2). For example, if curvature has been calculated at every millimeter along the length of an arc, we would report its curvature as degrees per millimeter $degrees \cdot mm^{-1}$. Framed this way curvature is a measure of rotation per unit distance. In contrast to previous definitions, where curvature is an indivisible, single property of an entire shape, here, curvature is a property of every measured point along the curve. Under this point-wise definition, we can summarize the _total curvature_ [@milnor_1954] of a specimen as the total point-wise individual curvature along the curve:
+This definition provides an intuitive unit of measurement for reporting curvature: degrees of rotation per unit arc length. For example, if curvature has been calculated at every millimeter along the length of an arc, we would report its curvature as degrees per millimeter $degrees \cdot mm^{-1}$. Framed this way curvature is a measure of rotation per unit distance. In contrast to previous definitions, where curvature is an indivisible, single property of an entire shape, here, curvature is a property of every measured point along the curve. Under this point-wise definition, we can summarize the _total curvature_ [@milnor_1954] of a specimen as the total point-wise individual curvature along the curve:
 
 $$\kappa_{total} = \int_{0}^{s_{max}} \kappa \; ds$$
 
@@ -215,6 +219,8 @@ As illustrated in our methodology review, the current protocols for measuring fl
 
 &emsp;&emsp; In order to apply the point-wise definition of curvature, a biological organ or tissue needs to be reduced to a continuous function. To do this, we propose a protocol as illustrated in Figure 3. First, a specimen is landmarked at several locations along the region of study. Second, a mathematical function is fitted to the landmarks, and finally, curvature is calculated point-wise along the curve. As in all GM analyses, landmarking requires some standardization of digital photographs; this means that a unit reference (e.g. a ruler) and consistency in the angle of photography is needed [for complete guidelines see: @fruciano_2016; @savriama_2018]. We note that compared to previous curvature methods, inclement weather will present a challenge if standardized photographs are to be taken in the field.
 
+![Figure 3: Proposed protocol for measuring curvature. 1. A specimen (in this case *Epimedium violaceum*) is landmarked, semi-landmarked and assigned $xy$ coordinates within a Cartesian plane. 2. The $xy$ coordinates are rotated so that a single-valued function can be fitted to the landmarks (this step is not necessary for all cases). 3. The tangent vector $\mathbf{T}$ is calculated at an arbitrarily large number of increments, $ds$, along the curve. 4. Curvature is calculated as the rate of change of the tangent angle ($\phi$) point-wise along the curve. Total curvature is calculated by the methods outlined in the section "Concepts from differential geometry".](Figures/Figure_3.tif)
+
 &emsp;&emsp; As mentioned in the previous section, the field of plant physiology was an early adopter of the point-wise definition of curvature. In one case we found curvature (as defined above) computed from cubic functions fitted to cucumber seedlings that had been landmarked by hand [@cosgrove_1990]. Our protocol can be seen as a computerized version of this procedure. In another study, total curvature of _Anthurium_ Schott (Araceae) spadices was computed from fitted B-spline curves [@pour_2018]. However, because landmarks were not defined and the scripts are not publicly available, the reproducibility of this protocol is low. Here, we propose to develop the analysis of curvature specifically within the R programming environment [@R_2017], where existing landmarking and curve-fitting procedures can be called, and where modern morphometrics is being most actively developed [e.g. @adams_2013; @bonhomme_2014]. 
 
 &emsp;&emsp; The long-term goal of this proposal is to integrate the analysis of curvature with existing morphometrics protocols. In the following demonstration we use existing morphometric tools for landmarking and curve-fitting&mdash;these were previously developed in the field of traditional and outline morphometrics [e.g. @rohlf_1990; @macleod_1993; @terral_2004]. We opted to calculate curvature from cubic smoothing splines [@wood_2017] fitted to landmarks. Generally, splines are suitable for accurately modeling open curves, but we encourage the development of algorithms that will compute curvature from more sophisticated curve-fitting strategies [reviewed in @rohlf_1990; @macleod_2002]. Already there is potential for existing GM algorithms to be modified to compute curvature. Notably, the tangent angle function, $\phi(t)$, describes the angle of the tangent at a landmark as a function of distance traveled along the specimen's outline (see: previous section). While the concept of $\phi$ [sensu @zahn_1972] is equivalent to the one described in the previous section, the tangent angle function appears to have been derived without reference to differential geometry [@raudseps_1965]. Though we are interested specifically in the curvature of shapes, the tangent angle function was developed as a means to quantify shapes in their entirety&mdash;curvature is incidental. Nonetheless, when many interpolated semi-landmarks are used to model a specimen's outline [e.g. @zahn_1972], the tangent angles could be summed to give an approximation of $\kappa_{total}$. There is great opportunity for existing tangent angle algorithms [e.g. @claude_2008] to parse curvature data as a part of an outline morphometrics analysis. 
@@ -229,27 +235,31 @@ As illustrated in our methodology review, the current protocols for measuring fl
 
 In this section we focus on the tools and protocols used to measure curvature (as defined above) in a practical demonstration. Further information on the study system and methods can be found in the online Supplemental Materials.
 
-&emsp;&emsp; We characterized the development of floral curvature in two subspecies from the _Epimedium grandiflorum_ complex [@stearn_2002, pp. 140-142]: _Epimedium koreanum_ Nakai (*Epimedium grandiflorum* var. *koreanum* (Nakai) K.Suzuki), and _E. violaceum_ C.Morren & Decne. (*Epimedium grandiflorum* f. _violaceum_ (C.Morren & Decne.) Stearn). Though closely related, these taxa have notable differences in floral pigmentation and size [@stearn_2002]. We investigated whether there were consequent differences in floral shape, including curvature of the prominent nectar spurs. To do this, we implement a protocol (see: previous section) largely within the R programming environment. This study serves to demonstrate that 1) the analysis of curvature can be improved by clearly defined protocols and units of measurement, 2) patterns of shape variation revealed by GM analyses can be further dissected using traditional morphometrics, and 3) measuring point-wise curvature improves estimates of total curvature for shapes not well fitted by a circle. All R scripts and data used for this demonstration can be accessed at Dryad XXX.
+&emsp;&emsp; We characterized the development of floral curvature in two subspecies from the _Epimedium grandiflorum_ complex [@stearn_2002, pp. 140-142]: _Epimedium koreanum_ Nakai (*Epimedium grandiflorum* var. *koreanum* (Nakai) K.Suzuki), and _E. violaceum_ C.Morren & Decne. (*Epimedium grandiflorum* f. _violaceum_ (C.Morren & Decne.) Stearn). Though closely related, these taxa have notable differences in floral pigmentation and size [@stearn_2002]. We investigated whether there were consequent differences in floral shape, including curvature of the prominent nectar spurs. To do this, we implement a protocol (see: previous section) largely within the R programming environment. This study serves to demonstrate that 1) the analysis of curvature can be improved by clearly defined protocols and units of measurement, 2) patterns of shape variation revealed by GM analyses can be further dissected using traditional morphometrics, and 3) measuring point-wise curvature improves estimates of total curvature for shapes not well fitted by a circle. All R scripts and data used for this demonstration can be accessed at Dryad: https://doi.org/10.5061/dryad.8gtht76pm.
 
-&emsp;&emsp; Following an initial description of _Epimedium_ development (Supp. Mat.), a set of nectar spurs ($n$=57, Table S2) of varying maturity were sampled for imaging. Spurs were photographed with a millimeter scale reference in the dorsiventral view using a stereo microscope at 6.3x. Digital images were imported into _tpsUtil_ and _tpsDig_ [@rohlf_2015] and the dorsal and ventral arcs each assigned 15 landmarks (Supp. Mat.). The .tps files containing the landmark $xy$ coordinates were imported into R v.4.0.2 using the `readmulti.tps()` function from `geomorph` v.3.3.1 [@adams_2013]. Landmark configurations (shapes) were aligned using a Generalized Procrustes Analysis, as implemented in the `geomorph::gpagen()` function. Aligned shapes were then analysed for the principal components (PCs) of shape variation, using `geomorph::plotTangentSpace()`. 
+&emsp;&emsp; Following an initial description of _Epimedium_ development (Table S3), a set of nectar spurs ($n$=57, Table S2) of varying maturity were sampled for imaging. Spurs were photographed with a millimeter scale reference in the dorsiventral view using a stereo microscope at 6.3x. Digital images were imported into _tpsUtil_ and _tpsDig_ [@rohlf_2015] and the dorsal and ventral arcs each assigned 15 landmarks (Supp. Mat.). The .tps files containing the landmark $xy$ coordinates were imported into R v.4.0.2 using the `readmulti.tps()` function from `geomorph` v.3.3.1 [@adams_2013]. Landmark configurations (shapes) were aligned using a Generalized Procrustes Analysis, as implemented in the `geomorph::gpagen()` function. Aligned shapes were then analysed for the principal components (PCs) of shape variation, using `geomorph::plotTangentSpace()`. 
 
-&emsp;&emsp; The deformation grids illustrating variation in PCA shape space suggested that dorsal curvature increased along both PC1 and PC2 (Figure 4). To analyse dorsal curvature specifically, we first subset the morphometric data to include only the landmarks on the dorsal side of the nectar spurs&mdash;note that adapting (closed) landmark data for curvature analysis will vary for each study. Second, we used `coo_alignxax()` in `Momocs` v.1.3.0 [@bonhomme_2014] to rotate each set of landmarks so that the chord was parallel to the $x$-axis. We then used the `curvature_spline()` function in `curvr` v.0.1.0 [@boehm_2021] to fit a smoothing cubic spline [@cleveland_1992] for each set of landmarks, and compute total curvature as described in the previous section. 
+&emsp;&emsp; The deformation grids illustrating variation in PCA shape space suggested that dorsal curvature increased along both PC1 and PC2 (Figure S3). To analyse dorsal curvature specifically, we first subset the morphometric data to include only the landmarks on the dorsal side of the nectar spurs&mdash;note that adapting (closed) landmark data for curvature analysis will vary for each study. Second, we used `coo_alignxax()` in `Momocs` v.1.3.0 [@bonhomme_2014] to rotate each set of landmarks so that the chord was parallel to the $x$-axis. We then used the `curvature_spline()` function in `curvr` v.0.0.1 [@boehm_2021] to fit a smoothing cubic spline [@cleveland_1992] for each set of landmarks, and compute total curvature as described in the previous section. Total curvature estimates were regressed against PC2 of shape space using a linear mixed effects model (Supp. Mat.). 
 
-&emsp;&emsp; Finally, we re-measured curvature using metrics 2&ndash;5 as outlined in the previous section. Linear measurements (e.g. chord length) were made using `Momocs::coo_scalars()`. Angle of declension was estimated as the angle between 1) the base of the spur and the centroid and 2) the base of the spur and its apex (Figure S3).  The _inverse radius_ was computed from fitted circles using  `pracma::circlefit()`. This function also estimates the root mean square error for each fitted circle. Each _inverse radius_ measure was multiplied by arc length to adjust for size. We then performed a pairwise regression for each metric, including the point-wise definition proposed here. All linear models and associated tests are described in the Supplementary Materials. 
+&emsp;&emsp; Finally, we re-measured curvature using metrics 2&ndash;5 as outlined in the previous section. Linear measurements (e.g. chord length) were made using `Momocs::coo_scalars()`. Angle of declension was estimated as the angle between 1) the base of the spur and the centroid and 2) the base of the spur and its apex (Figure S4).  The _inverse radius_ was computed from fitted circles using  `pracma::circlefit()`. This function also estimates the root mean square error for each fitted circle. Each _inverse radius_ measure was multiplied by arc length to adjust for size. We then performed a pairwise regression for each metric, including the point-wise definition proposed here. All linear models and associated tests are described in the Supplementary Materials. 
 
 &nbsp;
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; _Results_
 
-&emsp;&emsp; Inspection of the deformation grids associated with PC1 and PC2 suggests that curvature is associated with both axes of shape space (Figure 4). Indeed, an explicit analysis of total curvature found a significant correlation between curvature and PC1 ($p=0.019$, $t_{52}=2.40$, $\eta{_p}^2=0.14$) and PC2 ($p=2.01\times10^{-11}$, $t_{52}=8.49$, $\eta{_p}^2=0.69$, Figure 5). There are no interspecific differences in curvature during floral development, but in _E. koreanum_ there is a significant increase in curvature during mid-development (Stage 2, Table S6, Figure S6). From early to middle stage (Stages 1 to 2) the spurs develop 37.9 $degrees$ more total curvature ($p=0.073$, $t_{49}=3.00$). As the spurs enter late development (Stage 4) there is a decrease of 50.6 $degrees$ total curvature ($p=0.002$, $t_{49}=4.27$). The specimen photographs (Supp. Mat.) suggest that at Stage 2, nectar spurs tend to curve sharply as they elongate (grow) from bud-size spurs (Stage 1) to mature-size. After growth slows, the spurs straighten as they approach anthesis (Stage 4). 
+&emsp;&emsp; Inspection of the deformation grids associated with PC1 and PC2 suggests that curvature is associated with both axes of shape space (Figure S3). Indeed, an explicit analysis of total curvature found a significant correlation between curvature and PC1 ($p=0.019$, $t_{52}=2.40$, $\eta{_p}^2=0.14$) and PC2 ($p=2.01\times10^{-11}$, $t_{52}=8.49$, $\eta{_p}^2=0.69$, Figure 4). There are no interspecific differences in curvature during floral development, but in _E. koreanum_ there is a significant increase in curvature during mid-development (Stage 2, Table S6, Figure S5). From early to middle stage (Stages 1 to 2) the spurs develop 37.9 $degrees$ more total curvature ($p=0.073$, $t_{49}=3.00$). As the spurs enter late development (Stage 4) there is a decrease of 50.6 $degrees$ total curvature ($p=0.002$, $t_{49}=4.27$). The specimen photographs (Supp. Mat.) suggest that at Stage 2, nectar spurs tend to curve sharply as they elongate (grow) from bud-size spurs (Stage 1) to mature-size. After growth slows, the spurs straighten as they approach anthesis (Stage 4). 
 
-&emsp;&emsp; Pairwise comparisons of the various curvature metrics found that, for both species, all metrics are significantly correlated ($p<2.8\times10^{-7}$, Spearman's $|\rho| > 0.85$, Tables S8 and S9). The _inverse radius_ metric had the lowest correlation with total curvature (*E. koreanum*: $|\rho|=0.85$ versus $|\rho|>0.94$ for methods 2&ndash;4, *E. violaceum*: $|\rho|=0.81$ versus $|\rho|>0.90$). By analysing the the error distance for each fitted circle, we found that specimens approximated poorly by circles had more residual variation between the total curvature and _inverse radius_ metrics ($p=4.46\times10^{-9}$, $t_{53}=7.0$, $\eta{_p}^2=0.48$, Figure S8). 
+![Figure 4: Scatterplot of total curvature and PC2 from PCA of geometric morphometric shape data (see also: Figure 4).  PC2 represents the axis of second greatest variation in shape during _Epimedium_ flower development.](Figures/Figure_4.tif)
+
+&emsp;&emsp; Pairwise comparisons of the various curvature metrics found that, for both species, all metrics are significantly correlated ($p<2.8\times10^{-7}$, Spearman's $|\rho| > 0.85$, Figure 5, Tables S8 and S9). The _inverse radius_ metric had the lowest correlation with total curvature (*E. koreanum*: $|\rho|=0.85$ versus $|\rho|>0.94$ for methods 2&ndash;4, *E. violaceum*: $|\rho|=0.81$ versus $|\rho|>0.90$). By analysing the the error distance for each fitted circle, we found that specimens approximated poorly by circles had more residual variation between the total curvature and _inverse radius_ metrics ($p=4.46\times10^{-9}$, $t_{53}=7.0$, $\eta{_p}^2=0.48$, Figure S6). 
+
+![Figure 5: Pairwise comparisons of curvature metrics. Density plots show the distribution of curvature values for each species. Fittted lines are locally estimated scatterplot smoothing (LOESS).](Figures/Figure_5.tif)
 
 &nbsp;
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; _Discussion and Future Applications_
 
-&emsp;&emsp; The proposed definition for curvature (as adopted from differential geometry) clarifies both the concept and the units of measurement. Using the terms _point-wise curvature_ and _total curvature_ enables us to distinguish between the curvature at a point and the cumulative curvature of the specimen. Using this framework allowed us to examine the development of floral curvature in _Epimedium_ with units of measurement ($degrees$) that are rooted in geometry, and have a clear biological basis. This framework also considers allometry: Here, we asked "does floral curvature vary between life stages, regardless of arc length?". Thus, we used $K_{tot}$ instead of $K_{adj}$. Alternatively, if we had posed "does floral curvature co-vary with arc length?", then $K_{adj}$ would be better suited. 
+&emsp;&emsp; The proposed definition for curvature (as adopted from differential geometry) clarifies both the concept and the units of measurement. Using the terms _point-wise curvature_ and _total curvature_ enables us to distinguish between the curvature at a point and the cumulative curvature of the specimen. Using this framework allowed us to examine the development of floral curvature in _Epimedium_ with units of measurement ($degrees$) that are rooted in geometry, and have a clear biological basis. This framework also considers allometry: Here, we asked "does floral curvature vary between life stages, regardless of arc length?" . Thus, we used $K_{tot}$ instead of $K_{adj}$. Alternatively, if we had posed "does floral curvature co-vary with arc length?", then $K_{adj}$ would be better suited. 
 
 &emsp;&emsp; The majority of _Epimedium_ nectar spurs were well fitted by a circle. Accordingly, methods 2&ndash;5 and total curvature are highly correlated, though the _inverse radius_ metric scored the lowest for both species. As the specimens deviated from circular, the distance between the _inverse radius_ and total curvature estimates increased. This suggests that for complex curves, a point-wise metric is better suited to capture fluctuations in curvature that deviate from circularity. 
 
@@ -259,73 +269,51 @@ In this section we focus on the tools and protocols used to measure curvature (a
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; _Conclusions_ 
 
-&emsp;&emsp; In this synthesis we discussed the ecological significance of curvature within the field of pollination ecology. In reviewing the methods used to measure curvature, we found a need for both conceptual and methodological unity. By drawing from the geometry literature we aimed to clarify the definition of curvature within the contexts most commonly used in pollination ecology: the curvature of floral tubes or pollinator mouthparts in the dorsiventral plane. We demonstrated the utility of this revised metric by analysing the development of curved nectar spurs in _Epimedium_.  For curves that deviate from segments of circles, a point-wise definition of curvature is recommended over historical methods that model a curve as segment of a circle. Furthermore, a clearly defined concept of curvature creates the potential for progressive integration with the swiftly advancing, and broadly applied field of geometric morphometrics.  
+&emsp;&emsp; In this synthesis we discussed the ecological significance of curvature within the field of pollination ecology. In reviewing the methods used to measure curvature, we found a need for both conceptual and methodological unity. By drawing from the geometry literature, we aimed to clarify the definition of curvature within the contexts most commonly used in pollination ecology: the curvature of floral tubes or pollinator mouthparts in the dorsiventral plane. We demonstrated the utility of this revised metric by analysing the development of curved nectar spurs in _Epimedium_.  For curves that deviate from segments of circles, a point-wise definition of curvature is recommended over historical methods that model a curve as segment of a circle. Furthermore, a clearly defined concept of curvature creates the potential for progressive integration with the swiftly advancing, and broadly applied field of geometric morphometrics.  
 
 \newpage
 
 
-![Figure 1. Overview of most commonly used curvature metrics within pollination ecology. 1. arc:chord ratio. 2. mandibular index 3. inverse radius. 4. angle of deflection](Figures/Figure_1.svg)
+```{r include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+
+```
+
+```{r include = FALSE}
+library(googlesheets4)
+
+# prevent using auto-token
+gs4_deauth()
+
+# sign in
+gs4_auth(email = 'mannfredboehm@gmail.com',
+         scopes = "https://www.googleapis.com/auth/spreadsheets")
+
+# my "app" info from https://console.cloud.google.com
+google_app <- httr::oauth_app(
+  appname = "mannys_cool_app",
+  key = "1089626906814-9lggcl5o3m7oeaqr583bs23h8pkbdgl7.apps.googleusercontent.com",
+  secret = "2uIBhIcqOC85xMx5EWkdQGHG"
+)
+
+# my API key
+google_key <- gs4_api_key()
+
+# configure access
+gs4_auth_configure(app = google_app, api_key = google_key)
+
+```
+
+
+```{r table1}
+
+table1 <- read_sheet('1yOv3FwtVp4DNOClNkfZ8CCUB9MsU-aWuvD0Wkm3cR70', col_names=TRUE)
+
+knitr::kable(table1, caption = 'Table 1: Summary of literature reviewed for metrics of floral or mouthpart curvature in plant-pollinator systems.')
+
+```
 
 \newpage
-
-
-![Figure 2. A curve parameterized by arc length, $s$. $T_0$, $T_2$, and $T_7$ are the tangents ( $\frac{d \mathbf{r}}{ds}$ ) at $s=0$, $s=2$, and $s=7$, respectively. For convenience the tangents are displayed as indications only, not exact representations. $\phi_2$ and $\phi_{n-ds}$ represent the angles formed between the tangent $T_2$ and the $x$ axis, and $T_{n-ds}$ and the $x$ axis, respectively. Total curvature is the sum of the changes in rotation ($\Delta\phi$) along the curve.](Figures/Figure_2.svg)
-
-\newpage
-
-![Figure 3: Proposed protocol for measuring curvature. 1. A specimen (in this case *Epimedium violaceum*) is landmarked, semi-landmarked and assigned $xy$ coordinates within a Cartesian plane. 2. The $xy$ coordinates are rotated so that a single-valued function can be fitted to the landmarks (this step is not necessary for all cases). 3. The tangent vector $\mathbf{T}$ is calculated at an arbitrarily large number of increments, $ds$, along the curve. 4. Curvature is calculated as the rate of change of the tangent angle ($\phi$) point-wise along the curve. Total curvature is calculated by the methods outlined in the section "Concepts from differential geometry".](Figures/Figure_3.svg)
-
-\newpage
-
-![Figure 4: Scatterplot of total curvature and PC2 from PCA of geometric morphometric shape data (see also: Figure 4).  PC2 represents the axis of second greatest variation in shape during _Epimedium_ flower development.](Figures/Figure_4.svg)
-
-\newpage
-
-![Figure 5: Pairwise comparisons of curvature metrics. Density plots show the distribution of curvature values for each species. Fittted lines are locally estimated scatterplot smoothing (LOESS).](Figures/Figure_5.svg)
-
-\newpage
-
-
-<!-- ```{r include=FALSE}  -->
-<!-- knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE) -->
-
-<!-- ``` -->
-
-<!-- ```{r include = FALSE} -->
-<!-- library(googlesheets4) -->
-
-<!-- # prevent using auto-token -->
-<!-- gs4_deauth() -->
-
-<!-- # sign in  -->
-<!-- gs4_auth(email = 'mannfredboehm@gmail.com',  -->
-<!--          scopes = "https://www.googleapis.com/auth/spreadsheets") -->
-
-<!-- # my "app" info from https://console.cloud.google.com -->
-<!-- google_app <- httr::oauth_app( -->
-<!--   appname = "mannys_cool_app", -->
-<!--   key = "1089626906814-9lggcl5o3m7oeaqr583bs23h8pkbdgl7.apps.googleusercontent.com", -->
-<!--   secret = "2uIBhIcqOC85xMx5EWkdQGHG" -->
-<!-- ) -->
-
-<!-- # my API key -->
-<!-- google_key <- gs4_api_key() -->
-
-<!-- # configure access -->
-<!-- gs4_auth_configure(app = google_app, api_key = google_key) -->
-
-<!-- ``` -->
-
-
-<!-- ```{r table1} -->
-
-<!-- table1 <- read_sheet('1yOv3FwtVp4DNOClNkfZ8CCUB9MsU-aWuvD0Wkm3cR70', col_names=TRUE) -->
-
-<!-- knitr::kable(table1, caption = 'Table 1: Summary of literature reviewed for metrics of floral or mouthpart curvature in plant-pollinator systems.') -->
-
-<!-- ``` -->
-
-<!-- \newpage -->
 
 
 
