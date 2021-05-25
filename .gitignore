@@ -3,6 +3,9 @@
 *.RData
 *.Ruserdata
 *.Rmd
+/data/raw_data/epimedium_photos/
+/dryad/
+/writing/
 /writing/curvature_review_papers/
 /writing/vector_valued_functions.txt
 /writing/Zeiss_Zen_instructions.txt
@@ -15,6 +18,4 @@
 *.jpg
 *.jpeg
 *.svg
-/dryad/
 
-.Rproj.user
