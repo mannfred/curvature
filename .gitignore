@@ -5,6 +5,7 @@
 *.Rmd
 /data/raw_data/epimedium_photos/
 /dryad/
+/publication/
 /writing/
 /writing/curvature_review_papers/
 /writing/vector_valued_functions.txt

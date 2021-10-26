@@ -8,9 +8,6 @@ library(tidyverse)
 # --------------------------------------
 # is chord length correlated with curvature in Epimedium?
 
-# import pracma circles (from "3_circle_fitting.R")
-circledata <- read.csv(file=here('data/derived_data/circles_fitby_pracma.csv'))
-
 # import linear measurement data
 alt_metrics <- 
   read.csv(file = here("data/derived_data/alternative_metrics.csv")) %>% 
@@ -23,7 +20,7 @@ curv_data <-
 data10 <-
   data.frame(chord = alt_metrics$chord, 
              curvature = curv_data$total_K,
-             arclength = circledata$arcs,
+             arclength = curv_data$perimeter,
              species = c(rep("koreanum", 30), rep("violaceum", 27)))
 
 ggplot(data = data10, aes(x = curvature, y = arclength, group = species, colour=species)) +
@@ -38,7 +35,7 @@ ggplot(data = data10, aes(x = curvature, y = arclength, group = species, colour=
 lmerTest::lmer(arclength ~ curvature + (1|species), data = data10) %>% summary()
 
 #eta2 = 0.07
-effectsize::t_to_eta2(-3.173, 54.53042 )
+effectsize::t_to_eta2(-2.016, 54.00531)
 
 
 
@@ -77,7 +74,7 @@ baselines_list <-
 
 # fit splines and compute curvature
 curvature_tbl <-
-  mapply(curvr::curvature_spline, coords, baselines_list) %>% 
+  mapply(curvature_spline, coords, baselines_list) %>% 
   enframe() %>% 
   mutate(total_K = abs(value)*(180/pi)) 
 
